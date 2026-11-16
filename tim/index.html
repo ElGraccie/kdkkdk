@@ -38,7 +38,7 @@ html[data-theme=dark] .theme .sun{display:block}
 html[data-theme=dark] .theme .moon{display:none}
 *{box-sizing:border-box}
 html{overflow-x:hidden;overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:90px}
-body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:var(--ink);font:400 16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+body{margin:0;overflow-wrap:break-word;-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:var(--ink);font:400 16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
 button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
 a{color:inherit}
@@ -121,7 +121,7 @@ section{padding:96px 0}
 .gsel button{display:flex;flex-direction:column;align-items:center;gap:2px;min-height:58px;justify-content:center;border-radius:13px;color:rgba(255,255,255,.7);transition:background .4s var(--ease),color .3s var(--ease),box-shadow .4s var(--ease)}
 .gsel button b{font-family:var(--disp);font-size:1.05rem}
 .gsel button span{font-family:var(--mono);font-size:.7rem;letter-spacing:.04em;opacity:.85;white-space:nowrap}
-@media (max-width:420px){.gsel button span{font-size:.58rem;letter-spacing:0}}
+@media (max-width:420px){.gsel button{padding:6px 4px}.gsel button span{font-size:.62rem;letter-spacing:0;white-space:normal;text-align:center;line-height:1.3}.gauge-foot div{padding:10px 4px}.gauge-foot span{font-size:.68rem;line-height:1.3;display:block}}
 .gsel button:hover{color:#fff}
 .gsel button[aria-checked=true]{background:var(--grad);color:#fff;box-shadow:0 10px 26px -10px rgba(34,199,240,.7)}
 .hsel{display:flex;justify-content:center;gap:4px;margin:-6px auto 6px;padding:4px;border-radius:12px;background:rgba(255,255,255,.04);width:max-content;max-width:100%}
@@ -309,6 +309,22 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px 30px;justify-content:space-bet
 footer a{text-decoration:none}footer a:hover{color:#fff}
 footer .logo{margin:0}
 
+/* mobile overflow guard: grid cells may shrink, long words wrap */
+.adv>*,.pay>*,.nums>*,.gauge-foot>*,.pick>*,.plans>*,.svc-grid>*,.cont>*,.docs>*,.news>*,.frow>*,.hero-grid>*,.about>*,.dev>*{min-width:0}
+.adv,.pay,.nums{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (min-width:900px){.adv{grid-template-columns:repeat(4,minmax(0,1fr))}.pay{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media (max-width:640px){
+  .adv{grid-template-columns:minmax(0,1fr);gap:10px}
+  .adv div{display:flex;align-items:center;gap:14px;padding:14px 18px}
+  .adv div .ico{margin:0;flex:none}
+  .adv div:first-child{grid-column:auto;display:block;padding:22px}
+  .adv div:first-child .ico{margin-bottom:14px}
+  .adv div:first-child b{font-size:1.25rem}
+  .need{font-size:clamp(2.6rem,14vw,3.6rem)}
+  .bar-l{font-size:.62rem}
+  .res .btn{width:100%}
+}
+
 /* floating contact */
 .fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:45;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
 .fab-main{display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 20px 0 16px;border-radius:999px;background:var(--grad);color:#fff;font-weight:700;box-shadow:0 14px 34px -10px rgba(29,92,255,.75);transition:transform .4s var(--ease-out),box-shadow .4s var(--ease)}
@@ -459,8 +475,8 @@ try{var t=localStorage.getItem('tim_theme');if(!t)t=matchMedia('(prefers-color-s
       </div>
       <div class="gauge-foot">
         <div><b id="gPrice">99 грн</b><span id="gPriceL">перші 6 міс, далі 450</span></div>
-        <div><b id="gExtra">200</b><span id="gExtraL">каналів ТБ у подарунок</span></div>
-        <div><b id="gConn">PON</b><span id="gConnL">0 грн підключення</span></div>
+        <div><b id="gExtra">200</b><span id="gExtraL">каналів ТБ</span></div>
+        <div><b id="gConn">PON</b><span id="gConnL">оптика, 0 грн</span></div>
       </div>
       <p class="gname" id="gName">Тариф «Стандарт Гігабіт»</p>
       <button class="btn btn-blue gbtn" id="gBtn" data-order="Стандарт Гігабіт">Підключити Преміум</button>
@@ -782,8 +798,8 @@ $('#burger').addEventListener('click',function(){$('#mnav').showModal()});
   var G={
     std:{flat:{sp:300,price:'300 грн',priceL:'на місяць',extra:'PON',extraL:'оптика до дверей',conn:'0 грн',connL:'підключення',name:'Тариф «Стандарт» · квартира',order:'Стандарт',btn:'Підключити Стандарт'},
          house:{sp:300,price:'350 грн',priceL:'на місяць',extra:'PON',extraL:'оптика до будинку',conn:'0 грн',connL:'підключення',name:'Тариф «Стандарт Приватний» · будинок',order:'Стандарт Приватний',btn:'Підключити Стандарт'}},
-    prem:{flat:{sp:1000,price:'99 грн',priceL:'перші 6 міс, далі 450',extra:'200',extraL:'каналів ТБ у подарунок',conn:'PON',connL:'оптика, підключення 0 грн',name:'Тариф «Стандарт Гігабіт» · квартира',order:'Стандарт Гігабіт',btn:'Підключити Преміум'},
-          house:{sp:1000,price:'99 грн',priceL:'перші 6 міс, далі 470',extra:'200',extraL:'каналів ТБ у подарунок',conn:'PON',connL:'оптика, підключення 0 грн',name:'Тариф «Приват Преміум» · будинок',order:'Приват Преміум',btn:'Підключити Преміум'}}};
+    prem:{flat:{sp:1000,price:'99 грн',priceL:'перші 6 міс, далі 450',extra:'200',extraL:'каналів ТБ',conn:'PON',connL:'оптика, 0 грн',name:'Тариф «Стандарт Гігабіт» · квартира',order:'Стандарт Гігабіт',btn:'Підключити Преміум'},
+          house:{sp:1000,price:'99 грн',priceL:'перші 6 міс, далі 470',extra:'200',extraL:'каналів ТБ',conn:'PON',connL:'оптика, 0 грн',name:'Тариф «Приват Преміум» · будинок',order:'Приват Преміум',btn:'Підключити Преміум'}}};
   var gk='prem',hk='flat';
   function draw(x){v.style.strokeDashoffset=440*(1-x/1000);n.textContent=Math.round(x)}
   function go(to,delay){
