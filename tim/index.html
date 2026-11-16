@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ТІМ. Інтернет до 1 Гбіт/с і телебачення в Умані та Христинівці</title>
+<meta name="description" content="Оператор телекомунікацій ТІМ: оптичний інтернет до 1 Гбіт/с, цифрове та IP-телебачення, відеоспостереження, Ajax, Wi-Fi мережі. Умань, Христинівка. Техпідтримка 24/7.">
+<meta name="theme-color" content="#071634">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%231d5cff'/%3E%3Cstop offset='1' stop-color='%2322c7f0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%23071634'/%3E%3Cpath d='M14 40c10-16 26-16 36 0' stroke='url(%23g)' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3Cpath d='M22 44c6-8 14-8 20 0' stroke='url(%23g)' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='48' r='4' fill='%2322c7f0'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@500;600;700;800&family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#071634; --navy2:#0c2152; --navy3:#132b63;
+  --canvas:#f2f6fd; --card:#fbfcff; --line:#dbe4f3; --line2:#c3d1ea;
+  --ink:#0b1a38; --muted:#4f5f7d; --muted-d:#a9b9d9;
+  --blue:#1d5cff; --cyan:#22c7f0; --blue-ink:#ffffff;
+  --grad:linear-gradient(115deg,#1d5cff,#22c7f0);
+  --ease:cubic-bezier(.2,.7,.2,1); --ease-out:cubic-bezier(.16,1,.3,1);
+  --disp:"Geologica",system-ui,sans-serif; --body:"Onest",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{overflow-x:hidden;overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:var(--ink);font:400 16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;border-radius:10px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--blue);color:#fff;padding:10px 16px;border-radius:10px;z-index:99;font-weight:700}
+.skip:focus{left:8px}
+.wrap{width:min(1200px,100% - 32px);margin-inline:auto}
+h1,h2,h3{font-family:var(--disp);font-weight:700;line-height:1.08;margin:0;letter-spacing:-.025em}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.kicker::before{content:"";width:20px;height:2px;border-radius:2px;background:var(--grad)}
+.dark .kicker,.hero .kicker{color:var(--cyan)}
+.h2{font-size:clamp(2rem,4.8vw,3.3rem);margin:12px 0 0}
+.lead{color:var(--muted);font-size:1.08rem;max-width:56ch;margin:14px 0 0}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:14px;font-weight:700;font-size:1rem;text-decoration:none;transition:transform .4s var(--ease-out),box-shadow .4s var(--ease),background .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease)}
+.btn:hover{transform:translateY(-2px)}
+.btn-blue{background:var(--grad);color:#fff;box-shadow:0 12px 30px -12px rgba(29,92,255,.7)}
+.btn-blue:hover{box-shadow:0 18px 40px -12px rgba(29,92,255,.85)}
+.btn-line{border:1.5px solid var(--line2);color:var(--ink);background:var(--card)}
+.btn-line:hover{border-color:var(--blue);color:var(--blue)}
+.dark .btn-line,.hero .btn-line{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2);color:#fff;backdrop-filter:blur(10px)}
+.dark .btn-line:hover,.hero .btn-line:hover{border-color:var(--cyan);color:var(--cyan)}
+section{padding:96px 0}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+.reveal.in{opacity:1;transform:none}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto;z-index:40;transition:background .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease);border-bottom:1px solid transparent}
+.nav .wrap{display:flex;align-items:center;gap:8px;height:74px}
+.nav.solid{background:rgba(7,22,52,.9);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-color:rgba(255,255,255,.08)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;margin-right:auto}
+.logo svg{width:38px;height:38px;flex:none}
+.logo b{font-family:var(--disp);font-weight:800;font-size:1.45rem;letter-spacing:-.02em;line-height:1}
+.logo small{display:block;font-size:.66rem;font-weight:500;color:var(--muted-d);letter-spacing:.06em;margin-top:2px}
+.links{display:none;gap:2px}
+.links a{color:rgba(255,255,255,.78);text-decoration:none;font-weight:500;font-size:.93rem;padding:10px 12px;border-radius:10px;transition:color .3s var(--ease),background .3s var(--ease)}
+.links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+@media (min-width:1060px){.links{display:flex}}
+.nav .phone{display:none;color:#fff;text-decoration:none;font-family:var(--mono);font-weight:700;font-size:.9rem;padding:0 10px}
+@media (min-width:760px){.nav .phone{display:block}}
+.nav .btn{min-height:44px;padding:0 18px;font-size:.92rem;border-radius:12px}
+.nav .cab{display:none}
+@media (min-width:600px){.nav .cab{display:inline-flex}}
+.burger{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.08)}
+.burger svg{width:22px;height:22px}
+@media (min-width:1060px){.burger{display:none}}
+.mnav{width:min(380px,100%);height:100%;max-height:none;margin:0 0 0 auto;background:var(--navy);color:#fff;display:none;flex-direction:column;padding:20px}
+.mnav[open]{display:flex;animation:slide .45s var(--ease-out)}
+.mnav a{display:block;text-decoration:none;font-family:var(--disp);font-weight:600;font-size:1.3rem;padding:12px 4px;border-bottom:1px solid rgba(255,255,255,.08)}
+.mnav .x{align-self:flex-end;margin-bottom:10px}
+.mnav .btn{margin-top:18px}
+
+/* hero */
+.hero{position:relative;min-height:100svh;display:grid;align-items:center;padding:120px 0 70px;overflow:hidden;background:radial-gradient(70% 60% at 75% 20%,#123a8f 0%,transparent 60%),radial-gradient(60% 60% at 10% 90%,#0b3a6b 0%,transparent 60%),var(--navy);color:#fff;isolation:isolate}
+#fiber{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.hero-grid{display:grid;gap:40px;align-items:center}
+@media (min-width:980px){.hero-grid{grid-template-columns:1.25fr 1fr}}
+.badge{display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 7px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(10px);font-size:.86rem;font-weight:500}
+.badge i{font-style:normal;font-family:var(--mono);font-size:.68rem;font-weight:700;letter-spacing:.08em;background:var(--grad);padding:4px 10px;border-radius:999px}
+.hero h1{font-size:clamp(2.6rem,6.4vw,5rem);font-weight:800;margin:22px 0 20px;letter-spacing:-.035em}
+.hero p.sub{font-size:clamp(1.05rem,1.5vw,1.2rem);color:rgba(255,255,255,.82);max-width:46ch;margin:0 0 30px}
+.hero .row{display:flex;flex-wrap:wrap;gap:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:34px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);font-size:.86rem;color:rgba(255,255,255,.9)}
+.chip svg{width:16px;height:16px;color:var(--cyan)}
+.rise{opacity:0;transform:translateY(26px);animation:in 1s var(--ease-out) forwards}
+.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}.d4{animation-delay:.32s}.d5{animation-delay:.42s}
+@keyframes in{to{opacity:1;transform:none}}
+
+/* speed card in hero */
+.gauge-card{position:relative;border-radius:28px;padding:28px;background:linear-gradient(160deg,rgba(255,255,255,.1),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
+.gauge{position:relative;width:100%;max-width:360px;margin:0 auto}
+.gauge svg{width:100%;height:auto;display:block}
+.gauge .trk{fill:none;stroke:rgba(255,255,255,.1);stroke-width:14;stroke-linecap:round}
+.gauge .val{fill:none;stroke:url(#gg);stroke-width:14;stroke-linecap:round;stroke-dasharray:440;stroke-dashoffset:440;filter:drop-shadow(0 0 10px rgba(34,199,240,.6))}
+.gauge .read{position:absolute;inset:auto 0 8%;text-align:center}
+.gauge .read b{display:block;font-family:var(--disp);font-weight:800;font-size:clamp(2.6rem,6vw,3.6rem);letter-spacing:-.04em;line-height:1}
+.gauge .read span{font-family:var(--mono);font-size:.78rem;color:var(--muted-d);letter-spacing:.1em}
+.gauge-foot{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:20px}
+.gauge-foot div{text-align:center;padding:12px 6px;border-radius:14px;background:rgba(255,255,255,.05)}
+.gauge-foot b{display:block;font-family:var(--disp);font-size:1.15rem}
+.gauge-foot span{font-size:.74rem;color:var(--muted-d)}
+
+/* services */
+.svc-grid{display:grid;gap:14px;margin-top:40px}
+@media (min-width:680px){.svc-grid{grid-template-columns:1fr 1fr}}
+@media (min-width:1040px){.svc-grid{grid-template-columns:repeat(3,1fr)}}
+.svc{position:relative;text-align:left;padding:28px;border-radius:24px;background:var(--card);border:1px solid var(--line);overflow:hidden;transition:transform .5s var(--ease-out),box-shadow .5s var(--ease),border-color .3s var(--ease)}
+.svc::after{content:"";position:absolute;inset:auto -30% -60% auto;width:220px;height:220px;border-radius:50%;background:radial-gradient(closest-side,rgba(34,199,240,.18),transparent);opacity:0;transition:opacity .5s var(--ease)}
+.svc:hover{transform:translateY(-4px);box-shadow:0 24px 50px -24px rgba(11,26,56,.25);border-color:var(--line2)}
+.svc:hover::after{opacity:1}
+.ico{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(29,92,255,.12),rgba(34,199,240,.14));color:var(--blue);margin-bottom:20px}
+.ico svg{width:28px;height:28px}
+.svc h3{font-size:1.28rem;margin:0 0 8px}
+.svc p{margin:0;color:var(--muted);font-size:.95rem}
+.svc .more{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-weight:700;font-size:.9rem;color:var(--blue)}
+.svc .more i{font-style:normal;transition:transform .4s var(--ease-out)}
+.svc:hover .more i{transform:translateX(4px)}
+
+/* tariffs */
+.tar{background:linear-gradient(180deg,var(--canvas),#e8effb)}
+.tabs{display:inline-flex;gap:4px;padding:5px;border-radius:16px;background:var(--card);border:1px solid var(--line);margin-top:30px;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;min-height:46px;padding:0 18px;border-radius:12px;font-weight:700;font-size:.94rem;color:var(--muted);transition:background .35s var(--ease),color .35s var(--ease)}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected=true]{background:var(--navy);color:#fff}
+.note{font-family:var(--mono);font-size:.74rem;color:var(--muted);margin-top:14px;letter-spacing:.04em}
+.plans{display:grid;gap:14px;margin-top:22px}
+@media (min-width:720px){.plans{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1080px){.plans.c3{grid-template-columns:repeat(3,1fr)}.plans.c4{grid-template-columns:repeat(4,1fr)}}
+.plan{position:relative;display:flex;flex-direction:column;padding:28px;border-radius:26px;background:var(--card);border:1px solid var(--line);opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out),box-shadow .4s var(--ease)}
+.plan.in{opacity:1;transform:none}
+.plan:hover{box-shadow:0 24px 50px -26px rgba(11,26,56,.28)}
+.plan.hot{background:linear-gradient(160deg,var(--navy2),var(--navy));color:#fff;border-color:transparent;box-shadow:0 30px 60px -28px rgba(7,22,52,.7)}
+.plan .flag{position:absolute;top:18px;right:18px;font-family:var(--mono);font-size:.64rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:var(--grad);color:#fff}
+.plan .nm{font-family:var(--mono);font-weight:700;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.plan.hot .nm{color:var(--muted-d)}
+.plan .sp{font-family:var(--disp);font-weight:800;font-size:2.3rem;letter-spacing:-.04em;margin:10px 0 2px;line-height:1}
+.plan .sp small{font-size:1rem;font-weight:600;color:var(--muted);letter-spacing:0}
+.plan.hot .sp small{color:var(--muted-d)}
+.plan ul{list-style:none;margin:18px 0 22px;padding:0;display:grid;gap:9px;font-size:.94rem}
+.plan li{display:flex;gap:10px;align-items:flex-start}
+.plan li::before{content:"";flex:none;width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--grad);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12'/%3E%3C/svg%3E");}
+.plan li{position:relative}
+.plan li::after{content:"";position:absolute;left:5px;top:8px;width:7px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg)}
+.price{margin-top:auto;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.price b{font-family:var(--disp);font-weight:800;font-size:2.6rem;letter-spacing:-.04em;line-height:1}
+.price span{color:var(--muted);font-size:.95rem}
+.plan.hot .price span{color:var(--muted-d)}
+.price s{color:var(--muted);font-size:1.1rem}
+.plan.hot .price s{color:var(--muted-d)}
+.promo{font-size:.8rem;color:var(--muted-d);margin:8px 0 0}
+.plan .btn{margin-top:20px;width:100%}
+.plan .btn-line{background:transparent}
+details.equip{margin-top:26px;border-radius:20px;background:var(--card);border:1px solid var(--line);padding:4px 22px}
+details.equip summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:58px;font-weight:700}
+details.equip summary::-webkit-details-marker{display:none}
+details.equip summary i{font-style:normal;transition:transform .4s var(--ease-out);color:var(--blue);font-size:1.3rem}
+details.equip[open] summary i{transform:rotate(45deg)}
+.eq{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:.95rem}
+.eq td{padding:12px 0;border-top:1px solid var(--line)}
+.eq td:last-child{text-align:right;font-family:var(--mono);font-weight:700;white-space:nowrap}
+
+/* speed picker */
+.pick{display:grid;gap:16px;margin-top:40px}
+@media (min-width:980px){.pick{grid-template-columns:1.2fr 1fr}}
+.box{border-radius:28px;background:var(--card);border:1px solid var(--line);padding:clamp(22px,3vw,34px)}
+.seg{display:inline-flex;gap:4px;padding:5px;border-radius:14px;background:var(--canvas);border:1px solid var(--line);margin-bottom:18px}
+.seg button{min-height:42px;padding:0 16px;border-radius:10px;font-weight:700;font-size:.9rem;color:var(--muted);transition:background .3s var(--ease),color .3s var(--ease)}
+.seg button[aria-pressed=true]{background:var(--card);color:var(--ink);box-shadow:0 4px 14px -6px rgba(11,26,56,.25)}
+.dev{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.dev:first-of-type{border-top:0}
+.dev .ico{width:46px;height:46px;border-radius:14px;margin:0}
+.dev .ico svg{width:22px;height:22px}
+.dev b{display:block;font-weight:700}
+.dev span{color:var(--muted);font-size:.84rem}
+.step{display:flex;align-items:center;gap:6px}
+.step button{width:40px;height:40px;border-radius:12px;border:1px solid var(--line2);font-size:1.2rem;font-weight:700;color:var(--ink);transition:border-color .3s var(--ease),color .3s var(--ease),background .3s var(--ease)}
+.step button:hover{border-color:var(--blue);color:var(--blue)}
+.step output{min-width:28px;text-align:center;font-family:var(--mono);font-weight:700;font-size:1.05rem}
+@media (pointer:coarse){.step button{width:44px;height:44px}}
+.res{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--navy2),var(--navy));color:#fff;border:0;display:flex;flex-direction:column}
+.res::before{content:"";position:absolute;inset:-40% -30% auto auto;width:360px;height:360px;border-radius:50%;background:radial-gradient(closest-side,rgba(34,199,240,.25),transparent)}
+.need{position:relative;font-family:var(--disp);font-weight:800;font-size:clamp(3rem,7vw,4.4rem);letter-spacing:-.05em;line-height:1;margin:14px 0 4px}
+.need small{font-size:1.1rem;color:var(--muted-d);letter-spacing:0;font-weight:600}
+.bar{position:relative;height:12px;border-radius:9px;background:rgba(255,255,255,.1);margin:18px 0 8px;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;width:0;border-radius:9px;background:var(--grad);box-shadow:0 0 18px rgba(34,199,240,.6);transition:width .7s var(--ease-out)}
+.bar-l{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.68rem;color:var(--muted-d)}
+.rec{position:relative;margin-top:24px;padding:20px;border-radius:20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
+.rec .nm{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;color:var(--cyan);text-transform:uppercase}
+.rec h3{font-size:1.6rem;margin:6px 0 4px}
+.rec p{margin:0;color:rgba(255,255,255,.78);font-size:.94rem}
+.res .btn{margin-top:auto;position:relative}
+.res .why{position:relative;color:var(--muted-d);font-size:.85rem;margin:14px 0 20px}
+
+/* advantages */
+.adv{display:grid;gap:12px;margin-top:40px;grid-template-columns:repeat(2,1fr)}
+@media (min-width:900px){.adv{grid-template-columns:repeat(4,1fr)}}
+.adv div{padding:22px;border-radius:22px;background:var(--card);border:1px solid var(--line)}
+.adv .ico{width:48px;height:48px;margin-bottom:14px}
+.adv .ico svg{width:24px;height:24px}
+.adv b{display:block;font-family:var(--disp);font-weight:600;font-size:1.05rem;line-height:1.25}
+.adv div:first-child{grid-column:span 2;background:linear-gradient(160deg,var(--navy2),var(--navy));color:#fff;border:0}
+.adv div:first-child p{color:rgba(255,255,255,.78);margin:8px 0 0;font-size:.95rem}
+.adv div:first-child b{font-size:1.5rem}
+
+/* about */
+.dark{background:var(--navy);color:#fff}
+.about{display:grid;gap:40px;align-items:center}
+@media (min-width:960px){.about{grid-template-columns:1.1fr 1fr}}
+.about .lead{color:rgba(255,255,255,.78)}
+.nums{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.nums div{padding:24px;border-radius:22px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}
+.nums b{display:block;font-family:var(--disp);font-weight:800;font-size:clamp(2rem,4vw,2.8rem);letter-spacing:-.04em;line-height:1}
+.nums span{display:block;margin-top:8px;color:var(--muted-d);font-size:.9rem}
+
+/* news */
+.news{display:grid;gap:14px;margin-top:36px}
+@media (min-width:900px){.news{grid-template-columns:repeat(3,1fr)}}
+.nw{display:flex;flex-direction:column;padding:26px;border-radius:24px;background:var(--card);border:1px solid var(--line);text-decoration:none;transition:transform .5s var(--ease-out),box-shadow .5s var(--ease)}
+.nw:hover{transform:translateY(-4px);box-shadow:0 24px 50px -26px rgba(11,26,56,.25)}
+.nw time{font-family:var(--mono);font-size:.74rem;color:var(--blue);font-weight:700}
+.nw h3{font-size:1.15rem;margin:10px 0 8px}
+.nw p{margin:0;color:var(--muted);font-size:.93rem}
+
+/* pay */
+.pay{display:grid;gap:12px;margin-top:36px;grid-template-columns:repeat(2,1fr)}
+@media (min-width:900px){.pay{grid-template-columns:repeat(5,1fr)}}
+.pay a{display:flex;flex-direction:column;justify-content:space-between;gap:20px;min-height:130px;padding:22px;border-radius:22px;background:var(--card);border:1px solid var(--line);text-decoration:none;transition:transform .5s var(--ease-out),border-color .3s var(--ease)}
+.pay a:hover{transform:translateY(-3px);border-color:var(--blue)}
+.pay b{font-family:var(--disp);font-size:1.2rem}
+.pay span{font-size:.84rem;color:var(--muted)}
+.pay em{font-style:normal;font-family:var(--mono);font-size:.7rem;font-weight:700;color:#0a8f5a;background:#e2f7ee;padding:4px 8px;border-radius:999px;align-self:flex-start}
+
+/* contacts */
+.cont{display:grid;gap:14px;margin-top:36px}
+@media (min-width:960px){.cont{grid-template-columns:1.2fr 1fr 1fr}}
+.cont .box h3{font-size:1.2rem;margin:10px 0 14px}
+.tel{display:block;font-family:var(--disp);font-weight:700;font-size:clamp(1.3rem,2.4vw,1.6rem);text-decoration:none;padding:6px 0;transition:color .3s var(--ease)}
+.tel:hover{color:var(--blue)}
+.cont p{margin:0 0 8px;color:var(--muted)}
+.cont .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.cont .row .btn{min-height:46px;padding:0 16px;font-size:.9rem}
+.mono{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.cta{padding:30px 0 100px}
+.cta .in-box{position:relative;overflow:hidden;border-radius:34px;padding:clamp(40px,7vw,84px) 24px;text-align:center;background:var(--navy);color:#fff;isolation:isolate}
+.cta .in-box::before{content:"";position:absolute;inset:auto -10% -70%;height:130%;z-index:-1;background:radial-gradient(50% 50% at 50% 50%,rgba(29,92,255,.55),rgba(34,199,240,.18) 55%,transparent 75%);animation:glow 7s -2s ease-in-out infinite alternate}
+@keyframes glow{to{opacity:.65;transform:scale(1.08)}}
+.cta h2{font-size:clamp(2.2rem,6vw,4.4rem);font-weight:800;margin:14px 0 14px}
+.cta p{color:rgba(255,255,255,.78);margin:0 auto 28px;max-width:44ch}
+.cta .row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+footer{background:var(--navy);color:var(--muted-d);padding:40px 0 50px;font-size:.88rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:14px 30px;justify-content:space-between;align-items:center}
+footer a{text-decoration:none}footer a:hover{color:#fff}
+footer .logo{margin:0}
+
+/* dialogs */
+dialog{border:0;padding:0;color:var(--ink);background:var(--card);max-width:none}
+dialog::backdrop{background:rgba(7,22,52,.6);backdrop-filter:blur(6px)}
+.x{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:1.1rem;background:rgba(127,140,170,.14);transition:transform .4s var(--ease-out),background .3s var(--ease)}
+.x:hover{transform:rotate(90deg)}
+.dlg{width:min(560px,100% - 24px);max-height:90vh;border-radius:28px;margin:auto;overflow:auto}
+.dlg[open]{animation:sheet .5s var(--ease-out)}
+@keyframes sheet{from{transform:translateY(30px);opacity:0}}
+@keyframes slide{from{transform:translateX(60px);opacity:0}}
+.dlg .hd{position:relative;padding:28px 28px 22px;background:linear-gradient(160deg,var(--navy2),var(--navy));color:#fff}
+.dlg .hd .x{position:absolute;top:14px;right:14px;color:#fff;background:rgba(255,255,255,.1)}
+.dlg .hd .ico{background:rgba(255,255,255,.1);color:var(--cyan)}
+.dlg .hd h3{font-size:1.6rem;padding-right:40px}
+.dlg .bd{padding:24px 28px 28px}
+.dlg .bd p{margin:0 0 12px;color:var(--muted)}
+.dlg .bd ul{margin:0 0 16px;padding-left:20px;color:var(--muted)}
+.dlg .bd li{margin:4px 0}
+.dlg .acts{display:grid;gap:10px;margin-top:20px}
+.order .num{display:block;font-family:var(--disp);font-weight:700;font-size:1.35rem;text-decoration:none;padding:12px 16px;border-radius:14px;border:1px solid var(--line);margin-bottom:8px;transition:border-color .3s var(--ease),color .3s var(--ease)}
+.order .num:hover{border-color:var(--blue);color:var(--blue)}
+.order .num small{display:block;font-family:var(--body);font-weight:500;font-size:.78rem;color:var(--muted)}
+.msg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.msg a{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:12px;font-weight:700;font-size:.9rem;text-decoration:none;color:#fff}
+.msg .vb{background:#7360f2}.msg .tg{background:#229ed9}.msg .fb{background:#1877f2}
+.hint{font-size:.8rem;color:var(--muted);margin:14px 0 0}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .rise,.reveal,.plan{opacity:1;transform:none}
+}
+body.paused *,body.paused *::before,body.paused *::after{animation-play-state:paused!important}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">До змісту</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d5cff"/><stop offset="1" stop-color="#22c7f0"/></linearGradient>
+    <symbol id="i-net" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M3 9.5c5-5 13-5 18 0M6 13c3.400-3.300 8.600-3.300 12 0M9 16.500c1.700-1.600 4.300-1.600 6 0"/><circle cx="12" cy="19.500" r="1.400" fill="currentColor"/></symbol>
+    <symbol id="i-tv" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2.500"/><path d="M8 21h8M9 2.500l3 3.500 3-3.500"/></g></symbol>
+    <symbol id="i-iptv" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.500" y="4" width="13" height="10" rx="2"/><rect x="16" y="9" width="5.500" height="10" rx="1.500"/><path d="M6 18h6M10.500 9l-2.500-1.600v3.200z"/></g></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.500 3v5.500c0 4.500-3.200 8.200-7.500 9.500-4.300-1.300-7.500-5-7.500-9.500V6z"/><path d="M8.500 12l2.500 2.500 4.500-5"/></g></symbol>
+    <symbol id="i-cam" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.500l13 3.500-1.500 5.500-13-3.500z"/><path d="M16 11l4.500-1.500v5l-5-.500M6 15l-1 5h4"/></g></symbol>
+    <symbol id="i-wifi" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 17h.01M11 17h.01M8 10.500c2.200-2 5.800-2 8 0M5.500 7.500c3.600-3.300 9.400-3.300 13 0"/></g></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M13 2.500L5 13.500h6l-1 8 8-11h-6z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="7" y="2.500" width="10" height="19" rx="2.500"/><path d="M11 18.500h2"/></g></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.500" y="5" width="15" height="10" rx="1.500"/><path d="M2.500 19h19"/></g></symbol>
+    <symbol id="i-game" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10a4 4 0 0 1 4 4v3a3 3 0 0 1-5.400 1.800L14.500 15h-5l-1.100 1.800A3 3 0 0 1 3 14v-3a4 4 0 0 1 4-4z"/><path d="M8 10v3M6.500 11.500h3M15.500 11h.01M17.500 13h.01"/></g></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.500" y="6" width="13" height="12" rx="2.500"/><path d="M15.500 10.500l6-3.500v10l-6-3.500"/></g></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
+    <symbol id="i-sms" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 5h16v11H9l-5 4z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.500-4 4.500-6 8-6s6.500 2 8 6"/></g></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.500-4.500-7.500-10.500A4.300 4.300 0 0 1 12 8a4.300 4.300 0 0 1 7.500 2.500C19.500 16.500 12 21 12 21z"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 12h8M8 15h5"/></g></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.500" cy="8.500" r="1.300"/></g></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/></g></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round" d="M5 12.500l4.500 4.500L19 7.500"/></symbol>
+  </defs>
+</svg>
+
+<nav class="nav" id="nav" aria-label="Головна навігація">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="ТІМ, на початок">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0c2152"/><path d="M14 40c10-16 26-16 36 0" stroke="url(#gg)" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M22 44c6-8 14-8 20 0" stroke="url(#gg)" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="32" cy="48" r="4" fill="#22c7f0"/></svg>
+      <span><b>ТІМ</b><small>оператор телекомунікацій</small></span>
+    </a>
+    <div class="links"><a href="#services">Послуги</a><a href="#tariffs">Тарифи</a><a href="#pick">Підбір швидкості</a><a href="#pay">Оплата</a><a href="#news">Новини</a><a href="#contacts">Контакти</a></div>
+    <a class="phone" href="tel:0971992299">(097) 199-22-99</a>
+    <a class="btn btn-line cab" href="https://cabinet.itim.net/" target="_blank" rel="noopener" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2);color:#fff">Кабінет</a>
+    <button class="btn btn-blue" data-order style="display:none" id="navOrder">Підключити</button>
+    <button class="burger" id="burger" aria-label="Меню" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="fiber" aria-hidden="true"></canvas>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="badge rise"><i>PON</i>Оптика до дверей · з 2001 року</div>
+      <h1 class="rise d1">Інтернет до <span class="grad-text">1&nbsp;Гбіт/с</span> і 200 телеканалів</h1>
+      <p class="sub rise d2">Умань, Христинівка та населені пункти Черкаської області. Безкоштовне підключення і техпідтримка цілодобово.</p>
+      <div class="row rise d3">
+        <button class="btn btn-blue" data-order>Підключити</button>
+        <a class="btn btn-line" href="#tariffs">Дивитись тарифи</a>
+      </div>
+      <div class="chips rise d4">
+        <span class="chip"><svg aria-hidden="true"><use href="#i-check"/></svg>Безлімітний інтернет</span>
+        <span class="chip"><svg aria-hidden="true"><use href="#i-check"/></svg>Підтримка 24/7</span>
+        <span class="chip"><svg aria-hidden="true"><use href="#i-check"/></svg>Особистий кабінет</span>
+      </div>
+    </div>
+    <div class="gauge-card rise d5" aria-label="Швидкість до 1000 Мбіт/с">
+      <div class="gauge">
+        <svg viewBox="0 0 320 200" aria-hidden="true">
+          <path class="trk" d="M30 180 A130 130 0 0 1 290 180"/>
+          <path class="val" id="gVal" d="M30 180 A130 130 0 0 1 290 180" pathLength="440"/>
+        </svg>
+        <div class="read"><b id="gNum">0</b><span>МБІТ/С</span></div>
+      </div>
+      <div class="gauge-foot">
+        <div><b>від 300</b><span>грн/міс</span></div>
+        <div><b>200</b><span>каналів ТБ</span></div>
+        <div><b>0 грн</b><span>підключення</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<section id="services">
+  <div class="wrap">
+    <div class="reveal"><div class="kicker">Послуги</div><h2 class="h2">Усе для зв'язку і <span class="grad-text">безпеки</span></h2>
+    <p class="lead">Від домашнього інтернету до систем охорони та енергетики. Натисніть на послугу, щоб дізнатися більше.</p></div>
+    <div class="svc-grid" id="svcGrid"></div>
+  </div>
+</section>
+
+<section class="tar" id="tariffs">
+  <div class="wrap">
+    <div class="reveal"><div class="kicker">Тарифи</div><h2 class="h2">Обирайте свій тариф</h2>
+    <p class="lead">Тарифи для м. Умань. Для Христинівського району ціни уточнюйте у операторів.</p></div>
+    <div class="tabs" role="tablist" id="tTabs">
+      <button class="tab" role="tab" aria-selected="true" data-t="home">Інтернет для дому</button>
+      <button class="tab" role="tab" aria-selected="false" data-t="biz">Для бізнесу</button>
+      <button class="tab" role="tab" aria-selected="false" data-t="tv">Телебачення</button>
+    </div>
+    <div class="note" id="tNote">Тарифи діють з 01.05.2026</div>
+    <div class="plans" id="plans"></div>
+    <details class="equip" id="equip"><summary>Обладнання та послуги <i aria-hidden="true">+</i></summary><table class="eq" id="eqTable"></table></details>
+  </div>
+</section>
+
+<section id="pick">
+  <div class="wrap">
+    <div class="reveal"><div class="kicker">Підбір швидкості</div><h2 class="h2">Яка швидкість потрібна <span class="grad-text">саме вам?</span></h2>
+    <p class="lead">Вкажіть, що у вас вдома підключено до інтернету, і ми одразу порадимо тариф.</p></div>
+    <div class="pick">
+      <div class="box reveal">
+        <div class="seg" role="group" aria-label="Тип житла"><button aria-pressed="true" data-home="flat">Квартира</button><button aria-pressed="false" data-home="house">Приватний будинок</button></div>
+        <div id="devs"></div>
+      </div>
+      <div class="box res reveal" aria-live="polite">
+        <div class="kicker">Вам потрібно приблизно</div>
+        <div class="need"><span id="needN">0</span> <small>Мбіт/с</small></div>
+        <div class="bar"><i id="needBar"></i></div>
+        <div class="bar-l"><span>0</span><span>300</span><span>1000 Мбіт/с</span></div>
+        <div class="rec"><div class="nm">Радимо тариф</div><h3 id="recName">Стандарт</h3><p id="recText"></p></div>
+        <p class="why" id="recWhy"></p>
+        <button class="btn btn-blue" data-order>Підключити цей тариф</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="reveal"><div class="kicker">Переваги</div><h2 class="h2">Чому обирають ТІМ</h2></div>
+    <div class="adv reveal">
+      <div><span class="ico" style="background:rgba(255,255,255,.1);color:var(--cyan)"><svg aria-hidden="true"><use href="#i-hand"/></svg></span><b>Доступність, якість, оперативність</b><p>Ми завжди готові до пошуку компромісу та максимально вигідних умов для клієнта.</p></div>
+      <div><span class="ico"><svg aria-hidden="true"><use href="#i-clock"/></svg></span><b>Техпідтримка 24/7</b></div>
+      <div><span class="ico"><svg aria-hidden="true"><use href="#i-sms"/></svg></span><b>SMS-інформування</b></div>
+      <div><span class="ico"><svg aria-hidden="true"><use href="#i-user"/></svg></span><b>Персональний кабінет</b></div>
+      <div><span class="ico"><svg aria-hidden="true"><use href="#i-hand"/></svg></span><b>Індивідуальний підхід</b></div>
+      <div><span class="ico"><svg aria-hidden="true"><use href="#i-bolt"/></svg></span><b>Висока швидкість</b></div>
+      <div><span class="ico"><svg aria-hidden="true"><use href="#i-gear"/></svg></span><b>Професійне обладнання</b></div>
+      <div><span class="ico"><svg aria-hidden="true"><use href="#i-tag"/></svg></span><b>Лояльні ціни</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="about">
+  <div class="wrap about">
+    <div class="reveal">
+      <div class="kicker">Про компанію</div>
+      <h2 class="h2">На зв'язку з Уманню <span class="grad-text">з 2001 року</span></h2>
+      <p class="lead">Надаємо інтернет, кабельне, цифрове та IP-телебачення. Створюємо локальні й корпоративні мережі, будуємо системи відеоспостереження, надаємо доступ до магістральних телекомунікаційних каналів.</p>
+      <p class="lead">Наші клієнти: потужні підприємства регіону, приватні особи, державні та комунальні підприємства, лідери ринку послуг.</p>
+    </div>
+    <div class="nums reveal">
+      <div><b data-count="2001">2001</b><span>рік заснування</span></div>
+      <div><b><span data-count="1000">1000</span></b><span>Мбіт/с максимальна швидкість</span></div>
+      <div><b data-count="200">200</b><span>телеканалів</span></div>
+      <div><b>24/7</b><span>техпідтримка</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="news">
+  <div class="wrap">
+    <div class="reveal" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px">
+      <div><div class="kicker">Новини</div><h2 class="h2">Важливе для абонентів</h2></div>
+      <a class="btn btn-line" href="https://itim.net/news" target="_blank" rel="noopener">Усі новини</a>
+    </div>
+    <div class="news">
+      <a class="nw reveal" href="https://itim.net/news/182" target="_blank" rel="noopener"><time datetime="2026-08-17">17.08.2026</time><h3>Шановні абоненти!</h3><p>З 01.09.2026 змінюється надавач послуги Телебачення. Пакети «Все включено» та «Все включено приватний» припиняють дію 31.08.2026. Оплата ТБ та інтернету тепер за окремим логіном і тарифом для кожної послуги.</p></a>
+      <a class="nw reveal" href="https://itim.net/news/181" target="_blank" rel="noopener"><time datetime="2026-04-15">15.04.2026</time><h3>Оновлення тарифних планів з 1 травня 2026 року</h3><p>З 1 травня 2026 року змінюється абонентська плата за послугу Інтернет.</p></a>
+      <a class="nw reveal" href="https://itim.net/news/180" target="_blank" rel="noopener"><time datetime="2026-02-23">23.02.2026</time><h3>Шановний клієнте!</h3><p>З 1 березня 2026 року припиняють дію тарифи на Інтернет «Преміум 300», «Преміум 500» та «Преміум 500 СПОРТ».</p></a>
+    </div>
+  </div>
+</section>
+
+<section id="pay" style="padding-top:20px">
+  <div class="wrap">
+    <div class="reveal"><div class="kicker">Оплата</div><h2 class="h2">Оплатити за хвилину</h2>
+    <p class="lead">Онлайн-сервісами, у застосунку ТІМ або готівкою в найближчому терміналі самообслуговування.</p></div>
+    <div class="pay">
+      <a class="reveal" href="https://itim.net/payment" target="_blank" rel="noopener"><em>0% комісії</em><div><b>EasyPay</b><br><span>Онлайн-оплата</span></div></a>
+      <a class="reveal" href="https://itim.net/payment" target="_blank" rel="noopener"><em>0% комісії</em><div><b>Portmone</b><br><span>Онлайн-оплата</span></div></a>
+      <a class="reveal" href="https://itim.net/payment" target="_blank" rel="noopener"><div><b>Приват24</b><br><span>Онлайн-оплата</span></div></a>
+      <a class="reveal" href="https://itim.net/payment" target="_blank" rel="noopener"><div><b>Monobank</b><br><span>Сервіс оплати</span></div></a>
+      <a class="reveal" href="https://itim.net/app" target="_blank" rel="noopener"><div><b>Застосунок ТІМ</b><br><span>Оплата, баланс, кредит, підтримка</span></div></a>
+    </div>
+  </div>
+</section>
+
+<section id="contacts" style="padding-top:20px">
+  <div class="wrap">
+    <div class="reveal"><div class="kicker">Контакти</div><h2 class="h2">Ми завжди на зв'язку</h2></div>
+    <div class="cont">
+      <div class="box reveal">
+        <div class="mono">Багатоканальні номери</div>
+        <a class="tel" href="tel:0971992299">(097) 199-22-99</a>
+        <a class="tel" href="tel:0931992299">(093) 199-22-99</a>
+        <a class="tel" href="tel:0991992299">(099) 199-22-99</a>
+        <div class="msg">
+          <a class="vb" href="viber://pa?chatURI=tim_support_bot">Viber</a>
+          <a class="tg" href="https://t.me/tim_support_bot" target="_blank" rel="noopener">Telegram</a>
+          <a class="fb" href="https://m.me/itim.net" target="_blank" rel="noopener">Facebook</a>
+        </div>
+      </div>
+      <div class="box reveal">
+        <div class="mono">Абонвідділи</div>
+        <h3>Приходьте до нас</h3>
+        <p>м. Умань, вул. Європейська, 76</p>
+        <p>м. Христинівка, вул. Стадіонна, 1</p>
+        <p>Графік роботи: з 9:00 до 18:00</p>
+        <div class="row"><a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&query=%D0%A3%D0%BC%D0%B0%D0%BD%D1%8C%2C%20%D0%84%D0%B2%D1%80%D0%BE%D0%BF%D0%B5%D0%B9%D1%81%D1%8C%D0%BA%D0%B0%2C%2076" target="_blank" rel="noopener">Маршрут</a></div>
+      </div>
+      <div class="box reveal">
+        <div class="mono">Онлайн</div>
+        <h3>Пишіть і керуйте</h3>
+        <p>E-mail: <a href="mailto:support@itim.net">support@itim.net</a></p>
+        <p>ТОВ «ТРК «ТІМ»</p>
+        <div class="row">
+          <a class="btn btn-blue" href="https://cabinet.itim.net/" target="_blank" rel="noopener">Особистий кабінет</a>
+          <a class="btn btn-line" href="https://www.instagram.com/itim_net/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <div class="in-box reveal">
+      <div class="kicker">Безкоштовне підключення</div>
+      <h2>Швидкий інтернет <span class="grad-text">вже поруч</span></h2>
+      <p>Залиште заявку зручним способом, і ми підключимо вас якнайшвидше.</p>
+      <div class="row"><button class="btn btn-blue" data-order>Підключити</button><a class="btn btn-line" href="tel:0971992299" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2);color:#fff">(097) 199-22-99</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#top"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0c2152"/><path d="M14 40c10-16 26-16 36 0" stroke="url(#gg)" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M22 44c6-8 14-8 20 0" stroke="url(#gg)" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="32" cy="48" r="4" fill="#22c7f0"/></svg><span><b>ТІМ</b><small>оператор телекомунікацій</small></span></a>
+    <span>ТОВ «ТРК «ТІМ» · Умань, Христинівка</span>
+    <span><a href="https://itim.net/documents" target="_blank" rel="noopener">Документи</a> · <a href="https://itim.net/settings" target="_blank" rel="noopener">Налаштування</a> · <a href="https://cabinet.itim.net/" target="_blank" rel="noopener">Кабінет</a></span>
+  </div>
+</footer>
+
+<dialog class="mnav" id="mnav" aria-label="Меню">
+  <button class="x" data-close aria-label="Закрити" style="color:#fff;background:rgba(255,255,255,.1)">✕</button>
+  <a href="#services" data-close>Послуги</a><a href="#tariffs" data-close>Тарифи</a><a href="#pick" data-close>Підбір швидкості</a><a href="#pay" data-close>Оплата</a><a href="#news" data-close>Новини</a><a href="#contacts" data-close>Контакти</a>
+  <a class="btn btn-blue" href="https://cabinet.itim.net/" target="_blank" rel="noopener">Особистий кабінет</a>
+</dialog>
+
+<dialog class="dlg" id="svcDlg" aria-labelledby="svcName">
+  <div class="hd"><button class="x" data-close aria-label="Закрити">✕</button><span class="ico" id="svcIco"></span><h3 id="svcName"></h3></div>
+  <div class="bd"><div id="svcBody"></div><div class="acts"><button class="btn btn-blue" data-order>Замовити послугу</button></div></div>
+</dialog>
+
+<dialog class="dlg order" id="order" aria-labelledby="orderH">
+  <div class="hd"><button class="x" data-close aria-label="Закрити">✕</button><span class="ico"><svg aria-hidden="true" width="28" height="28"><use href="#i-net"/></svg></span><h3 id="orderH">Заявка на підключення</h3><p style="margin:8px 0 0;color:rgba(255,255,255,.75)" id="orderSub">Зателефонуйте або напишіть у месенджер, і ми все налаштуємо.</p></div>
+  <div class="bd">
+    <a class="num" href="tel:0971992299">(097) 199-22-99<small>Київстар · багатоканальний</small></a>
+    <a class="num" href="tel:0931992299">(093) 199-22-99<small>lifecell · багатоканальний</small></a>
+    <a class="num" href="tel:0991992299">(099) 199-22-99<small>Vodafone · багатоканальний</small></a>
+    <div class="msg">
+      <a class="vb" href="viber://pa?chatURI=tim_support_bot">Viber</a>
+      <a class="tg" href="https://t.me/tim_support_bot" target="_blank" rel="noopener">Telegram</a>
+      <a class="fb" href="https://m.me/itim.net" target="_blank" rel="noopener">Facebook</a>
+    </div>
+    <p class="hint">На комп'ютері дзвінок може не відкритися, тоді наберіть номер з телефона. Абонвідділ працює з 9:00 до 18:00, техпідтримка цілодобово.</p>
+  </div>
+</dialog>
+
+<script>
+(function(){
+'use strict';
+var $=function(s){return document.querySelector(s)};
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+document.addEventListener('visibilitychange',function(){document.body.classList.toggle('paused',document.hidden)});
+
+/* nav */
+var nav=$('#nav'),navOrder=$('#navOrder');
+function onNav(){var s=scrollY>40;nav.classList.toggle('solid',s);navOrder.style.display=s&&innerWidth>=480?'inline-flex':'none'}
+addEventListener('scroll',onNav,{passive:true});addEventListener('resize',onNav);onNav();
+$('#burger').addEventListener('click',function(){$('#mnav').showModal()});
+
+/* fiber light canvas */
+(function(){
+  var cv=$('#fiber'),ctx=cv.getContext('2d'),W,H,dpr=Math.min(1.5,devicePixelRatio||1),lines=[],pulses=[],run=false,raf=0,last=0,mx=.5,my=.5,tx=.5,ty=.5;
+  function build(){
+    var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    lines=[];var n=W<700?9:16;
+    for(var i=0;i<n;i++){var y0=H*(.15+Math.random()*.85),y1=H*(Math.random()*.9),bend=(Math.random()-.5)*H*.6;
+      lines.push({p:[[-40,y0],[W*.33,y0+bend],[W*.66,y1-bend*.6],[W+40,y1]],w:.6+Math.random()*1.2,a:.08+Math.random()*.14,depth:.3+Math.random()*.7});}
+  }
+  function pt(L,t,ox,oy){var p=L.p,u=1-t;var x=u*u*u*p[0][0]+3*u*u*t*p[1][0]+3*u*t*t*p[2][0]+t*t*t*p[3][0];var y=u*u*u*p[0][1]+3*u*u*t*p[1][1]+3*u*t*t*p[2][1]+t*t*t*p[3][1];return [x+ox*L.depth,y+oy*L.depth]}
+  function frame(t){
+    var dt=Math.min(50,t-(last||t))/16.667;last=t;
+    mx+=(tx-mx)*.05*dt;my+=(ty-my)*.05*dt;var ox=(mx-.5)*40,oy=(my-.5)*30;
+    ctx.clearRect(0,0,W,H);
+    lines.forEach(function(L){ctx.beginPath();for(var k=0;k<=40;k++){var q=pt(L,k/40,ox,oy);k?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1])}ctx.strokeStyle='rgba(120,180,255,'+L.a+')';ctx.lineWidth=L.w;ctx.stroke()});
+    if(pulses.length<lines.length*1.4&&Math.random()<.12*dt)pulses.push({L:lines[Math.random()*lines.length|0],t:0,v:.0025+Math.random()*.005,c:Math.random()<.5?'34,199,240':'90,140,255'});
+    ctx.globalCompositeOperation='lighter';
+    for(var i=pulses.length-1;i>=0;i--){var P=pulses[i];P.t+=P.v*dt;if(P.t>1){pulses.splice(i,1);continue}
+      for(var j=0;j<14;j++){var tt=P.t-j*.006;if(tt<0)break;var q=pt(P.L,tt,ox,oy),al=(1-j/14);
+        ctx.fillStyle='rgba('+P.c+','+(al*.9)+')';ctx.beginPath();ctx.arc(q[0],q[1],(2.2-j*.12)*P.L.w,0,6.283);ctx.fill()}
+      var h=pt(P.L,P.t,ox,oy),g=ctx.createRadialGradient(h[0],h[1],0,h[0],h[1],22);g.addColorStop(0,'rgba('+P.c+',.45)');g.addColorStop(1,'rgba('+P.c+',0)');ctx.fillStyle=g;ctx.fillRect(h[0]-22,h[1]-22,44,44)}
+    ctx.globalCompositeOperation='source-over';
+    if(run)raf=requestAnimationFrame(frame);
+  }
+  function start(){if(run||reduce)return;run=true;last=0;raf=requestAnimationFrame(frame)}
+  function stop(){run=false;cancelAnimationFrame(raf)}
+  build();
+  if(reduce){for(var i=0;i<10;i++)pulses.push({L:lines[i%lines.length],t:Math.random(),v:0,c:'34,199,240'});frame(0)}
+  else start();
+  addEventListener('resize',function(){build()});
+  $('#top').addEventListener('pointermove',function(e){tx=e.clientX/innerWidth;ty=e.clientY/innerHeight});
+  if('IntersectionObserver' in window)new IntersectionObserver(function(e){e[0].isIntersecting?start():stop()}).observe(cv);
+  document.addEventListener('visibilitychange',function(){document.hidden?stop():start()});
+})();
+
+/* gauge */
+(function(){
+  var v=$('#gVal'),n=$('#gNum'),T=1000;
+  if(reduce){v.style.strokeDashoffset=0;n.textContent=T;return}
+  var t0=null;setTimeout(function(){requestAnimationFrame(function step(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/1800),e=1-Math.pow(1-k,3);v.style.strokeDashoffset=440*(1-e);n.textContent=Math.round(T*e);if(k<1)requestAnimationFrame(step)})},500);
+})();
+
+/* services */
+var SVC=[
+ {i:'net',n:'Інтернет',s:'Підключення до всесвітньої мережі. Вигідні тарифи, швидкість та надійність.',b:'<p>Оптичне PON підключення на швидкості до 1 Гбіт/с, безлімітний трафік, безкоштовне підключення і легка зміна тарифного плану.</p><ul><li>Тарифи для дому та для бізнесу</li><li>Реальна IP-адреса для керування пристроями вдома й в офісі</li><li>Налаштування роутера: базові й розширені налаштування, оновлення прошивки</li></ul>',go:'#tariffs'},
+ {i:'tv',n:'Телебачення',s:'Цифрове, аналогове та IP-телебачення. Понад 150 українських і зарубіжних каналів.',b:'<p>Популярні шоу, фільми, новини у високій якості.</p><ul><li>70 каналів аналогового ТБ</li><li>200 каналів цифрового ТБ</li><li>Понад 30 Full HD телеканалів</li><li>Тариф «Базовий» від 120 грн/міс</li></ul>'},
+ {i:'iptv',n:'IP-телебачення',s:'200 телеканалів на телевізорі, смартфоні, планшеті й комп\'ютері.',b:'<p>Розважальні, музичні, спортивні, інформаційні, освітні та дитячі телеканали в бездоганній якості. IP-телебачення надається через фіксований інтернет від «ТІМ».</p><ul><li>200 телеканалів, 17 Full HD преміум</li><li>Телепрограма</li><li>Перегляд на будь-яких пристроях</li><li>Тариф «ТІМ IPTV» 120 грн/міс</li></ul>'},
+ {i:'shield',n:'Системи охорони та безпеки',s:'Бездротові, дротові та комбіновані системи охорони і контролю доступу. Ajax.',b:'<p>Монтаж та налаштування бездротової системи безпеки Ajax від української компанії Ajax Systems для комплексного захисту оселі та офісу.</p><ul><li>Датчики руху, розбиття скла, периметру, відкриття дверей</li><li>Датчики протікання, диму, температури</li><li>Керування зі смартфону з будь-якої точки світу</li><li>Підключення на пульт охоронних компаній, зокрема державної служби охорони</li><li>Швидке встановлення, що не шкодить ремонту, гарантія та сервіс</li></ul>'},
+ {i:'cam',n:'Відеоспостереження та Безпечний ДІМ',s:'Проєкти й монтаж відеонагляду будь-якої складності. Камери та домофони на під\'їздах.',b:'<p><b>Відеоспостереження:</b> проєктування та будівництво професійних систем відеонагляду, готові комплекти для осель та офісів. Гарантія на всі роботи, техпідтримка і цілодобовий моніторинг.</p><p><b>Безпечний ДІМ:</b> камери при вході в під\'їзди, у ліфтах, на паркінгах і майданчиках. Мешканці дивляться відео в реальному часі, архів зберігається в хмарі. Домофони з відкриттям дверей і шлагбаумів через мобільний додаток «ТІМ».</p>'},
+ {i:'wifi',n:'Wi-Fi мережі та обладнання',s:'Проєктування й монтаж Wi-Fi для квартири та офісу. Продаж і налаштування роутерів.',b:'<p>Створюємо та обслуговуємо бездротові мережі для будинків, квартир, офісів, підприємств, медичних закладів і готелів.</p><ul><li>Мережі від 5 до понад 500 клієнтів</li><li>Стабільна швидкість без «мертвих» зон</li><li>Захист від злому, просте розширення</li><li>Гарантія та сервісне обслуговування</li></ul>'},
+ {i:'bolt',n:'Енергетика та спецтехніка',s:'Проєктування в енергетиці, монтаж ТП і ліній, генератори, оренда спецтехніки.',b:'<ul><li>Проєктування в сфері енергетики, геодезично-вишукувальні роботи</li><li>Монтаж ТП 10/0,4 кВ, кабельних та повітряних ліній</li><li>Встановлення генераторів, допомога у введенні в експлуатацію</li><li>Оренда спецтехніки: автовишки, екскаватора, маніпулятора</li><li>Алмазне та горизонтально направлене буріння</li></ul>'}
+];
+$('#svcGrid').innerHTML=SVC.map(function(s,i){return '<button class="svc reveal" data-svc="'+i+'"><span class="ico"><svg aria-hidden="true"><use href="#i-'+s.i+'"/></svg></span><h3>'+s.n+'</h3><p>'+s.s+'</p><span class="more">Детальніше <i aria-hidden="true">→</i></span></button>'}).join('');
+function openSvc(i){var s=SVC[i];$('#svcIco').innerHTML='<svg aria-hidden="true" width="28" height="28"><use href="#i-'+s.i+'"/></svg>';$('#svcName').textContent=s.n;$('#svcBody').innerHTML=s.b+(s.go?'<p><a href="'+s.go+'" data-close style="color:var(--blue);font-weight:700">Дивитись тарифи →</a></p>':'');$('#svcDlg').showModal()}
+
+/* tariffs */
+var T={
+ home:{c:'c3',note:'Тарифи діють з 01.05.2026 · м. Умань · фізичні особи',p:[
+  {n:'Стандарт',sp:'300',f:['Безлімітний інтернет','PON підключення'],pr:300},
+  {n:'Стандарт Гігабіт',sp:'1000',f:['Безлімітний інтернет','PON підключення','200 телеканалів'],pr:99,old:450,hot:1,flag:'Акція',promo:'Спеціальна ціна для нових абонентів перші 6 місяців.'},
+  {n:'Стандарт Приватний',sp:'300',f:['Для приватного будинку','Безлімітний інтернет','PON підключення'],pr:350}],
+  eq:[['IPTV-медіапрогравач iNeXT TV 5','1300 грн'],['Реальна IP-адреса','60 грн'],['Роутер TP-Link TL-WR850N з налаштуванням','700 грн'],['Роутер Netis WF2419E з налаштуванням','550 грн'],['Роутер Mikrotik hAP ac lite з налаштуванням','2328 грн'],['Роутер Mikrotik hAP ax2 з налаштуванням','4380 грн']]},
+ biz:{c:'c4',note:'Тарифи діють з 01.05.2026 · м. Умань · юридичні особи',p:[
+  {n:'Офіс Стандарт',sp:'300',f:['Безлімітний інтернет','PON підключення'],pr:800},
+  {n:'Офіс 500',sp:'500',f:['Безлімітний інтернет','PON підключення','Реальна IP-адреса'],pr:1400},
+  {n:'Офіс 1000',sp:'1000',f:['PON, реальна IP-адреса','Гарантована швидкість','Персональний менеджер','VIP підтримка'],pr:2000,hot:1,flag:'Максимум'},
+  {n:'Бізнес 100',sp:'100',f:['Гарантована швидкість','Реальна IP-адреса','Персональний менеджер','VIP підтримка'],pr:1200}],
+  eq:[['IPTV-медіапрогравач iNeXT TV 5','1300 грн'],['Реальна IP-адреса','100 грн'],['Роутер TP-Link TL-WR850N з налаштуванням','700 грн'],['Роутер Netis WF2419E з налаштуванням','550 грн'],['Роутер Mikrotik hAP ac lite з налаштуванням','2328 грн'],['Роутер Mikrotik hAP ax2 з налаштуванням','4380 грн']]},
+ tv:{c:'c3',note:'ТБ з 01.05.2026 · IPTV з 01.11.2021 · м. Умань',p:[
+  {n:'Базовий',tv:'Телебачення',f:['70 каналів аналогового ТБ','200 каналів цифрового ТБ','Понад 30 Full HD каналів'],pr:120},
+  {n:'ТІМ IPTV',tv:'IP-телебачення',f:['200 телеканалів','17 Full HD преміум каналів','Телепрограма','Перегляд на будь-яких пристроях'],pr:120,hot:1,flag:'Будь-де'}],
+  eq:[['CAM-модуль абонентського декодера','550 грн'],['IPTV-медіапрогравач iNeXT TV 5','1300 грн']]}
+};
+var io=('IntersectionObserver' in window)&&!reduce?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'}):null;
+function watch(root){root.querySelectorAll('.reveal,.plan').forEach(function(el,i){if(el.classList.contains('in'))return;if(io){if(el.classList.contains('plan')){el.style.transitionDelay=(i*80)+'ms';el.addEventListener('transitionend',function f(){el.style.transitionDelay='';el.removeEventListener('transitionend',f)})}io.observe(el)}else el.classList.add('in')})}
+function renderT(k){
+  var d=T[k];$('#tNote').textContent=d.note;var pl=$('#plans');pl.className='plans '+d.c;
+  pl.innerHTML=d.p.map(function(p){return '<article class="plan'+(p.hot?' hot':'')+'">'+(p.flag?'<span class="flag">'+p.flag+'</span>':'')+'<div class="nm">'+p.n+'</div>'+(p.sp?'<div class="sp">'+p.sp+' <small>Мбіт/с</small></div>':'<div class="sp" style="font-size:1.7rem">'+p.tv+'</div>')+'<ul>'+p.f.map(function(f){return '<li>'+f+'</li>'}).join('')+'</ul><div class="price">'+(p.old?'<s>'+p.old+'</s>':'')+'<b>'+p.pr+'</b><span>грн/міс</span></div>'+(p.promo?'<p class="promo">* '+p.promo+'</p>':'')+'<button class="btn '+(p.hot?'btn-blue':'btn-line')+'" data-order="'+esc(p.n)+'">Підключити</button></article>'}).join('');
+  $('#eqTable').innerHTML=d.eq.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'}).join('');
+  watch(pl);
+}
+$('#tTabs').addEventListener('click',function(e){var b=e.target.closest('.tab');if(!b)return;document.querySelectorAll('#tTabs .tab').forEach(function(t){t.setAttribute('aria-selected',t===b)});renderT(b.dataset.t)});
+renderT('home');
+
+/* speed picker */
+var DEV=[
+ {i:'phone',n:'Смартфони та планшети',s:'відео, соцмережі',mb:15,v:3},
+ {i:'laptop',n:'Ноутбуки та комп\'ютери',s:'робота, навчання',mb:30,v:1},
+ {i:'tv',n:'Smart TV, 4K',s:'фільми, IPTV',mb:35,v:1},
+ {i:'game',n:'Ігрові консолі та ПК',s:'онлайн-ігри, завантаження',mb:80,v:0},
+ {i:'video',n:'Відеодзвінки та стріми',s:'Zoom, трансляції',mb:25,v:0},
+ {i:'cam',n:'Камери та розумний дім',s:'відеоспостереження',mb:8,v:0}
+];
+var homeType='flat';
+$('#devs').innerHTML=DEV.map(function(d,i){return '<div class="dev"><span class="ico"><svg aria-hidden="true"><use href="#i-'+d.i+'"/></svg></span><div><b>'+d.n+'</b><span>'+d.s+'</span></div><div class="step"><button data-d="'+i+'" data-v="-1" aria-label="Менше: '+d.n+'">−</button><output id="dv'+i+'">'+d.v+'</output><button data-d="'+i+'" data-v="1" aria-label="Більше: '+d.n+'">+</button></div></div>'}).join('');
+function calc(){
+  var need=0,cnt=0;DEV.forEach(function(d){need+=d.mb*d.v;cnt+=d.v});
+  need=Math.round(need*1.3/10)*10;if(cnt&&need<50)need=50;
+  $('#needN').textContent=need;$('#needBar').style.width=Math.min(100,need/10)+'%';
+  var name,text,why;
+  if(need>220){name='Стандарт Гігабіт';text='1000 Мбіт/с, 200 телеканалів. Акція: 99 грн/міс перші 6 місяців, далі 450 грн.';why='У вас багато одночасних пристроїв, тож запас швидкості не завадить: ігри, 4K і дзвінки не заважатимуть одне одному.'}
+  else if(homeType==='house'){name='Стандарт Приватний';text='300 Мбіт/с для приватного будинку, безліміт, PON підключення. 350 грн/міс.';why='300 Мбіт/с з запасом вистачить на всю родину. Захочете більше, тариф легко змінити.'}
+  else{name='Стандарт';text='300 Мбіт/с, безлімітний інтернет, PON підключення. 300 грн/міс.';why='300 Мбіт/с з запасом вистачить на всю родину. Захочете більше, тариф легко змінити.'}
+  $('#recName').textContent=name;$('#recText').textContent=text;$('#recWhy').textContent=why;
+  document.querySelector('.res [data-order]').setAttribute('data-order',name);
+}
+$('#devs').addEventListener('click',function(e){var b=e.target.closest('[data-d]');if(!b)return;var d=DEV[+b.dataset.d];d.v=Math.max(0,Math.min(12,d.v+(+b.dataset.v)));$('#dv'+b.dataset.d).textContent=d.v;calc()});
+document.querySelector('.seg').addEventListener('click',function(e){var b=e.target.closest('[data-home]');if(!b)return;homeType=b.dataset.home;document.querySelectorAll('.seg button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});calc()});
+calc();
+
+/* counters */
+(function(){
+  var els=document.querySelectorAll('[data-count]');if(reduce||!('IntersectionObserver' in window))return;
+  var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;ob.unobserve(e.target);var el=e.target,to=+el.dataset.count,from=to>1900?1990:0,t0=null;
+    requestAnimationFrame(function st(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/1400),v=Math.round(from+(to-from)*(1-Math.pow(1-k,3)));el.textContent=v;if(k<1)requestAnimationFrame(st)})})},{threshold:.6});
+  els.forEach(function(el){ob.observe(el)});
+})();
+
+/* dialogs and clicks */
+document.addEventListener('click',function(e){
+  var o=e.target.closest('[data-order]');
+  if(o){e.preventDefault();document.querySelectorAll('dialog[open]').forEach(function(d){d.close()});var nm=o.getAttribute('data-order');$('#orderSub').textContent=nm?'Тариф «'+nm+'». Зателефонуйте або напишіть у месенджер, і ми все налаштуємо.':'Зателефонуйте або напишіть у месенджер, і ми все налаштуємо.';$('#order').showModal();return}
+  var s=e.target.closest('[data-svc]');if(s){openSvc(+s.dataset.svc);return}
+  var c=e.target.closest('[data-close]');if(c){var dl=c.closest('dialog');if(dl)dl.close();return}
+  if(e.target.tagName==='DIALOG')e.target.close();
+});
+
+watch(document);
+})();
+</script>
+</body>
+</html>
