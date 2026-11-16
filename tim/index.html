@@ -19,7 +19,23 @@
   --grad:linear-gradient(115deg,#1d5cff,#22c7f0);
   --ease:cubic-bezier(.2,.7,.2,1); --ease-out:cubic-bezier(.16,1,.3,1);
   --disp:"Geologica",system-ui,sans-serif; --body:"Onest",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+  --tar-end:#e8effb; --ok-bg:#e2f7ee; --ok:#0a8f5a; --shadow:rgba(11,26,56,.25);
+  color-scheme:light;
 }
+html[data-theme=dark]{
+  --canvas:#121b30; --card:#18233d; --line:#26344f; --line2:#34466b;
+  --ink:#e4ebf7; --muted:#a3b3d0; --blue:#4d82ff;
+  --tar-end:#0f182b; --ok-bg:rgba(34,197,128,.15); --ok:#5fe0a5; --shadow:rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+html.theming *,html.theming *::before,html.theming *::after{transition:background-color .45s var(--ease),border-color .45s var(--ease),color .45s var(--ease)!important}
+.theme{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.08);flex:none;transition:background .3s var(--ease)}
+.theme:hover{background:rgba(255,255,255,.16)}
+.theme svg{width:21px;height:21px;transition:transform .6s var(--ease-out)}
+.theme:active svg{transform:rotate(-30deg) scale(.9)}
+.theme .sun{display:none}
+html[data-theme=dark] .theme .sun{display:block}
+html[data-theme=dark] .theme .moon{display:none}
 *{box-sizing:border-box}
 html{overflow-x:hidden;overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:90px}
 body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:var(--ink);font:400 16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
@@ -58,11 +74,11 @@ section{padding:96px 0}
 .logo small{display:block;font-size:.68rem;font-weight:500;line-height:1.25;color:var(--muted-d);letter-spacing:.04em;padding-left:12px;border-left:1px solid rgba(255,255,255,.18)}
 @media (max-width:380px){.logo small{display:none}}
 .links{display:none;gap:2px}
-.links a{color:rgba(255,255,255,.78);text-decoration:none;font-weight:500;font-size:.93rem;padding:10px 12px;border-radius:10px;transition:color .3s var(--ease),background .3s var(--ease)}
+.links a{white-space:nowrap;color:rgba(255,255,255,.78);text-decoration:none;font-weight:500;font-size:.93rem;padding:10px 12px;border-radius:10px;transition:color .3s var(--ease),background .3s var(--ease)}
 .links a:hover{color:#fff;background:rgba(255,255,255,.08)}
 @media (min-width:1060px){.links{display:flex}}
-.nav .phone{display:none;color:#fff;text-decoration:none;font-family:var(--mono);font-weight:700;font-size:.9rem;padding:0 10px}
-@media (min-width:760px){.nav .phone{display:block}}
+.nav .phone{display:none;white-space:nowrap;color:#fff;text-decoration:none;font-family:var(--mono);font-weight:700;font-size:.9rem;padding:0 10px}
+@media (min-width:760px) and (max-width:1059px),(min-width:1360px){.nav .phone{display:block}}
 .nav .btn{min-height:44px;padding:0 18px;font-size:.92rem;border-radius:12px}
 .nav .cab{display:none}
 @media (min-width:600px){.nav .cab{display:inline-flex}}
@@ -126,7 +142,7 @@ section{padding:96px 0}
 @media (min-width:1040px){.svc-grid{grid-template-columns:repeat(3,1fr)}}
 .svc{position:relative;text-align:left;padding:28px;border-radius:24px;background:var(--card);border:1px solid var(--line);overflow:hidden;transition:transform .5s var(--ease-out),box-shadow .5s var(--ease),border-color .3s var(--ease)}
 .svc::after{content:"";position:absolute;inset:auto -30% -60% auto;width:220px;height:220px;border-radius:50%;background:radial-gradient(closest-side,rgba(34,199,240,.18),transparent);opacity:0;transition:opacity .5s var(--ease)}
-.svc:hover{transform:translateY(-4px);box-shadow:0 24px 50px -24px rgba(11,26,56,.25);border-color:var(--line2)}
+.svc:hover{transform:translateY(-4px);box-shadow:0 24px 50px -24px var(--shadow);border-color:var(--line2)}
 .svc:hover::after{opacity:1}
 .ico{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(29,92,255,.12),rgba(34,199,240,.14));color:var(--blue);margin-bottom:20px}
 .ico svg{width:28px;height:28px}
@@ -137,19 +153,20 @@ section{padding:96px 0}
 .svc:hover .more i{transform:translateX(4px)}
 
 /* tariffs */
-.tar{background:linear-gradient(180deg,var(--canvas),#e8effb)}
+.tar{background:linear-gradient(180deg,var(--canvas),var(--tar-end))}
 .tabs{display:inline-flex;gap:4px;padding:5px;border-radius:16px;background:var(--card);border:1px solid var(--line);margin-top:30px;max-width:100%;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{flex:none;min-height:46px;padding:0 18px;border-radius:12px;font-weight:700;font-size:.94rem;color:var(--muted);transition:background .35s var(--ease),color .35s var(--ease)}
 .tab:hover{color:var(--ink)}
 .tab[aria-selected=true]{background:var(--navy);color:#fff}
+html[data-theme=dark] .tab[aria-selected=true]{background:var(--blue)}
 .note{font-family:var(--mono);font-size:.74rem;color:var(--muted);margin-top:14px;letter-spacing:.04em}
 .plans{display:grid;gap:14px;margin-top:22px}
 @media (min-width:720px){.plans{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:1080px){.plans.c3{grid-template-columns:repeat(3,1fr)}.plans.c4{grid-template-columns:repeat(4,1fr)}}
 .plan{position:relative;display:flex;flex-direction:column;padding:28px;border-radius:26px;background:var(--card);border:1px solid var(--line);opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out),box-shadow .4s var(--ease)}
 .plan.in{opacity:1;transform:none}
-.plan:hover{box-shadow:0 24px 50px -26px rgba(11,26,56,.28)}
+.plan:hover{box-shadow:0 24px 50px -26px var(--shadow)}
 .plan.hot{background:linear-gradient(160deg,var(--navy2),var(--navy));color:#fff;border-color:transparent;box-shadow:0 30px 60px -28px rgba(7,22,52,.7)}
 .plan .flag{position:absolute;top:18px;right:18px;font-family:var(--mono);font-size:.64rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:var(--grad);color:#fff}
 .plan .nm{font-family:var(--mono);font-weight:700;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
@@ -237,7 +254,7 @@ details.equip[open] summary i{transform:rotate(45deg)}
 .news{display:grid;gap:14px;margin-top:36px}
 @media (min-width:900px){.news{grid-template-columns:repeat(3,1fr)}}
 .nw{display:flex;flex-direction:column;padding:26px;border-radius:24px;background:var(--card);border:1px solid var(--line);text-decoration:none;transition:transform .5s var(--ease-out),box-shadow .5s var(--ease)}
-.nw:hover{transform:translateY(-4px);box-shadow:0 24px 50px -26px rgba(11,26,56,.25)}
+.nw:hover{transform:translateY(-4px);box-shadow:0 24px 50px -26px var(--shadow)}
 .nw time{font-family:var(--mono);font-size:.74rem;color:var(--blue);font-weight:700}
 .nw h3{font-size:1.15rem;margin:10px 0 8px}
 .nw p{margin:0;color:var(--muted);font-size:.93rem}
@@ -249,7 +266,7 @@ details.equip[open] summary i{transform:rotate(45deg)}
 .pay a:hover{transform:translateY(-3px);border-color:var(--blue)}
 .pay b{font-family:var(--disp);font-size:1.2rem}
 .pay span{font-size:.84rem;color:var(--muted)}
-.pay em{font-style:normal;font-family:var(--mono);font-size:.7rem;font-weight:700;color:#0a8f5a;background:#e2f7ee;padding:4px 8px;border-radius:999px;align-self:flex-start}
+.pay em{font-style:normal;font-family:var(--mono);font-size:.7rem;font-weight:700;color:var(--ok);background:var(--ok-bg);padding:4px 8px;border-radius:999px;align-self:flex-start}
 
 /* contacts */
 .cont{display:grid;gap:14px;margin-top:36px}
@@ -307,6 +324,7 @@ dialog::backdrop{background:rgba(7,22,52,.6);backdrop-filter:blur(6px)}
 }
 body.paused *,body.paused *::before,body.paused *::after{animation-play-state:paused!important}
 </style>
+<script>try{var t=localStorage.getItem('tim_theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 </head>
 <body>
 <a class="skip" href="#main">До змісту</a>
@@ -343,6 +361,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
     <a class="phone" href="tel:0971992299">(097) 199-22-99</a>
     <a class="btn btn-line cab" href="https://cabinet.itim.net/" target="_blank" rel="noopener" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2);color:#fff">Кабінет</a>
     <button class="btn btn-blue" data-order style="display:none" id="navOrder">Підключити</button>
+    <button class="theme" id="theme" aria-label="Увімкнути темну тему" title="Тема"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.500A8 8 0 0 1 9.500 4a8 8 0 1 0 10.500 10.500z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.200"/><path d="M12 2.500v2.200M12 19.300v2.200M2.500 12h2.200M19.300 12h2.200M5.300 5.300l1.500 1.500M17.200 17.200l1.500 1.500M5.300 18.700l1.500-1.500M17.200 6.800l1.500-1.500"/></svg></button>
     <button class="burger" id="burger" aria-label="Меню" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
 </nav>
@@ -595,6 +614,12 @@ var nav=$('#nav'),navOrder=$('#navOrder');
 function onNav(){var s=scrollY>40;nav.classList.toggle('solid',s);navOrder.style.display=s&&innerWidth>=480?'inline-flex':'none'}
 addEventListener('scroll',onNav,{passive:true});addEventListener('resize',onNav);onNav();
 $('#burger').addEventListener('click',function(){$('#mnav').showModal()});
+(function(){
+  var b=$('#theme'),root=document.documentElement;
+  function label(){var d=root.getAttribute('data-theme')==='dark';b.setAttribute('aria-label',d?'Увімкнути світлу тему':'Увімкнути темну тему');b.title=d?'Світла тема':'Темна тема'}
+  label();
+  b.addEventListener('click',function(){var d=root.getAttribute('data-theme')==='dark'?'light':'dark';if(!reduce){root.classList.add('theming');setTimeout(function(){root.classList.remove('theming')},600)}root.setAttribute('data-theme',d);try{localStorage.setItem('tim_theme',d)}catch(e){}label()});
+})();
 
 /* fiber light canvas */
 (function(){
@@ -638,7 +663,7 @@ $('#burger').addEventListener('click',function(){$('#mnav').showModal()});
     std:{flat:{sp:300,price:'300 грн',priceL:'на місяць',extra:'PON',extraL:'оптика до дверей',name:'Тариф «Стандарт» · квартира',order:'Стандарт',btn:'Підключити Стандарт'},
          house:{sp:300,price:'350 грн',priceL:'на місяць',extra:'PON',extraL:'оптика до будинку',name:'Тариф «Стандарт Приватний» · будинок',order:'Стандарт Приватний',btn:'Підключити Стандарт'}},
     prem:{flat:{sp:1000,price:'99 грн',priceL:'перші 6 міс, далі 450',extra:'200',extraL:'каналів ТБ у подарунок',name:'Тариф «Стандарт Гігабіт» · квартира',order:'Стандарт Гігабіт',btn:'Підключити Преміум'},
-          house:{sp:1000,price:'470 грн',priceL:'на місяць',extra:'PON',extraL:'оптика до будинку',name:'Тариф «Гігабіт Приватний» · будинок',order:'Гігабіт Приватний',btn:'Підключити Преміум'}}};
+          house:{sp:1000,price:'99 грн',priceL:'перші 6 міс, далі 470',extra:'PON',extraL:'оптика до будинку',name:'Тариф «Приват Преміум» · будинок',order:'Приват Преміум',btn:'Підключити Преміум'}}};
   var gk='prem',hk='flat';
   function draw(x){v.style.strokeDashoffset=440*(1-x/1000);n.textContent=Math.round(x)}
   function go(to,delay){
@@ -683,7 +708,7 @@ var T={
   {n:'Стандарт',sp:'300',f:['Безлімітний інтернет','PON підключення'],pr:300},
   {n:'Стандарт Гігабіт',sp:'1000',f:['Безлімітний інтернет','PON підключення','200 телеканалів'],pr:99,old:450,hot:1,flag:'Акція',promo:'Спеціальна ціна для нових абонентів перші 6 місяців.'},
   {n:'Стандарт Приватний',sp:'300',f:['Для приватного будинку','Безлімітний інтернет','PON підключення'],pr:350},
-  {n:'Гігабіт Приватний',sp:'1000',f:['Для приватного будинку','Безлімітний інтернет','PON підключення'],pr:470}],
+  {n:'Приват Преміум',sp:'1000',f:['Для приватного будинку','Безлімітний інтернет','PON підключення'],pr:99,old:470,flag:'Акція',promo:'Спеціальна ціна для нових абонентів перші 6 місяців.'}],
   eq:[['IPTV-медіапрогравач iNeXT TV 5','1300 грн'],['Реальна IP-адреса','60 грн'],['Роутер TP-Link TL-WR850N з налаштуванням','700 грн'],['Роутер Netis WF2419E з налаштуванням','550 грн'],['Роутер Mikrotik hAP ac lite з налаштуванням','2328 грн'],['Роутер Mikrotik hAP ax2 з налаштуванням','4380 грн']]},
  biz:{c:'c4',note:'Тарифи діють з 01.05.2026 · м. Умань · юридичні особи',p:[
   {n:'Офіс Стандарт',sp:'300',f:['Безлімітний інтернет','PON підключення'],pr:800},
@@ -723,7 +748,7 @@ function calc(){
   need=Math.round(need*1.3/10)*10;if(cnt&&need<50)need=50;
   $('#needN').textContent=need;$('#needBar').style.width=Math.min(100,need/10)+'%';
   var name,text,why;
-  if(need>220&&homeType==='house'){name='Гігабіт Приватний';text='1000 Мбіт/с для приватного будинку, безліміт, PON підключення. 470 грн/міс.';why='У вас багато одночасних пристроїв, тож запас швидкості не завадить: ігри, 4K і дзвінки не заважатимуть одне одному.'}
+  if(need>220&&homeType==='house'){name='Приват Преміум';text='1000 Мбіт/с для приватного будинку, безліміт, PON підключення. Акція: 99 грн/міс перші 6 місяців, далі 470 грн.';why='У вас багато одночасних пристроїв, тож запас швидкості не завадить: ігри, 4K і дзвінки не заважатимуть одне одному.'}
   else if(need>220){name='Стандарт Гігабіт';text='1000 Мбіт/с, 200 телеканалів. Акція: 99 грн/міс перші 6 місяців, далі 450 грн.';why='У вас багато одночасних пристроїв, тож запас швидкості не завадить: ігри, 4K і дзвінки не заважатимуть одне одному.'}
   else if(homeType==='house'){name='Стандарт Приватний';text='300 Мбіт/с для приватного будинку, безліміт, PON підключення. 350 грн/міс.';why='300 Мбіт/с з запасом вистачить на всю родину. Захочете більше, тариф легко змінити.'}
   else{name='Стандарт';text='300 Мбіт/с, безлімітний інтернет, PON підключення. 300 грн/міс.';why='300 Мбіт/с з запасом вистачить на всю родину. Захочете більше, тариф легко змінити.'}
