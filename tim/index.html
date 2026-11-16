@@ -343,7 +343,8 @@ dialog::backdrop{background:rgba(7,22,52,.6);backdrop-filter:blur(6px)}
 }
 body.paused *,body.paused *::before,body.paused *::after{animation-play-state:paused!important}
 </style>
-<script>try{var t=localStorage.getItem('tim_theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script>try{if('scrollRestoration' in history)history.scrollRestoration='manual';if(location.hash)history.replaceState(null,'',location.pathname+location.search)}catch(e){}
+try{var t=localStorage.getItem('tim_theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 </head>
 <body>
 <a class="skip" href="#main">До змісту</a>
@@ -806,6 +807,10 @@ document.addEventListener('click',function(e){
   var c=e.target.closest('[data-close]');if(c){var dl=c.closest('dialog');if(dl)dl.close();return}
   if(e.target.tagName==='DIALOG')e.target.close();
 });
+
+/* always open at the top; in-page links scroll without changing the address */
+scrollTo(0,0);addEventListener('load',function(){scrollTo(0,0)});addEventListener('pageshow',function(e){if(e.persisted)scrollTo(0,0)});
+document.addEventListener('click',function(e){var a=e.target.closest('a[href^="#"]');if(!a)return;var id=a.getAttribute('href').slice(1),el=id?document.getElementById(id):null;e.preventDefault();var dl=a.closest('dialog');if(dl)dl.close();if(id==='top'||!el){scrollTo({top:0,behavior:reduce?'auto':'smooth'});return}var y=el.getBoundingClientRect().top+scrollY-80;scrollTo({top:y,behavior:reduce?'auto':'smooth'})});
 
 /* floating contact */
 (function(){
