@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ben Chef. М'ясо з вогню, бургери, вино. Умань</title>
+<meta name="description" content="Ben Chef в Умані: стейки з печі Josper, бургери, риба на вогні та вино. Повне меню з цінами, страва дня, бронювання столу. Садова, 20. Щодня 11:00-22:30.">
+<meta name="theme-color" content="#15110f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23ff5f6d'/%3E%3Cstop offset='1' stop-color='%23ffa24c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%2315110f'/%3E%3Cpath d='M32 9c7 9 15 15 15 26a15 15 0 0 1-30 0c0-5 2-9 6-12 1 5 3 8 6 8 0-9 0-15 3-22z' fill='url(%23g)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn-media.choiceqr.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Geologica:wght@600;700;800&family=Onest:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canvas:#15110f; --panel:#1f1916; --panel2:#29201c; --line:#352a25; --line-strong:#5e4b42;
+  --bone:#faf3ec; --muted:#bcaa9f; --heat:#ffa24c; --heat2:#ff5f6d; --ink:#1a0f0b;
+  --grad:linear-gradient(115deg,var(--heat),var(--heat2));
+  --ease:cubic-bezier(.2,.7,.2,1); --ease-out:cubic-bezier(.16,1,.3,1);
+  --logo:"Bricolage Grotesque","Geologica",system-ui,sans-serif;
+  --disp:"Geologica",system-ui,sans-serif; --body:"Onest",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{overflow-x:hidden;overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:var(--bone);font:400 16px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none;
+  background:radial-gradient(35% 30% at 15% 25%,color-mix(in srgb,var(--heat) 10%,transparent),transparent 70%),radial-gradient(40% 35% at 85% 70%,color-mix(in srgb,var(--heat2) 9%,transparent),transparent 70%);
+  animation:drift 80s var(--ease) infinite alternate}
+@keyframes drift{to{transform:translate3d(5%,-4%,0) scale(1.1)}}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--heat);outline-offset:3px;border-radius:10px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--heat);color:var(--ink);padding:10px 16px;border-radius:10px;z-index:99;font-weight:700}
+.skip:focus{left:8px}
+.wrap{width:min(1200px,100% - 32px);margin-inline:auto}
+.mono{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--heat)}
+.kicker::before{content:"";width:18px;height:2px;border-radius:2px;background:var(--grad)}
+h1,h2,h3{font-family:var(--disp);font-weight:800;line-height:1.04;margin:0;letter-spacing:-.025em}
+.h2{font-size:clamp(2rem,5.4vw,3.6rem);margin:12px 0 0}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;font-weight:700;font-size:1rem;text-decoration:none;position:relative;isolation:isolate;transition:transform .4s var(--ease-out),box-shadow .4s var(--ease),border-color .3s var(--ease),color .3s var(--ease),background .3s var(--ease)}
+.btn:hover{transform:translateY(-2px)}
+.btn-fire{background:var(--grad);color:var(--ink);box-shadow:0 10px 30px -10px color-mix(in srgb,var(--heat2) 70%,transparent)}
+.btn-fire:hover{box-shadow:0 16px 40px -10px color-mix(in srgb,var(--heat2) 85%,transparent)}
+.btn-glass{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:var(--bone);backdrop-filter:blur(10px)}
+.btn-glass:hover{border-color:var(--heat);color:var(--heat)}
+
+/* nav */
+.nav{position:fixed;inset:12px 0 auto;z-index:40;pointer-events:none}
+.nav .bar{pointer-events:auto;display:flex;align-items:center;gap:10px;height:60px;padding:0 8px 0 18px;border-radius:999px;background:rgba(21,17,15,.62);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(18px) saturate(1.3);transition:background .4s var(--ease)}
+.nav.solid .bar{background:rgba(21,17,15,.86)}
+.logo{font-family:var(--logo);font-weight:800;font-size:1.3rem;letter-spacing:-.04em;text-decoration:none;display:flex;align-items:center;gap:8px;margin-right:auto;white-space:nowrap}
+.logo svg{width:22px;height:22px}
+.links{display:none;gap:4px}
+.links a{text-decoration:none;font-weight:500;font-size:.92rem;color:var(--muted);padding:10px 14px;border-radius:999px;transition:color .3s var(--ease),background .3s var(--ease)}
+.links a:hover{color:var(--bone);background:rgba(255,255,255,.06)}
+@media (min-width:980px){.links{display:flex}}
+.status{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 6px;font-size:.8rem;color:var(--muted);white-space:nowrap;text-decoration:none;transition:color .3s var(--ease)}
+.status:hover{color:var(--bone)}
+.dot{width:8px;height:8px;border-radius:50%;background:#6d5a50;flex:none}
+.status.on .dot{background:#5fe08f;animation:pulse 2.6s -1s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(95,224,143,.55)}70%,100%{box-shadow:0 0 0 9px rgba(95,224,143,0)}}
+.favbtn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:999px;font-weight:700;font-size:.9rem;transition:background .3s var(--ease)}
+.favbtn:hover{background:rgba(255,255,255,.07)}
+.favbtn b{font-family:var(--mono);background:var(--grad);color:var(--ink);border-radius:999px;min-width:22px;height:22px;display:inline-grid;place-items:center;font-size:.72rem;padding:0 6px;transition:transform .4s var(--ease-out)}
+.favbtn b.bump{transform:scale(1.35)}
+.nav .btn{min-height:44px;padding:0 18px;font-size:.9rem;display:none}
+@media (min-width:720px){.nav .btn{display:inline-flex}}
+@media (max-width:560px){.status span,.favbtn i{display:none}}
+
+/* hero */
+.hero{position:relative;min-height:100svh;display:grid;align-items:end;padding:120px 0 44px;overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-3;background:#211814 center/cover no-repeat;transform:scale(1.08);filter:saturate(1.1);opacity:0;transition:opacity 1.4s var(--ease)}
+.hero-bg.ok{opacity:1}
+.hero::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(90% 70% at 70% 30%,rgba(21,17,15,.25),rgba(21,17,15,.7) 60%),linear-gradient(180deg,rgba(21,17,15,.55) 0%,rgba(21,17,15,.15) 35%,rgba(21,17,15,.88) 78%,var(--canvas) 100%)}
+#embers{position:absolute;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none}
+.hero .wrap{position:relative}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);font-size:.85rem;font-weight:500}
+.pill i{font-style:normal;font-family:var(--mono);font-size:.68rem;font-weight:700;letter-spacing:.1em;background:var(--grad);color:var(--ink);padding:4px 9px;border-radius:999px}
+.title{font-family:var(--logo);font-weight:800;font-size:clamp(4.6rem,19vw,15rem);line-height:.82;letter-spacing:-.065em;margin:22px 0 22px -.04em}
+.title .c{display:inline-block;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.06em}
+.lead{max-width:38ch;font-size:clamp(1.05rem,1.6vw,1.2rem);color:rgba(250,243,236,.88);margin:0 0 28px}
+.hero .row{display:flex;flex-wrap:wrap;gap:12px}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:38px}
+.fact{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(10px);font-size:.88rem}
+.fact b{font-family:var(--mono);font-weight:700}
+.fact span{color:var(--muted)}
+.fan{position:absolute;right:16px;bottom:48px;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:none;align-items:center;gap:10px}
+.fan::before{content:"";width:26px;height:26px;border-radius:50%;border:1.5px solid var(--heat);animation:fanp 2.4s -1s infinite}
+@keyframes fanp{50%{transform:scale(.7);opacity:.5}}
+@media (min-width:900px) and (pointer:fine){.fan{display:flex}}
+.rise{opacity:0;transform:translateY(26px);animation:in 1s var(--ease-out) forwards}
+.d1{animation-delay:.08s}.d2{animation-delay:.18s}.d3{animation-delay:.28s}.d4{animation-delay:.38s}
+@keyframes in{to{opacity:1;transform:none}}
+
+.ticker{border-block:1px solid var(--line);overflow:hidden;padding:16px 0}
+.ticker div{display:flex;gap:40px;width:max-content;animation:tick 42s linear infinite;font-family:var(--logo);font-weight:800;font-size:clamp(1.3rem,2.6vw,1.9rem);letter-spacing:-.03em;color:var(--bone)}
+.ticker b{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--grad);align-self:center}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+section{padding:90px 0}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+.reveal.in{opacity:1;transform:none}
+
+/* dish of the day */
+.dod{position:relative;display:grid;border-radius:32px;overflow:hidden;background:var(--panel);border:1px solid var(--line);min-height:460px;isolation:isolate}
+@media (min-width:900px){.dod{grid-template-columns:1.05fr 1fr}}
+.dod-pic{position:relative;min-height:300px;background:#211814 center/cover no-repeat;filter:blur(18px) brightness(.45) saturate(.6);transform:scale(1.12);transition:filter 1.1s var(--ease-out),transform 1.1s var(--ease-out)}
+.dod.lit .dod-pic{filter:none;transform:scale(1)}
+.dod-pic::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(21,17,15,.55),transparent 45%)}
+#dodFire{position:absolute;inset:0;z-index:2;width:100%;height:100%;pointer-events:none}
+.dod-body{position:relative;z-index:3;padding:clamp(26px,4vw,48px);display:flex;flex-direction:column;justify-content:center}
+.dod-body .h2{font-size:clamp(1.9rem,4.4vw,3rem)}
+.dod-body > p{color:var(--muted);margin:14px 0 26px;max-width:40ch}
+.hold{display:flex;align-items:center;gap:18px;touch-action:none;user-select:none;-webkit-user-select:none;text-align:left}
+.hold .knob{position:relative;width:92px;height:92px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--panel2);border:1px solid var(--line-strong);transition:transform .4s var(--ease-out)}
+.hold:active .knob{transform:scale(.95)}
+.hold .knob svg.r{position:absolute;inset:-6px;width:104px;height:104px;transform:rotate(-90deg)}
+.hold .knob svg.r circle{fill:none;stroke:url(#gr);stroke-width:5;stroke-linecap:round;stroke-dasharray:301;stroke-dashoffset:calc(301 - 301 * var(--h,0))}
+.hold .knob .fl{width:34px;height:34px;transform:scale(calc(.75 + .5 * var(--h,0)));transition:transform .15s linear}
+.hold strong{display:block;font-family:var(--disp);font-size:1.15rem}
+.hold span{color:var(--muted);font-size:.88rem}
+.dod-res{display:none}
+.dod.lit .dod-res{display:block;animation:in .9s var(--ease-out)}
+.dod.lit .hold,.dod.lit .dod-intro{display:none}
+.dod-res h3{font-size:clamp(1.5rem,3.2vw,2.2rem);margin:14px 0 10px}
+.dod-res p{color:var(--muted);margin:0 0 18px;max-width:44ch}
+.dod-res .meta{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
+.dod-res .price{font-size:1.6rem}
+.dod-res .row{display:flex;gap:10px;flex-wrap:wrap}
+.next{margin-top:18px;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;color:var(--muted)}
+
+/* hits rail */
+.rail-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:26px}
+.arrows{display:none;gap:8px}
+@media (min-width:760px){.arrows{display:flex}}
+.arrows button{width:52px;height:52px;border-radius:50%;border:1px solid var(--line-strong);font-size:1.2rem;transition:border-color .3s var(--ease),color .3s var(--ease),transform .4s var(--ease-out)}
+.arrows button:hover{border-color:var(--heat);color:var(--heat);transform:translateY(-2px)}
+.rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 16px 10px;margin:0 -16px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.hit-card{position:relative;flex:none;width:min(300px,78vw);scroll-snap-align:start;border-radius:26px;overflow:hidden;background:var(--panel);border:1px solid var(--line);text-align:left;transition:transform .5s var(--ease-out),border-color .3s var(--ease)}
+.hit-card:hover{transform:translateY(-4px);border-color:var(--line-strong)}
+.hit-card .ph{aspect-ratio:4/5;background:var(--panel2);overflow:hidden}
+.hit-card .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease-out)}
+.hit-card:hover .ph img{transform:scale(1.06)}
+.hit-card .cap{position:absolute;inset:auto 0 0;padding:60px 18px 18px;background:linear-gradient(0deg,rgba(21,17,15,.95) 30%,transparent)}
+.hit-card h3{font-family:var(--body);font-weight:700;font-size:1.02rem;line-height:1.25;letter-spacing:0;margin:0 0 8px}
+.hit-card .price{font-size:1.05rem}
+
+/* doneness */
+.done{display:grid;gap:16px}
+@media (min-width:900px){.done{grid-template-columns:1fr 1.15fr}}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:clamp(24px,3.4vw,40px)}
+.done .box:first-child p{color:var(--muted);margin:16px 0 0;max-width:40ch}
+.steak{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 30px rgba(0,0,0,.35))}
+.steak .core{fill:var(--core);transition:fill .7s var(--ease)}
+.steak .mid{fill:var(--mid);transition:fill .7s var(--ease)}
+.lvl{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:18px 0 6px}
+.lvl strong{font-family:var(--disp);font-size:1.5rem}
+.lvl span{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+#doneText{min-height:3.1em;margin:0 0 14px;font-size:.98rem;color:rgba(250,243,236,.85)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:36px;background:transparent;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:9px;background:linear-gradient(90deg,#ff5f6d,#ff7f5a,#ffa24c,#f3b96f,#dcc49a)}
+input[type=range]::-moz-range-track{height:8px;border-radius:9px;background:linear-gradient(90deg,#ff5f6d,#ff7f5a,#ffa24c,#f3b96f,#dcc49a)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:var(--bone);border:6px solid var(--canvas);box-shadow:0 0 0 2px var(--heat);margin-top:-11px}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--bone);border:6px solid var(--canvas);box-shadow:0 0 0 2px var(--heat)}
+.ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+/* menu */
+.menu-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:18px;margin-bottom:24px}
+.lucky{border:1px dashed var(--line-strong);border-radius:999px;min-height:50px;padding:0 20px;font-weight:700;display:inline-flex;align-items:center;gap:10px;transition:border-color .3s var(--ease),color .3s var(--ease),transform .4s var(--ease-out)}
+.lucky:hover{border-color:var(--heat);color:var(--heat);transform:rotate(-2deg)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:6px;border-radius:999px;background:var(--panel);border:1px solid var(--line);width:max-content;max-width:100%;scrollbar-width:none}
+.tabs::-webkit-scrollbar,.chips::-webkit-scrollbar{display:none}
+.tab{flex:none;min-height:46px;padding:0 20px;border-radius:999px;font-weight:700;font-size:.94rem;color:var(--muted);transition:background .35s var(--ease),color .35s var(--ease)}
+.tab:hover{color:var(--bone)}
+.tab[aria-selected=true]{background:var(--grad);color:var(--ink)}
+.tools{position:sticky;top:80px;z-index:20;margin:16px -16px 0;padding:10px 16px;background:linear-gradient(var(--canvas) 70%,transparent)}
+.search{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line-strong);border-radius:16px;padding:0 16px;transition:border-color .3s var(--ease),box-shadow .3s var(--ease)}
+.search:focus-within{border-color:var(--heat);box-shadow:0 0 0 4px color-mix(in srgb,var(--heat) 18%,transparent)}
+.search input{flex:1;min-width:0;height:48px;background:none;border:0;outline:0;color:var(--bone);font:inherit}
+.search input::placeholder{color:var(--muted)}
+.chips{display:flex;gap:6px;overflow-x:auto;margin-top:10px;scrollbar-width:none}
+.chip{flex:none;min-height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--line);font-size:.84rem;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;white-space:nowrap;transition:color .3s var(--ease),border-color .3s var(--ease)}
+.chip:hover{color:var(--bone);border-color:var(--heat)}
+.secinfo{color:var(--muted);margin:18px 0 0;max-width:70ch;font-size:.95rem}
+.cat{padding-top:46px}
+.cat h3{font-size:clamp(1.4rem,3.2vw,2rem);display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.cat h3 small{font-family:var(--mono);font-weight:500;font-size:.72rem;color:var(--muted);letter-spacing:.1em}
+.cat .note{margin:8px 0 0;color:var(--heat);font-size:.9rem}
+.grid{display:grid;gap:12px;margin-top:18px}
+@media (min-width:700px){.grid{grid-template-columns:1fr 1fr}}
+@media (min-width:1080px){.grid{grid-template-columns:1fr 1fr 1fr}}
+.card{position:relative;display:grid;grid-template-columns:1fr 112px;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:14px;opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out),border-color .35s var(--ease),background .35s var(--ease)}
+.card.in{opacity:1;transform:none}
+.card:hover{border-color:var(--line-strong);background:var(--panel2)}
+.card.noimg{grid-template-columns:1fr}
+.card.na{opacity:.5}
+.card h4{font-family:var(--body);font-weight:700;font-size:1rem;line-height:1.25;margin:0 0 6px}
+.card p{margin:0;color:var(--muted);font-size:.85rem;line-height:1.42;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.meta{display:flex;align-items:baseline;gap:10px;margin-top:10px;flex-wrap:wrap}
+.price{font-family:var(--mono);font-weight:700;font-size:1.04rem;color:var(--bone)}
+.price small{font-weight:500;color:var(--muted);font-size:.72rem}
+.wt{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
+.tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--muted)}
+.tag.hot{background:color-mix(in srgb,var(--heat) 16%,transparent);color:var(--heat)}
+.pic{position:relative;width:112px;height:112px;border-radius:16px;overflow:hidden;background:var(--panel2)}
+.pic img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-out)}
+.card:hover .pic img{transform:scale(1.08)}
+.hit{position:absolute;inset:0;border-radius:22px;z-index:1}
+.heart{position:absolute;z-index:2;right:8px;bottom:8px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(21,17,15,.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);transition:transform .4s var(--ease-out),border-color .3s var(--ease)}
+.card.noimg .heart{top:10px;bottom:auto;background:transparent}
+.card.noimg h4{padding-right:48px}
+.heart svg{width:19px;height:19px;fill:none;stroke:var(--bone);stroke-width:2;transition:fill .3s var(--ease),stroke .3s var(--ease)}
+.heart:hover{transform:scale(1.1)}
+.heart[aria-pressed=true]{border-color:var(--heat2)}
+.heart[aria-pressed=true] svg{fill:var(--heat2);stroke:var(--heat2)}
+.heart.pop{animation:pop .5s var(--ease-out)}
+@keyframes pop{40%{transform:scale(1.35)}}
+.empty{padding:50px 0;color:var(--muted);text-align:center}
+
+/* dialogs */
+dialog{border:0;padding:0;color:var(--bone);background:var(--panel);max-width:none}
+dialog::backdrop{background:rgba(12,9,8,.74);backdrop-filter:blur(6px)}
+.x{width:44px;height:44px;border-radius:50%;background:rgba(21,17,15,.8);border:1px solid rgba(255,255,255,.16);display:grid;place-items:center;font-size:1.1rem;transition:transform .4s var(--ease-out),border-color .3s var(--ease)}
+.x:hover{transform:rotate(90deg);border-color:var(--heat)}
+.dish{width:min(560px,100%);max-height:92vh;border-radius:30px 30px 0 0;margin:auto auto 0;overflow:auto}
+@media (min-width:700px){.dish{border-radius:30px;margin:auto}}
+.dish[open]{animation:sheet .55s var(--ease-out)}
+@keyframes sheet{from{transform:translateY(40px);opacity:0}}
+.dish .x{position:sticky;top:12px;float:right;margin:12px 12px -56px 0;z-index:3}
+.dish .big{aspect-ratio:4/3;background:var(--panel2)}
+.dish .big img{width:100%;height:100%;object-fit:cover}
+.dish .bd{padding:22px 24px 26px}
+.dish h3{font-size:1.6rem;margin:8px 0 10px}
+.dish .desc{color:var(--muted);white-space:pre-line;margin:0 0 18px}
+.dish .foot{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.dish .price{font-size:1.55rem}
+.calc{background:var(--canvas);border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin:0 0 18px}
+.calc .lvl{margin-top:0}
+.calc .lvl strong{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.drawer{width:min(440px,100%);height:100%;max-height:none;margin:0 0 0 auto;display:none;flex-direction:column}
+.drawer[open]{display:flex;animation:slide .5s var(--ease-out)}
+@keyframes slide{from{transform:translateX(60px);opacity:0}}
+.drawer header{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 14px;border-bottom:1px solid var(--line)}
+.drawer header h3{font-size:1.4rem}
+.drawer ul{list-style:none;margin:0;padding:8px 20px;overflow:auto;flex:1}
+.drawer li{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}
+.drawer li span{font-size:.94rem}
+.drawer li button{width:44px;height:44px;border-radius:50%;color:var(--muted);transition:color .3s var(--ease)}
+.drawer li button:hover{color:var(--heat2)}
+.drawer footer{padding:18px 20px 24px;border-top:1px solid var(--line)}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.total strong{font-family:var(--mono);font-size:1.5rem}
+.drawer footer p{color:var(--muted);font-size:.8rem;margin:0 0 14px}
+.drawer footer .btn{width:100%}
+.book{width:min(440px,100% - 24px);border-radius:30px;margin:auto;overflow:hidden}
+.book[open]{animation:sheet .5s var(--ease-out)}
+.book::before{content:"";position:absolute;inset:0 0 auto;height:180px;background:radial-gradient(70% 100% at 50% 0%,color-mix(in srgb,var(--heat2) 28%,transparent),transparent);pointer-events:none}
+.book .bd{position:relative;padding:34px 26px 26px;text-align:center}
+.book .x{position:absolute;top:12px;right:12px;z-index:2}
+.book .ring{width:68px;height:68px;margin:0 auto 16px;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:var(--ink);font-size:1.6rem;animation:ringp 2.8s -1s infinite}
+@keyframes ringp{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--heat2) 45%,transparent)}70%,100%{box-shadow:0 0 0 18px transparent}}
+.book h3{font-size:1.8rem;margin:6px 0 4px}
+.book .num{display:block;font-family:var(--mono);font-weight:700;font-size:clamp(1.5rem,7vw,2rem);margin:14px 0 4px;user-select:all}
+.book .sub{color:var(--muted);font-size:.92rem;margin:0 0 22px}
+.book .acts{display:grid;gap:10px}
+.book .acts .btn{width:100%}
+.book .hint{color:var(--muted);font-size:.78rem;margin:14px 0 0}
+.book .ok{color:#7fe0a3}
+
+/* info */
+.info{display:grid;gap:14px}
+@media (min-width:860px){.info{grid-template-columns:1.3fr 1fr 1fr}}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:28px}
+.tile h3{font-size:1.4rem;margin:10px 0 14px}
+.tile dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:.95rem}
+.tile dt{color:var(--muted)}.tile dd{margin:0;font-family:var(--mono);font-size:.9rem;text-align:right}
+.tile .big{font-family:var(--disp);font-weight:800;font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-.02em;text-align:left;display:block;margin:10px 0 12px;transition:color .3s var(--ease)}
+.tile .big:hover{color:var(--heat)}
+.tile p{margin:0 0 18px;color:var(--muted);font-size:.95rem}
+.tile .row{display:flex;gap:10px;flex-wrap:wrap}
+.tile .btn{min-height:48px;padding:0 20px;font-size:.92rem}
+.cta{padding:40px 0 100px}
+.cta .in-box{position:relative;overflow:hidden;border-radius:36px;padding:clamp(40px,7vw,90px) 24px;text-align:center;background:var(--panel);border:1px solid var(--line);isolation:isolate}
+.cta .in-box::before{content:"";position:absolute;inset:auto -10% -60%;height:120%;z-index:-1;background:radial-gradient(50% 50% at 50% 50%,color-mix(in srgb,var(--heat2) 40%,transparent),color-mix(in srgb,var(--heat) 18%,transparent) 50%,transparent 75%);animation:glow 6s -2s ease-in-out infinite alternate}
+@keyframes glow{to{opacity:.6;transform:scale(1.08)}}
+.cta h2{font-family:var(--logo);font-size:clamp(2.6rem,8vw,6rem);letter-spacing:-.05em;margin:14px 0 28px}
+footer.site{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--muted);font-size:.84rem}
+footer.site .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
+footer.site a{text-decoration:none}footer.site a:hover{color:var(--bone)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .rise,.card,.reveal{opacity:1;transform:none}
+}
+body.paused *,body.paused *::before,body.paused *::after{animation-play-state:paused!important}
+</style>
+</head>
+<body>
+<a class="skip" href="#menu">До меню</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffa24c"/><stop offset="1" stop-color="#ff5f6d"/></linearGradient><linearGradient id="gf" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#ff5f6d"/><stop offset="1" stop-color="#ffa24c"/></linearGradient></defs></svg>
+
+<nav class="nav" id="nav" aria-label="Головна навігація">
+  <div class="wrap bar">
+    <a class="logo" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="url(#gf)" d="M12 2c3 4 6.200 6.500 6.200 11a6.200 6.200 0 0 1-12.400 0c0-2.200.9-3.700 2.300-5 .4 2.200 1.300 3.200 2.300 3.200 0-3.600.4-6.200 1.600-9.200z"/></svg>Ben Chef</a>
+    <div class="links"><a href="#day">Страва дня</a><a href="#menu">Меню</a><a href="#info">Контакти</a></div>
+    <a class="status" id="status" href="#info"><i class="dot"></i><span id="statusText">Щодня 11:00-22:30</span></a>
+    <button class="favbtn" id="favOpen" aria-haspopup="dialog">♥ <i style="font-style:normal">Обране</i> <b id="favCount">0</b></button>
+    <button class="btn btn-fire" data-book>Забронювати</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-bg" id="heroBg"></div>
+  <canvas id="embers" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="pill rise"><i>JOSPER</i>М'ясо на вугіллі · Умань</div>
+    <h1 class="title rise d1">Ben <span class="c">Chef</span></h1>
+    <p class="lead rise d2">Стейки з печі Josper, соковиті бургери та вино. Вугілля вже розпалене, тобі лишається обрати.</p>
+    <div class="row rise d3">
+      <a class="btn btn-fire" href="#menu">Дивитись меню</a>
+      <button class="btn btn-glass" data-book>Забронювати стіл</button>
+    </div>
+    <div class="facts rise d4">
+      <div class="fact"><b>11:00-22:30</b><span>щодня</span></div>
+      <div class="fact"><b>12:00-21:00</b><span>меню Josper</span></div>
+      <div class="fact"><b>Садова, 20</b><span>Умань</span></div>
+    </div>
+  </div>
+  <div class="fan" aria-hidden="true">Поводь мишкою, роздуй вугілля</div>
+</header>
+
+<div class="ticker" aria-hidden="true"><div id="ticker"></div></div>
+
+<section id="day">
+  <div class="wrap">
+    <div class="dod reveal" id="dod">
+      <div class="dod-pic" id="dodPic"></div>
+      <canvas id="dodFire" aria-hidden="true"></canvas>
+      <div class="dod-body">
+        <div class="kicker">Страва дня</div>
+        <div class="dod-intro">
+          <h2 class="h2">Що шеф радить <span class="grad-text">сьогодні?</span></h2>
+          <p>Кожного дня нова страва. Затисни кнопку і розпали Josper, щоб дізнатися.</p>
+        </div>
+        <button class="hold" id="hold" aria-describedby="holdHint">
+          <span class="knob"><svg class="r" viewBox="0 0 104 104" aria-hidden="true"><circle cx="52" cy="52" r="48"/></svg><svg class="fl" viewBox="0 0 24 24" aria-hidden="true"><path fill="url(#gf)" d="M12 2c3 4 6.200 6.500 6.200 11a6.200 6.200 0 0 1-12.400 0c0-2.200.9-3.700 2.300-5 .4 2.200 1.300 3.200 2.300 3.200 0-3.600.4-6.200 1.600-9.200z"/></svg></span>
+          <span><strong>Тримай, щоб розпалити</strong><span id="holdHint">Затисни на дві секунди</span></span>
+        </button>
+        <div class="dod-res" aria-live="polite">
+          <div class="tags" id="dodTags"></div>
+          <h3 id="dodName"></h3>
+          <p id="dodDesc"></p>
+          <div class="meta"><span class="price" id="dodPrice"></span><span class="wt" id="dodWt"></span></div>
+          <div class="row">
+            <button class="btn btn-fire" id="dodFav">♡ В обране</button>
+            <button class="btn btn-glass" data-book>Забронювати стіл</button>
+          </div>
+          <div class="next" id="dodNext"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="rail-head reveal">
+      <div><div class="kicker">Хіти</div><h2 class="h2">Те, по що <span class="grad-text">повертаються</span></h2></div>
+      <div class="arrows"><button id="railPrev" aria-label="Назад">←</button><button id="railNext" aria-label="Далі">→</button></div>
+    </div>
+    <div class="rail" id="rail"></div>
+  </div>
+</section>
+
+<section style="padding-top:20px">
+  <div class="wrap done">
+    <div class="box reveal">
+      <div class="kicker">Твоя прожарка</div>
+      <h2 class="h2">Який стейк <span class="grad-text">твій?</span></h2>
+      <p>Посунь повзунок. Сайт запам'ятає твою прожарку і зустріне тебе нею наступного разу. А офіціанту не доведеться питати.</p>
+    </div>
+    <div class="box reveal">
+      <svg class="steak" viewBox="0 0 400 150" role="img" aria-label="Стейк у розрізі">
+        <rect x="6" y="14" width="388" height="122" rx="58" fill="#4b2c20"/>
+        <rect class="mid" x="18" y="26" width="364" height="98" rx="48"/>
+        <rect class="core" x="46" y="44" width="308" height="62" rx="31"/>
+        <path d="M70 60q40-10 80 0M250 92q40 9 82-2" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M60 20l-14 20M120 16l-14 22M180 15l-14 22M240 15l-14 22M300 16l-14 22M352 22l-12 18" stroke="#2a160f" stroke-width="5" stroke-linecap="round" opacity=".55"/>
+      </svg>
+      <div class="lvl"><strong id="doneName">Medium rare</strong><span id="doneTemp">55-57°C</span></div>
+      <p id="doneText"></p>
+      <input type="range" id="done" min="0" max="4" step="1" value="1" aria-label="Прожарка">
+      <div class="ticks" aria-hidden="true"><span>Rare</span><span>Med rare</span><span>Medium</span><span>Med well</span><span>Well</span></div>
+    </div>
+  </div>
+</section>
+
+<main id="menu" tabindex="-1">
+  <section style="padding-top:30px">
+    <div class="wrap">
+      <div class="menu-head">
+        <div><div class="kicker">Меню</div><h2 class="h2">Усе меню Ben Chef</h2></div>
+        <button class="lucky" id="lucky">🎲 Не знаю, що взяти</button>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Розділи меню" id="tabs"></div>
+      <div class="tools">
+        <label class="search"><span aria-hidden="true">⌕</span><input id="q" type="search" placeholder="Пошук: рібай, цезар, лате..." aria-label="Пошук у меню" autocomplete="off"></label>
+        <nav class="chips" id="chips" aria-label="Категорії"></nav>
+      </div>
+      <div id="list" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="info" style="padding-top:40px">
+    <div class="wrap">
+      <div class="kicker">Як нас знайти</div>
+      <h2 class="h2" style="margin-bottom:28px">Чекаємо щодня</h2>
+      <div class="info">
+        <div class="tile reveal">
+          <div class="mono">Бронювання</div>
+          <button class="big" data-book>073 76 77 766</button>
+          <p>Садова вулиця, 20, Умань. Є доставка, деталі за телефоном.</p>
+          <div class="row">
+            <a class="btn btn-glass" href="https://www.google.com/maps/search/?api=1&query=48.7521848,30.2290694" target="_blank" rel="noopener">Маршрут</a>
+            <a class="btn btn-glass" href="https://www.instagram.com/ben_chef_/" target="_blank" rel="noopener">Instagram</a>
+          </div>
+        </div>
+        <div class="tile reveal">
+          <div class="mono">Години</div>
+          <h3>Кожного дня</h3>
+          <dl><dt>Ресторан</dt><dd>11:00-22:30</dd><dt>Сніданки</dt><dd>до 13:00</dd><dt>Меню Josper</dt><dd>12:00-21:00</dd></dl>
+        </div>
+        <div class="tile reveal">
+          <div class="mono">Корисне</div>
+          <h3>Для гостей</h3>
+          <dl><dt>WiFi</dt><dd>66666666</dd><dt>Свій алкоголь</dt><dd>200 грн</dd><dt>Оплата</dt><dd>готівка</dd></dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <div class="in-box reveal">
+        <div class="kicker">Вугілля вже гаряче</div>
+        <h2>Стіл для тебе є</h2>
+        <button class="btn btn-fire" data-book>Забронювати стіл</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site"><div class="wrap"><span>Ben Chef · Садова, 20, Умань</span><a href="https://www.instagram.com/ben_chef_/" target="_blank" rel="noopener">Instagram @ben_chef_</a><span>Meat · Burgers · Wine</span></div></footer>
+
+<dialog class="dish" id="dish" aria-labelledby="dishName">
+  <button class="x" data-close aria-label="Закрити">✕</button>
+  <div class="big" id="dishPic"></div>
+  <div class="bd">
+    <div class="tags" id="dishTags"></div>
+    <h3 id="dishName"></h3>
+    <p class="desc" id="dishDesc"></p>
+    <div class="calc" id="calc" hidden>
+      <div class="lvl"><strong id="calcSum"></strong><span id="calcW"></span></div>
+      <label class="mono" for="calcR" style="display:block;margin-bottom:4px">Вага сирого шматка</label>
+      <input type="range" id="calcR" min="200" max="700" step="50" value="300">
+    </div>
+    <div class="foot">
+      <div><span class="price" id="dishPrice"></span> <span class="wt" id="dishWt"></span></div>
+      <button class="btn btn-fire" id="dishFav"></button>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="drawer" id="drawer" aria-labelledby="drawerH">
+  <header><h3 id="drawerH">Моє обране</h3><button class="x" data-close aria-label="Закрити">✕</button></header>
+  <ul id="favList"></ul>
+  <footer>
+    <div class="total"><span>Разом приблизно</span><strong id="favTotal">0 ₴</strong></div>
+    <p>Покажи цей список офіціанту. Стейки та риба за 100 г рахуються за одну порцію 100 г.</p>
+    <button class="btn btn-fire" data-book>Забронювати стіл</button>
+  </footer>
+</dialog>
+
+<dialog class="book" id="book" aria-labelledby="bookH">
+  <button class="x" data-close aria-label="Закрити">✕</button>
+  <div class="bd">
+    <div class="ring" aria-hidden="true">☏</div>
+    <div class="mono">Бронювання столу</div>
+    <h3 id="bookH">Чекаємо на тебе</h3>
+    <span class="num" id="bookNum">073 76 77 766</span>
+    <p class="sub">Щодня 11:00-22:30 · Садова, 20, Умань</p>
+    <div class="acts">
+      <a class="btn btn-fire" href="tel:+380737677766">📞 Подзвонити</a>
+      <button class="btn btn-glass" id="copyNum">Скопіювати номер</button>
+    </div>
+    <p class="hint" id="copyHint">Якщо дзвінок не відкрився, скопіюй номер і набери з телефона.</p>
+  </div>
+</dialog>
+
+<script type="application/json" id="data">{"hero":"https://cdn-media.choiceqr.com/prod-eat-benchef/company/lDrGRbV-GDOizBE-eTxmkbl.jpeg","s":[{"n":"Кухня","info":"Cork fee/свій алкоголь - 200 грн","c":[{"n":"GRILL SET (велика дошка на компанію)","d":"","i":[{"n":"GRILL SET + подарунок","p":3200,"w":"2 кг","d":"Три види стейків (яловичина, свинина, курка), курячі крильця, лаваш з Сулугуні, овочі на грилі 2 порції, перепілка, цибулеві кільця, картопляні кульки, соуси: Тар-Тар, Сальса(гострий) У подарунок +вино або лимонад власного приготування (на вибір)","D":"Три види стейків (яловичина, свинина,\nкурка), курячі крильця, лаваш з\nСулугуні, овочі на грилі 2 порції, перепілка,\nцибулеві кільця, картопляні кульки, \nсоуси: Тар-Тар, Сальса(гострий)\nУ подарунок +вино або лимонад власного\nприготування (на вибір)","l":["recommended"],"t":"thumbnail_cuxqkXQ-xzVwhZl-agisXrS.jpeg_t-g-a.webp","b":"cuxqkXQ-xzVwhZl-agisXrS.jpeg.webp"}]},{"n":"МʼЯСО ТА СТЕЙКИ","d":"- ЦІНА вказана за 100 грам СИРОЇ ваги стейку","i":[{"n":"РЕБЕРЦЯ З СОУСОМ БАРБЕКЮ 300грм.","p":390,"w":"300 г","d":"Реберця зі свинини смажемо на вогнищі та подаємо з картопляними діпами в поєднанні з соусом барбекю. Порція 300 гри.","l":["recommended","new"],"t":"thumbnail_uFnHFmY-FlZcNms-heahLqH_F-F-T.webp","b":"uFnHFmY-FlZcNms-heahLqH.webp"},{"n":"РІБАЙ - 100 грам сирої ваги","p":210,"d":"Найсоковитіший стейк з реберної частини яловичини, за рахунок свого жирового прошарку. ТОЧНУ ВАГУ СИРОГО СТЕЙКА УТОЧНЮЙТЕ У ОФІЦІАНТА!","D":"Найсоковитіший стейк з реберної частини яловичини, за рахунок свого жирового прошарку.\nТОЧНУ ВАГУ СИРОГО СТЕЙКА УТОЧНЮЙТЕ У ОФІЦІАНТА!","l":["recommended"],"t":"thumbnail_zgCPciL-khDFaRz-gGtnhaU_o-t-F.webp","b":"zgCPciL-khDFaRz-gGtnhaU.webp"},{"n":"ПЕПЕР СТЕЙК ШАТОБРІАН - 100 грам сирої ваги","p":235,"d":"Пікантне та пісне м’ясо, яке запікається в суміші перців (чорний, червоний та білий перець) ТОЧНУ ВАГУ СИРОГО СТЕЙКА УТОЧНЮЙТЕ У ОФІЦІАНТА!","D":"Пікантне та пісне м’ясо, яке запікається в суміші перців (чорний, червоний та білий перець) \nТОЧНУ ВАГУ СИРОГО СТЕЙКА УТОЧНЮЙТЕ У ОФІЦІАНТА!","l":["spicy"],"t":"thumbnail_wZAqTC-eZHrCJd-HFDPIok.jpeg_F-W-q.webp","b":"wZAqTC-eZHrCJd-HFDPIok.jpeg.webp"},{"n":"НЬЮ-ЙОРК - 100 грам","p":220,"d":"Ніжний та соковитий стейк, з тонкого края яловичини. ТОЧНУ ВАГУ СИРОГО СТЕЙКА УТОЧНЮЙТЕ У ОФІЦІАНТА!","D":"Ніжний та соковитий стейк, з тонкого края яловичини. \nТОЧНУ ВАГУ СИРОГО СТЕЙКА УТОЧНЮЙТЕ У ОФІЦІАНТА!","t":"thumbnail_JotbkiQ-gtkXICG-UPGqHgn_y-k-p.webp","b":"JotbkiQ-gtkXICG-UPGqHgn.webp"},{"n":"ФІЛЕ-МІНЬЙОН - 100 грам сирої ваги","p":220,"d":"Стейк з центральної частини яловичої вирізки, ніжне і пісне м’ясо. ТОЧНУ ВАГУ СИРОГО СТЕЙКА УТОЧНЮЙТЕ У ОФІЦІАНТА!","D":"Стейк з центральної частини яловичої вирізки, ніжне і пісне м’ясо. \nТОЧНУ ВАГУ СИРОГО СТЕЙКА УТОЧНЮЙТЕ У ОФІЦІАНТА!","t":"thumbnail_siEIoqb-OVbYvkI-SVtFCQm.jpeg_Z-N-k.webp","b":"siEIoqb-OVbYvkI-SVtFCQm.jpeg.webp"},{"n":"ЛЮЛЯ-КЕБАБ З МАРИНОВАНОЮ ЦИБУЛЬКОЮ","p":410,"w":"300 г","d":"До столу подаємо 2 соковитих люля (яловичина/свинина) з соусом сальса, прикрашаємо маринованою цибулею, огірочком та підсушеною чіабаттою з часниковим соусом.","l":["recommended","new"],"t":"thumbnail_OWGRwoU-wkdJvlf-IYfNnlF_M-G-a.webp","b":"OWGRwoU-wkdJvlf-IYfNnlF.webp"},{"n":"СТЕЙК ЗІ СВИНИНИ НА КІСТЦІ - 100 грам сирої ваги","p":180,"d":"Соковитий стейк зі свинини на кістці. Запікається у класичному маринаді. ТОЧНУ ВАГУ СИРОГО СТЕЙКА УТОЧНЮЙТЕ У ОФІЦІАНТА!","D":"Соковитий стейк зі свинини на кістці. Запікається у класичному маринаді. \nТОЧНУ ВАГУ СИРОГО СТЕЙКА УТОЧНЮЙТЕ У ОФІЦІАНТА!","t":"thumbnail_CPjiDKr-QHJbyph-cTMWSHl_p-k-C.webp","b":"CPjiDKr-QHJbyph-cTMWSHl.webp"},{"n":"ШАШЛИК ЗІ СВИНИНИ - 100 грам сирої ваги","p":175,"t":"thumbnail_lOGvdih-rmrlJCx-UfCHfUD_E-k-I.webp","b":"lOGvdih-rmrlJCx-UfCHfUD.webp"},{"n":"ПЕРЕПІЛКА","p":250,"d":"Перепілочку смажемо на вогні та подаємо з соусом сальса.","t":"thumbnail_lGeJGXP-EFmkPRl-JeyKEln_C-R-n.webp","b":"lGeJGXP-EFmkPRl-JeyKEln.webp"},{"n":"КУРЯЧІ КРИЛЬЦЯ","p":270,"w":"200 г","d":"Три хрустких крила з пікантним соусом сальса","t":"thumbnail_ZPgSxIF-epkNMwu-EHubkTl_l-r-j.webp","b":"ZPgSxIF-epkNMwu-EHubkTl.webp"},{"n":"КУРЯЧИЙ СТЕЙК З КАРТОПЛЯНИМ ПЮРЕ","p":395,"w":"400 г","d":"Куряче філе гриль, ніжне картопляне пюре, соус «солодкий чілі» та черрі.","t":"thumbnail_kcbJQwm-lJCkaXl-GPVBHgJ_l-I-H.webp","b":"kcbJQwm-lJCkaXl-GPVBHgJ.webp"}]},{"n":"БУРГЕРИ","d":"ПРИ НАЯВНОСТІ СВІТЛА ФРІ ТА СОУС У ПОДАРУНОК","i":[{"n":"ФІРМОВИЙ БУЛЛ БУРГЕР + подарунок","p":450,"d":"пшенична булочка, сир Чедер, яловичина, айсберг, томати, маринований огірок, цибуля кримська,соус БІФ, цибулеві кільця, яйце обсмажене з двох сторін. у подарунок ж/б кола, спрайт або фанта. При наявності світла картопля фрі у подарунок .","D":"пшенична булочка, сир Чедер, яловичина, айсберг,\nтомати, маринований огірок, цибуля кримська,соус БІФ,\nцибулеві кільця, яйце обсмажене з двох сторін.\nу подарунок ж/б кола, спрайт або фанта.\nПри наявності світла картопля фрі у подарунок .","l":["recommended"],"t":"thumbnail_ImkADLA-lkkcDtR-rndHZMB_G-e-k.webp","b":"ImkADLA-lkkcDtR-rndHZMB.webp"},{"n":"БІФ","p":360,"d":"пшенична булочка, сир Чедер, яловичина, айсберг, томати, маринований огірок, цибуля кримська, соус біф. При наявності світла картопля фрі у подарунок .","D":"пшенична булочка, сир Чедер, яловичина, айсберг, томати, маринований огірок, цибуля кримська, соус біф. \nПри наявності світла картопля фрі у подарунок .","t":"thumbnail_rNUJIF-TsLWeHs-AmMLyls.jpeg_e-d-o.webp","b":"rNUJIF-TsLWeHs-AmMLyls.jpeg.webp"},{"n":"ДАБЛБІФ","p":470,"w":"450 г","d":"Пшенична булочка, подвійна котлета з яловичини, подвійний сир Чеддер, айсберг, помідор, маринований огірок, цибуля кримська, соус «Біф» картопля фрі, кетчуп.","l":["new"],"t":"thumbnail_kkpJFAN-QGheTpD-StblzMQ_W-E-A.webp","b":"kkpJFAN-QGheTpD-StblzMQ.webp"},{"n":"БУРГЕР З КАРАМЕЛІЗОВАНОЮ ЦИБУЛЕЮ","p":360,"d":"Котлета з яловичини, сир Чеддер, ніжна карамелізована цибуля, соус барбекʼю, пшенична булочка, помідор та маринований огірок.","l":["new"],"t":"thumbnail_JzmDdTh-kvYnqZP-KFuCvkh_q-n-e.webp","b":"JzmDdTh-kvYnqZP-KFuCvkh.webp"},{"n":"ГРИБНИЙ ЧІЗБУРГЕР","p":360,"d":"пшенична булочка, яловичина, сир Чедер, помідор, печериці на грилі, соус БлюЧіз, листя салату, рукола, шпинат.","t":"thumbnail_tZGjCeo-eUiIiVa-ZzUVZHH.jpeg_V-k-T.webp","b":"tZGjCeo-eUiIiVa-ZzUVZHH.jpeg.webp"},{"n":"ЧІЛІ","p":370,"d":"пшенична булочка, яловичина, айзберг, помідор, маринований огірок, сир Чеддер, соус Чілі.","l":["middle-spicy"],"t":"thumbnail_nqKsGtN-tbniTcw-PAQvAzU.jpeg_X-o-e.webp","b":"nqKsGtN-tbniTcw-PAQvAzU.jpeg.webp"},{"n":"ЧІЗБУРГЕР","p":360,"d":"пшенична булочка, соус Блю Чіз, яловичина, сир Чедер, айсберг.","t":"thumbnail_YiAxpaP-gSIAeIj-rZOelmP.jpeg_L-j-b.webp","b":"YiAxpaP-gSIAeIj-rZOelmP.jpeg.webp"},{"n":"БІФБЕКОН","p":380,"d":"Пшенична булочка, яловичина, бекон, айсберг, помідор, свіжий огірок, цибуля кримська, яйце, соус «солодкий Чилі»","l":["new"],"t":"thumbnail_MGIDYut-SjWHMDH-CsvoYIC_l-M-P.webp","b":"MGIDYut-SjWHMDH-CsvoYIC.webp"},{"n":"ЧІКЕН З АНАНАСОМ","p":360,"d":"Пшенична булочка, котлета куряча, сир Чеддер 2 шт, ананас, айсберг, помідор, соус «Лагідний».","l":["new"],"t":"thumbnail_ueyGKxf-lIyJIXz-wsYeJbe_w-h-J.webp","b":"ueyGKxf-lIyJIXz-wsYeJbe.webp"},{"n":"АТЛАНТА","p":390,"d":"пшенична булочка, сир Чедер, яловичина, айсберг, помідор, маринований огірок, яйце глазунья, цибуля кримська, соус БІФ, соус БлюЧіз.","D":"пшенична булочка, сир Чедер, яловичина, \nайсберг, помідор, маринований огірок, яйце глазунья, цибуля кримська, соус БІФ, соус БлюЧіз.","t":"thumbnail_bGexaiS-NFFXdDY-TNSbNln_original.jpeg_N-X-r.webp","b":"bGexaiS-NFFXdDY-TNSbNln_original.jpeg.webp"},{"n":"ВЕГАН","p":365,"d":"пшенична булочка, листя салату, перець болгарський, кабачок, печериці, баклажан, соус блю чіз.","D":"пшенична булочка, листя салату, перець\nболгарський, кабачок, печериці, баклажан,\nсоус блю чіз.","l":["vegetarian"],"t":"thumbnail_nNbZkip-bRJxkJe-ZmLlsqG.jpeg_o-A-X.webp","b":"nNbZkip-bRJxkJe-ZmLlsqG.jpeg.webp"}]},{"n":"РИБА","d":"","i":[{"n":"МОРСЬКИЙ ОКУНЬ","p":465,"w":"350 г","d":"Морського окуня смажемо на вогні до хрусткої скоринки. Подаємо з легким салатом, спаржею, томатами черрі та соусом тар-тар.","l":["recommended","new"],"t":"thumbnail_llKiy-KqCDx-mbYbe.webp","b":"HAkxiFH-bispuUm-uzqpYwo.webp"},{"n":"ДОРАДО ГРИЛЬ З ПЕСТО","p":515,"d":"Ніжну дорадо подаємо з песто та лимоном","t":"thumbnail_lphDnHo-DHJnXXQ-fceWNPh.jpeg_T-G-Z.webp","b":"lphDnHo-DHJnXXQ-fceWNPh.jpeg.webp"},{"n":"СКУМБРІЯ ГРИЛЬ за 100грм сирої ваги","p":175,"d":"з соусом Тар-Тар, картоплею по-селянськи та лимоном. ТОЧНУ ВАГУ СИРОЇ РИБИ УТОЧНЮЙТЕ У ОФІЦІАНТА!","D":"з соусом Тар-Тар, картоплею по-селянськи та лимоном.\nТОЧНУ ВАГУ СИРОЇ РИБИ УТОЧНЮЙТЕ У ОФІЦІАНТА!","t":"thumbnail_FFDoqHl-mEFTJiH-QaDhhvO_C-B-X.webp","b":"FFDoqHl-mEFTJiH-QaDhhvO.webp"},{"n":"СЬОМГА ГРИЛЬ за 100грм сирої ваги","p":280,"d":"з соусом Тар-Тар та лимоном. ТОЧНУ ВАГУ СИРОЇ РИБИ УТОЧНЮЙТЕ У ОФІЦІАНТА!","D":"з соусом Тар-Тар та лимоном.\nТОЧНУ ВАГУ СИРОЇ РИБИ УТОЧНЮЙТЕ У ОФІЦІАНТА!","t":"thumbnail_BOLcGFC-EHtseVp-WAACko.jpeg_y-W-o.webp","b":"BOLcGFC-EHtseVp-WAACko.jpeg.webp"},{"n":"ТИГРОВІ КРЕВЕТКИ НА ВОГНІ","p":370,"w":"100 г","d":"Подаємо на подушці з зелені, соусом тар-тар та лимоном.","t":"thumbnail_GQDmxYu-JgCHJCe-ahggmlH_s-K-G.webp","b":"GQDmxYu-JgCHJCe-ahggmlH.webp"}]},{"n":"ПЕРШІ СТРАВИ","d":"","i":[{"n":"БОРЩ","p":285,"w":"300 г","d":"Справжній Український борщ з телятиною який наварюємо на копчених реберцях. Подаємо з чорним хрустким хлібом, намазкою із сала, зеленим дзибулем та сметаною.","t":"thumbnail_dmVIcTw-RaWlpSv-GeoOAPH_X-b-g.webp","b":"dmVIcTw-RaWlpSv-GeoOAPH.webp"},{"n":"БУЛЬЙОН КУРЯЧИЙ","p":235,"w":"300 г","d":"Наваристий бульйон з домашньої курки та овочів. Подаємо з локшиною удон, курячим філе та трохи кропу. Окремо соус тар-тар, хрустке цибулеве кільце та підсушена чіабата. Ідеально вилікує від похмілля, а також подобається діткам☺️👌🏻","D":"Наваристий бульйон з домашньої курки та овочів. Подаємо з локшиною удон, курячим філе та трохи кропу. \nОкремо соус тар-тар, хрустке цибулеве кільце та підсушена чіабата. \nІдеально вилікує від похмілля, а також подобається діткам","t":"thumbnail_RJfCaa-mzAIASL-cTpwufR.jpeg_K-H-B.webp","b":"RJfCaa-mzAIASL-cTpwufR.jpeg.webp"},{"n":"БУЛЬЙОН З ТОМЛЕНОЮ ТЕЛЯТИНОЮ","p":265,"w":"300 г","d":"Основа - овочевий бульйон, який доповнюємо ніжною томленою телятиною, локшиною удон та кропом. Подаємо з соусом тар-тар, цибулевим кільцем та підсмаженою чіабатою.","t":"thumbnail_FmGgBKF-oKkRVQv-cDJwJfk.jpeg_I-k-g.webp","b":"FmGgBKF-oKkRVQv-cDJwJfk.jpeg.webp"},{"n":"БУЛЬЙОН З ЛОСОСЕМ ГРИЛЬ","p":280,"w":"300 г","d":"Локшина удон, лосось гриль, зелень. Окремо подається соус тар-тар та підсушена чіабата 3шт.","D":"Локшина удон, лосось гриль, зелень. \nОкремо подається соус тар-тар та підсушена чіабата 3шт.","t":"thumbnail_cJdcCQv-RVukISc-cCrsXC.jpeg_X-l-T.webp","b":"cJdcCQv-RVukISc-cCrsXC.jpeg.webp"}]},{"n":"СЕНДВІЧІ","d":"","i":[{"n":"Сендвіч з телятиною","p":265,"w":"200 г","d":"Хрусткий тостовий хліб, томлена телятина, сир Чедер, айсберг, маринований огірок, помідор, соус Біф.","t":"thumbnail_PeSPPGg-IlcAjFl-hpVaSDq_O-J-F.webp","b":"PeSPPGg-IlcAjFl-hpVaSDq.webp"},{"n":"Сендвіч з креветкою","p":320,"w":"200 г","d":"Креветки гриль, крем сир, ніжне авокадо, тостовий хліб, помідор Чері, свіжий огірок, руккола, листя салату.","t":"thumbnail_SLekCdM-rlBjbtO-EUpcxoY_a-F-C.webp","b":"SLekCdM-rlBjbtO-EUpcxoY.webp"},{"n":"Сендвіч з курячим філе гриль","p":240,"w":"200 г","d":"Курячий стейк гриль, хліб тостовий, сир Чедер, помідор, огірок маринований, кримська цибуля, листя салату, соус Біф, гірчиця в зернах.","t":"thumbnail_HFcsBJM-RgHKHWI-CdQyeDJ_f-j-Z.webp","b":"HFcsBJM-RgHKHWI-CdQyeDJ.webp"}]},{"n":"САЛАТИ","d":"","i":[{"n":"ГРЕЦЬКИЙ","p":270,"w":"195 г","d":"Листя салату, огірок, помідор, перець болгарський, маслини, сир Фета, оцет Бянко, соус песто, кримська цибуля, прованські трави.","t":"thumbnail_aYJEshk-glaTlDx-WEeCKX.jpeg_r-w-A.webp","b":"aYJEshk-glaTlDx-WEeCKX.jpeg.webp"},{"n":"САЛАТ З ТОФУ","p":290,"w":"250 г","d":"Підсмажений сир тофу, ніжне авокадо, огірок, помідор, листя салату, шпинат, соус унагі, перець Чілі, соєвий соус.","l":["vegetarian","vegan","new"],"t":"thumbnail_QTXmBqD-uZRhIOw-oazHdlD_M-a-b.webp","b":"QTXmBqD-uZRhIOw-oazHdlD.webp"},{"n":"ПРИВІТ З ОДЕСИ","p":345,"w":"200 г","d":"Теплий салат. Листя салату, шпинат, рукола, яловичина гриль, овочі гриль (баклажан, кабачок, печериці, болгарський перець) медово-гірчична заправка, сир Пармезан, помідор черрі.","D":"Теплий салат.\nЛистя салату, шпинат, рукола, яловичина гриль, овочі гриль (баклажан, кабачок, печериці, болгарський перець)\nмедово-гірчична заправка, сир Пармезан, помідор черрі.","l":["recommended"],"t":"thumbnail_tXomAlw-USIyBaj-DjZqFrC_p-e-e.webp","b":"tXomAlw-USIyBaj-DjZqFrC.webp"},{"n":"САЛАТ З КРЕВЕТКОЮ","p":375,"d":"Ніжна креветка гриль, сир Брі, консервований ананас, листя салату, шпинат, рукола, помідор Черрі, кешʼю, кунжут, соус Бате.","l":["recommended","new"],"t":"thumbnail_iCFZsDE-rdIRcPl-rlchgcp_h-b-Y.webp","b":"iCFZsDE-rdIRcPl-rlchgcp.webp"},{"n":"ЛІТНІЙ","p":315,"w":"200 г","d":"Шпинат, рукола, помідор, спаржева квасоля, куряче філе на грилі, соус медово-гірчичний, сир пармезан, кунжут.","t":"thumbnail_HIvMBbs-jZNHhAe-edAjMwN.jpeg_k-y-j.webp","b":"HIvMBbs-jZNHhAe-edAjMwN.jpeg.webp"},{"n":"ЦЕЗАР З КУРКОЮ","p":360,"w":"230 г","d":"Той самий класичний Цезар. Куряче мʼясо на грилі, бекон, соковитий айсберг, черрі, перепелині яйця, пармезан, крутони, соус цезар.","t":"thumbnail_xaAiJ-JMAvI-VNeXs.webp","b":"TIvnsFW-kNXHIZe-DMSoNpy.webp"},{"n":"ЦЕЗАР З КРЕВЕТКОЮ","p":375,"d":"Креветка гриль, айсберг, перепелині яйця, пармезан, крутони, черрі, соус цезар.","t":"thumbnail_kCIqY-sRrqb-asEUz.webp","b":"sqsziir-fhfmTGD-ffDdvIx.webp"},{"n":"КАЛІФОРНІЙСЬКИЙ","p":380,"w":"200 г","d":"Листя салату, рукола, шпинат, лосось слабо-солений, свіжий апельсин, сир Фета, апельсиновий соус, помідор Чері, кунжут.","t":"thumbnail_zsCEGIS-AAImNRd-YQckcoz_m-Y-C.webp","b":"zsCEGIS-AAImNRd-YQckcoz.webp"},{"n":"САЛАТ З ХАМОНОМ","p":380,"w":"200 г","d":"Хамон, листя салату, рукола, Бейбі моцарела, виноград, черрі помідор, оливкова олія, лимонний фреш.","l":["new"],"t":"thumbnail_kAsgQig-uJErluI-kkXkTFF_I-u-w.webp","b":"kAsgQig-uJErluI-kkXkTFF.webp"},{"n":"РОСТБІФ","p":345,"w":"170 г","d":"Листя салату, шпинат, рукола, соус Бате, перець болгарський, яловичина(ростбіф), сир Брі, цибуля кримська, прованські трави.","t":"thumbnail_lbzTfeD-gXbHIjA-ZLvkgHk_e-j-H.webp","b":"lbzTfeD-gXbHIjA-ZLvkgHk.webp"},{"n":"ОВОЧЕВИЙ","p":195,"w":"250 г","d":"Огірок, помідор, молода капуста, кріп. Заправляємо сметаною або домашньою олією на вибір.","D":"Огірок, помідор, молода капуста, кріп.\nЗаправляємо сметаною або домашньою олією на вибір.","t":"thumbnail_T-I-F.webp","b":"aXfBKao-euZLdnu-FLIIbhc.webp"}]},{"n":"ЗАКУСКИ","d":"","i":[{"n":"ТАР-ТАР З ЯЛОВИЧИНИ","p":390,"w":"160 г","d":"сира яловичина, маринований огірок, синя цибуля, маслини, сир Пармезан, перепелиний жовток, соус песто, соус ворчестер, соєвий соус, Руккола, прованські трави, чіабатта.","t":"thumbnail_zXQmmfN-GFekaok-ChFpemF_C-N-q.webp","b":"zXQmmfN-GFekaok-ChFpemF.webp"},{"n":"СИРНО-М’ЯСНЕ ПЛАТО","p":490,"w":"280 г","d":"Сир Пармезан, сир Брі, сир Дорблю, прошуто, салямі, гріссіні, оливки, маслини, мед, помідор черрі, рукола.","t":"thumbnail_lvMwfT-bbqeblj-WGMiVvS.jpeg_r-h-q.webp","b":"lvMwfT-bbqeblj-WGMiVvS.jpeg.webp"},{"n":"ОВОЧЕВА НАРІЗКА","p":200,"w":"200 г","d":"Огірок, помідор, перець болгарський, мікрогрін, листя салату.","t":"thumbnail_L-k-r.webp","b":"SbxExMP-AHlwHJI-xoGbljO.webp"},{"n":"ТАРІЛКА БЛАГОРОДНИХ СИРІВ","p":450,"w":"230 г","d":"Брі, пармезан, Дор-блю, Бейбі моцарелла, інжир, виноград, горіх кешʼю, мед. Краще смакує з білим вином)","D":"Брі, пармезан, Дор-блю, Бейбі моцарелла, інжир, виноград, горіх кешʼю, мед.\nКраще смакує з білим вином)","t":"thumbnail_koIgIJI-eolBubH-VcposJT_E-I-x.webp","b":"koIgIJI-eolBubH-VcposJT.webp"},{"n":"ОВОЧІ НА ГРИЛІ","p":295,"w":"200 г","d":"Помідор, баклажан, печериці, кабачок, перець болгарський, соус тар-тар.","l":["vegan"],"t":"thumbnail_bcJZjcp-nRJmTUC-EMVYClv.jpeg_q-n-b.webp","b":"bcJZjcp-nRJmTUC-EMVYClv.jpeg.webp"},{"n":"БРУСКЕТИ З ЛОСОСЕМ","p":230,"d":"Хрустка чіабата, слабосолений лосось, крем сир, руккола, свіжий огірок, лимон.","t":"thumbnail_FMhqFov-ZQKAetb-adGCjBR_x-h-M.webp","b":"FMhqFov-ZQKAetb-adGCjBR.webp"},{"n":"БРУСКЕТИ З ХАМОНОМ ТА ТОМАТАМИ","p":230,"d":"Чіабата, крем сир, хамон, вялені томати, мікрогрін.","l":["new"],"t":"thumbnail_XLHSVLF-fLgaOkF-hGjkXaD_k-U-l.webp","b":"XLHSVLF-fLgaOkF-hGjkXaD.webp"},{"n":"БРУСКЕТИ З ОВОЧАМИ ГРИЛЬ","p":195,"w":"140 г","d":"Брускети 3 шт.,намазка з Фети, рукола, грильовані овочі (перець болгарський, баклажан, кабачок).","t":"thumbnail_ulafChj-knogzDI-vrVVIPQ_x-r-j.webp","b":"ulafChj-knogzDI-vrVVIPQ.webp"},{"n":"ЛАВАШ З СУЛУГУНІ","p":175,"w":"200 г","d":"сир Сулугуні, зелень, помідор, соус тар-тар.","D":"сир Сулугуні, зелень, помідор,\nсоус тар-тар.","t":"thumbnail_pXkrRUP-liDneSO-chzZOCM.jpeg_z-T-w.webp","b":"pXkrRUP-liDneSO-chzZOCM.jpeg.webp"},{"n":"ДОШКА ДО ПИВА","p":550,"w":"500 г","d":"Дошка яка ідеально смакує до пінного! Розрахована від 2-ох до 5-ти друзів. Смажені кільця кальмара, вʼялене мʼясо, копчений сир, хрусткі нагетси, фісташки, цибулеві кільця та часникові запашні грінки.","D":"Дошка яка ідеально смакує до пінного! Розрахована від 2-ох до 5-ти  друзів.\nСмажені кільця кальмара, вʼялене мʼясо, копчений сир, хрусткі нагетси, фісташки, цибулеві кільця та часникові запашні грінки.","t":"thumbnail_hpxclXa-UjDlzJp-eoYxvpm_Z-I-u.webp","b":"hpxclXa-UjDlzJp-eoYxvpm.webp"},{"n":"КІЛЬЦЯ КАЛЬМАРА","p":310,"d":"Ідеально до пива. Смажені кільця кальмара в паніровці подаємо з кетчупом.","t":"thumbnail_j-h-c.webp","b":"lewKbkb-ZKmwyvw-SbpJJqt.webp"},{"n":"СОЛІННЯ","p":415,"w":"400 г","d":"Квашені помідори та капуста, мариновані огірочки, гриби гливи, маринований часник та кримська цибуля. Прикрашаємо запашною зеленою цибулею.","t":"thumbnail_LFhEzgJ-NFJnMIW-Ockqfeb_x-r-v.webp","b":"LFhEzgJ-NFJnMIW-Ockqfeb.webp"},{"n":"ШАУРМА З ШАШЛИКОМ","p":340,"d":"Лаваш, запашний шашлик з мангалу, картопля фрі, соус на основі грецького йогурту та часникового фрешу, помідор, маринований огірок, молода капуста, карамелізована цибуля морква, сир твердий.","l":["new"],"t":"thumbnail_doupzIk-iKbniFS-uirldbC_n-M-o.webp","b":"doupzIk-iKbniFS-uirldbC.webp"},{"n":"ШАУРМА З ТЕЛЯТИНОЮ","p":340,"d":"Лаваш, томлена телятина, картопля фрі, соус на основі грецького йогурту та часникового фрешу, помідор, маринований огірок, капуста, морква, сир твердий, цибуля кримська.","t":"thumbnail_biqZMon-BCnkQk-aQpQlBe.jpeg_a-B-V.webp","b":"biqZMon-BCnkQk-aQpQlBe.jpeg.webp"},{"n":"ШАУРМА З КУРКОЮ","p":310,"d":"Лаваш, куряче мʼясо з бедерної частини, , картопля фрі, соус на основі грецького йогурту та часникового фрешу, помідор, маринований огірок, молода капуста, морква, сир твердий, цибуля кримська.","t":"thumbnail_VPpfKDD-bGQGbnj-kKLuIDO_I-b-u.webp","b":"VPpfKDD-bGQGbnj-kKLuIDO.webp"},{"n":"НАГЕТСИ КУРЯЧІ","p":170,"w":"150 г","d":"Порція 6 штук, подаємо з кетчупом.","t":"thumbnail_V-q-G.webp","b":"IDSZzDD-CbUvKFv-ydIemhJ.webp"}]},{"n":"ГАРНІРИ","d":"","i":[{"n":"Картопля фрі","p":125,"w":"100 г","d":"Подається з кетчупом.","t":"thumbnail_SnmtmbU-ElDllCR-keGeXuv_F-O-o.webp","b":"SnmtmbU-ElDllCR-keGeXuv.webp"},{"n":"Цибулеві кільця","p":165,"d":"Порція 10 штук, подається з кетчупом.","t":"thumbnail_NtvtHDK-DuoxFWm-jgrNikf_A-b-C.webp","b":"NtvtHDK-DuoxFWm-jgrNikf.webp"},{"n":"Картопля по-селянськи","p":155,"w":"100 г","d":"Подається з часником та зеленю, також кетчуп.","t":"thumbnail_kCokbGb-EmcphSU-TmRWhiF.jpeg_e-z-D.webp","b":"kCokbGb-EmcphSU-TmRWhiF.jpeg.webp"},{"n":"Картопляні кульки","p":160,"d":"кульки в паніровці, які обсмажуються у фритюрі, подаються з кетчупом. Порція 20 шт.","t":"thumbnail_HmYqlpr-KGSFTuU-cgHECHN_original.jpeg_e-C-G.webp","b":"HmYqlpr-KGSFTuU-cgHECHN_original.jpeg.webp"},{"n":"Класичне пюре","p":125,"w":"250 г","d":"Картопляне пюре з вершками.","t":"thumbnail_yhYvSaN-aYxlDVI-EhVWglX_original.jpeg_m-n-R.webp","b":"yhYvSaN-aYxlDVI-EhVWglX_original.jpeg.webp"},{"n":"Сирне пюре","p":140,"w":"250 г","d":"Картопляне пюре, яке затирається сиром пармезаном.","t":"thumbnail_BNhsoBJ-kebfezi-IclwGlm_original.jpeg_z-z-l.webp","b":"BNhsoBJ-kebfezi-IclwGlm_original.jpeg.webp"},{"n":"Часникове пюре","p":130,"w":"250 г","d":"Пюре з додаванням запашного часниковою соусу.","t":"thumbnail_CuuDYfD-xIPdPrP-FTbsvON_original.jpeg_F-B-E.webp","b":"CuuDYfD-xIPdPrP-FTbsvON_original.jpeg.webp"},{"n":"Пюре Песто","p":140,"w":"250 г","d":"Картопляне пюре з додаванням соусу песто.","t":"thumbnail_HnYRkKO-cXPkOPC-DslKMzT_original.jpeg_s-g-i.webp","b":"HnYRkKO-cXPkOPC-DslKMzT_original.jpeg.webp"}]},{"n":"ДОДАТКИ","d":"","i":[{"n":"ЧІАБАТА (світла або темна)","p":50,"d":"Підсушена та хрустка чіабата 4 шт.","t":"thumbnail_kJCSKGl-fXKrsq-IqeRBs.jpeg_S-N-H.webp","b":"kJCSKGl-fXKrsq-IqeRBs.jpeg.webp"},{"n":"ЛАВАШ ДО МʼЯСА","p":50,"d":"1 шт.","t":"thumbnail_CBNjGnG-pumKQfl-RLTkhPP.jpeg_m-r-j.webp","b":"CBNjGnG-pumKQfl-RLTkhPP.jpeg.webp"}]},{"n":"СОУС","d":"","i":[{"n":"Песто","p":50,"w":"30 г","d":"Оливкова олія, базилік, пармезан, кедрові горіхи, часниковий фреш.","t":"thumbnail_LRRjqzv-pDuYTZU-eZTPlIr.jpeg_e-r-k.webp","b":"LRRjqzv-pDuYTZU-eZTPlIr.jpeg.webp"},{"n":"Тар-Тар","p":50,"w":"30 г","d":"Маринований огірок, майонез, кріп, цибуля кримська, лимонний фреш.","t":"thumbnail_STmgQjf-QEoxlpn-eFTJedP.jpeg_I-k-L.webp","b":"STmgQjf-QEoxlpn-eFTJedP.jpeg.webp"},{"n":"Вишневий","p":50,"w":"30 г","d":"Вишня, червоне вино, цукор, чебрець, розмарин.","t":"thumbnail_YDXTQop-vNHarjk-hoIMvoO.jpeg_r-h-a.webp","b":"YDXTQop-vNHarjk-hoIMvoO.jpeg.webp"},{"n":"Блю Чіз","p":55,"w":"30 г","d":"Сир Дор-Блю, вершки.","t":"thumbnail_NwFJkpF-NClYpjw-GrNLoCq.jpeg_S-g-a.webp","b":"NwFJkpF-NClYpjw-GrNLoCq.jpeg.webp"},{"n":"Сальса","p":50,"w":"30 г","d":"Перець болгарський, кетчуп, червоний перець, маринований огірок, кріп, соєвий соус, цибуля кримська, сіль, цукор.","l":["spicy"],"t":"thumbnail_EmciDk-eYUlhkX-KTIRJFK.jpeg_q-k-r.webp","b":"EmciDk-eYUlhkX-KTIRJFK.jpeg.webp"},{"n":"Барбекʼю","p":50},{"n":"Солодкий Чілі","p":50}]},{"n":"ДЕСЕРТИ","d":"","i":[{"n":"Фруктова нарізка","p":450,"d":"Грейпфрут, апельсин, банан, виноград, яблуко."},{"n":"Медівник «апельсин-обліпиха»","p":180,"d":"Медово-апельсинові коржі, конфі обліпиха, шар апельсинового чізкейку, цитрусовий ганаш на білому шоколаді.","t":"thumbnail_skkNe-AvmJc-kDVJK.webp","b":"tFvMuZH-WDriDwT-vWCRqGI.webp"},{"n":"Медівник «вишня-карамель»","p":180,"d":"Шоколадно-медові коржі, вишня конфі, карамельний мус, крем-чіз.","t":"thumbnail_fINtJ-rdcKh-kkzOD.webp","b":"FEliYJG-WKmkpkF-ZcHdYul.webp"},{"n":"Торт вафельний з мигдалевими пластівцями","p":110,"t":"thumbnail_HkLFM-hAefk-WgqCb.webp","b":"iWvrICl-YWSqeMZ-kZVemie.webp"},{"n":"Наполеон","p":180},{"n":"Торт-мус «Три шоколада»","p":190}]}]},{"n":"Сніданки","info":"Корисні та поживні сніданки від Ben Chef, з ароматною кавою для гарного початку дня! Діють з 10:00 до 13:00 кожного ранку, для улюблених гостей.","c":[{"n":"Обери свій сніданок","d":"","i":[{"n":"Все по-трошки і ковбаски","p":340,"d":"Поживний та збалансований сніданок який точно тобі сподобається! Пшенична булочка, яйце, сир Чеддер, підсмажені ковбаски з філе індички, фрі, квасолька в томаті, хрустке листя салату та помідор Черрі.","l":["new"],"t":"thumbnail_ceYADiZ-BelriDD-KpDIhGV_z-e-v.webp","b":"ceYADiZ-BelriDD-KpDIhGV.webp"},{"n":"Все по-трошки з лососем","p":380,"d":"Злегка підсолені шматочки лосося в поєднанні з ніжним авокадо, свіжими овочами, листям салату та яєчньою. Подаємо з хрустким тостовим хлібом.","l":["new"],"t":"thumbnail_ltaRbkG-eekCeBe-kINGHpS_b-e-R.webp","b":"ltaRbkG-eekCeBe-kINGHpS.webp"},{"n":"Класична яєчня","p":265,"d":"Хрусткий тостовий хліб та тріо яєць з рідким жовтком, свіже листя салату, огірочок та помідор чудово доповнює композицію для поживного початку дня.","t":"thumbnail_RNuHXkl-FCrsFxA-OqWHJGh_r-A-j.webp","b":"RNuHXkl-FCrsFxA-OqWHJGh.webp"},{"n":"Яєчня з беконом","p":295,"d":"Яйця у поєднанні з запашним беконом та хрустким хлібом.","t":"thumbnail_HYmzuIe-ePNlGmQ-JChKNgg_R-Q-H.webp","b":"HYmzuIe-ePNlGmQ-JChKNgg.webp"},{"n":"Сендвіч з телятиною","p":265,"w":"200 г","d":"хліб тостовий, соус Біф, телятина, сир Чедер, айсберг, огірок маринований, помідор","t":"thumbnail_GWjFYmm-LNuuoAl-qLZZIXY.jpeg_C-C-q.webp","b":"GWjFYmm-LNuuoAl-qLZZIXY.jpeg.webp"},{"n":"Сендвіч з креветкою","p":320,"w":"200 г","d":"хліб тостовий, крем сир, авокадо, листя салату, помідор Чері, креветки гриль, огірок, рукола","t":"thumbnail_JJHXoaO-exffCDA-VeFZICw.jpeg_E-H-X.webp","b":"JJHXoaO-exffCDA-VeFZICw.jpeg.webp"},{"n":"Сендвіч з курячим філе гриль","p":240,"w":"200 г","d":"хліб тостовий, соус Біф, листя салату, куряче філе на грилі, помідор, сир Чедер, гірчиця в зернах, огірок маринований, цибуля кримська","t":"thumbnail_XnljvrG-sEdHHsK-CWdHXkM.jpeg_N-M-m.webp","b":"XnljvrG-sEdHHsK-CWdHXkM.jpeg.webp"}]},{"n":"Перші страви","d":"","i":[{"n":"БОРЩ УКРАЇНСЬКИЙ","p":285,"w":"300 г","d":"Справжній Український борщ з телятиною. Подаємо з чорним хлібом, намазкою із сала, зеленою цибулею та сметаною.","t":"thumbnail_MeIeKMk-YTuYcxI-DzaCGFV_M-a-n.webp","b":"MeIeKMk-YTuYcxI-DzaCGFV.webp"},{"n":"БУЛЬЙОН З ЛОСОСЕМ ГРИЛЬ","p":280,"w":"300 г","d":"лосось на грилі, локшина удон, чіабата, соус тар-тар, цибулеве кільце, зелень","t":"thumbnail_iHXfEXl-wHFVGJD-bQAqSiT.jpeg_e-x-C.webp","b":"iHXfEXl-wHFVGJD-bQAqSiT.jpeg.webp"},{"n":"БУЛЬЙОН З ТЕЛЯТИНОЮ","p":265,"w":"300 г","d":"Томлена телятина, локшина удон, чіабата, соус тар-тар, цибулеве кільце, зелень.","t":"thumbnail_JJINbnO-IdnMIB-yecexTQ.jpeg_S-i-l.webp","b":"JJINbnO-IdnMIB-yecexTQ.jpeg.webp"},{"n":"БУЛЬЙОН КУРЯЧИМ ФІЛЕ","p":235,"w":"300 г","d":"філе куряче, зелень, локшина удон, чіабата, соус тар-тар, цибулеве кільце.","t":"thumbnail_rVJFgVk-HCAfekJ-xcZnb.jpeg_Q-p-H.webp","b":"rVJFgVk-HCAfekJ-xcZnb.jpeg.webp"}]},{"n":"Свіжовижаті соки та фреші","d":"","i":[{"n":"Яблучний","p":110,"w":"250 мл","t":"thumbnail_SsHOeHf-wsZhMIr-myaCFwo_original.jpeg_K-Y-i.webp","b":"SsHOeHf-wsZhMIr-myaCFwo_original.jpeg.webp"},{"n":"Морквяний","p":110,"w":"250 мл","t":"thumbnail_RIlnbiH-HmJrCkb-JHSqOcx_original.jpeg_G-k-Z.webp","b":"RIlnbiH-HmJrCkb-JHSqOcx_original.jpeg.webp"},{"n":"Апельсиновий","p":170,"w":"250 мл","t":"thumbnail_NeGQJJG-GFwACjZ-ZpEIIGc_original.jpeg_t-Z-u.webp","b":"NeGQJJG-GFwACjZ-ZpEIIGc_original.jpeg.webp"},{"n":"Грейпфрутовий","p":180,"w":"250 мл","t":"thumbnail_WOlGMXZ-WFoFZXW-CsnOMmX_original.jpeg_k-h-W.webp","b":"WOlGMXZ-WFoFZXW-CsnOMmX_original.jpeg.webp"}]}]},{"n":"Бар","info":"Алкогольні та безалкогольні напої","c":[{"n":"Чай","d":"","i":[{"n":"Крафтовий калиновий чай","p":120,"l":["recommended","new"]},{"n":"Крафтовий споришко-грейпфрутовий чай","p":120,"d":"Заварник обʼємом 500 мл, або 1 літр."},{"n":"Крафтовий чай «Імбир-лимон»","p":120,"d":"Заварник обʼємом 500 мл, або 1 літр.","l":["recommended","new"],"t":"thumbnail_KvSrkrH-HlYdLot-thtONIL_q-a-b.webp","b":"KvSrkrH-HlYdLot-thtONIL.webp"},{"n":"Крафтовий чай «Обліпиха-апельсин»","p":120,"d":"Заварник обʼємом 500 мл, або 1 літр.","l":["recommended","new"],"t":"thumbnail_XXGJvoJ-YuXeCKp-ScFAFIy_B-F-r.webp","b":"XXGJvoJ-YuXeCKp-ScFAFIy.webp"},{"n":"Крафтовий чай «Малина-гвоздика»","p":120,"d":"Заварник обʼємом 500 мл, або 1 літр.","l":["new"],"t":"thumbnail_lajDjDX-CVicxtg-vuHHmMJ_M-C-D.webp","b":"lajDjDX-CVicxtg-vuHHmMJ.webp"},{"n":"Крафтовий чай «Маракуя-мʼята»","p":120,"d":"Заварник обʼємом 500 мл, або 1 літр.","l":["new"]},{"n":"English Breakfast","p":110,"d":"Чай цейлонський чорний байховий листовий. Заварник обʼємом 500 мл, або 1 літр.","D":"Чай цейлонський чорний байховий листовий.\nЗаварник обʼємом 500 мл, або 1 літр.","t":"thumbnail_ZehGFxQ-YeZZnmL-FaCrYaI_original.jpeg_P-Z-g.webp","b":"ZehGFxQ-YeZZnmL-FaCrYaI_original.jpeg.webp"},{"n":"Чорний з бергамотом","p":110,"d":"Заварник обʼємом 500 мл, або 1 літр."},{"n":"Crazy Fruit","p":110,"d":"Каркаде, плоди журавлини, шипшини, цукати ананаса, родзинки, полуниця, яблука. Заварник обʼємом 500 мл, або 1 літр.","t":"thumbnail_wDpEpD-wXLFtFP-JITFjGN.jpeg_j-P-h.webp","b":"wDpEpD-wXLFtFP-JITFjGN.jpeg.webp"},{"n":"Alpine Field","p":110,"d":"Травʼяний чай, в складі ромашка, лемонграс, шипшина, ехінацея, мʼята, меліса, волошка, яблука та цедра лимона. Заварник обʼємом 500 мл, або 1 літр.","t":"thumbnail_KuyifVj-KBCGeGP-bbNdCeN_original.jpeg_x-c-k.webp","b":"KuyifVj-KBCGeGP-bbNdCeN_original.jpeg.webp"},{"n":"Gun Powder","p":110,"d":"Китайський зелений чай байховий листовий. Заварник обʼємом 500 мл, або 1 літр.","t":"thumbnail_NoeRCEz-xirdcpO-LnHhmOz_original.jpeg_M-Z-H.webp","b":"NoeRCEz-xirdcpO-LnHhmOz_original.jpeg.webp"}]},{"n":"Кава","d":"","i":[{"n":"Еспресо","p":42,"d":"-з молоком 48UAN","t":"thumbnail_jYCOXCm-JQknIVw-rKlIXwr.jpeg_e-Z-A.webp","b":"jYCOXCm-JQknIVw-rKlIXwr.jpeg.webp"},{"n":"Рістретто","p":42},{"n":"Американо","p":50,"d":"- з молоком 53 UAN","t":"thumbnail_bamiSII-bGFHPr-xXUyND.jpeg_J-G-C.webp","b":"bamiSII-bGFHPr-xXUyND.jpeg.webp"},{"n":"Капучино","p":80,"t":"thumbnail_IMFeMML-uavxMeC-VCNRZwb_original.jpeg_Z-k-D.webp","b":"IMFeMML-uavxMeC-VCNRZwb_original.jpeg.webp"},{"n":"Латте","p":80,"t":"thumbnail_nHJFfef-umVoITe-IPxEPi.jpeg_x-W-E.webp","b":"nHJFfef-umVoITe-IPxEPi.jpeg.webp"},{"n":"Матча лате","p":105,"d":"Зелена, рожева, блакитна."},{"n":"Бамбл","p":95,"d":"Еспресо, сік на вибір( апельсин, гранат, вишня) лід."},{"n":"Айс Лате","p":85},{"n":"Еспресо тонік","p":70},{"n":"Какао","p":95,"t":"thumbnail_WFBXIXt-HflJopW-eINoIzq.jpeg_V-b-l.webp","b":"WFBXIXt-HflJopW-eINoIzq.jpeg.webp"},{"n":"Лунго","p":42},{"n":"Допіо подвійний еспресо","p":85},{"n":"Флет-вайт","p":90},{"n":"Мокко","p":85},{"n":"Гласе","p":85},{"n":"Романо","p":50},{"n":"Фраппе","p":110},{"n":"Макіато","p":58},{"n":"Раф","p":85}]},{"n":"Безалкогольні напої","d":"","i":[{"n":"Узвар","p":65,"d":"Склянка 250мл-65 грн. Графін 1літр-200 грн.","D":"Склянка 250мл-65 грн.\nГрафін 1літр-200 грн.","t":"thumbnail_zobFA-PkYOS-GaXaI.webp","b":"JnOGDWe-qnzlmjS-LfEuGdE.webp"},{"n":"Coca-cola в асортименті","p":0,"d":"250ml скло- 85грн. 330ml ж/б- 70 грн. 500ml- 85грн.","D":"250ml скло- 85грн.\n330ml ж/б- 70 грн.\n500ml- 85грн.","t":"thumbnail_UfMhZnG-foIGNiu-IGVSekV.jpeg_u-N-C.webp","b":"UfMhZnG-foIGNiu-IGVSekV.jpeg.webp"},{"n":"Sprite в асортименті","p":0,"d":"330ml ж/б- 70 грн. 500ml- 85 грн.","D":"330ml ж/б- 70 грн.\n500ml- 85 грн.","t":"thumbnail_THHdJkL-movbJjI-hyBeEaN.jpeg_C-x-l.webp","b":"THHdJkL-movbJjI-hyBeEaN.jpeg.webp"},{"n":"Fanta в асортименті","p":0,"d":"330ml. ж/б - 70 грн. 500ml - 85 грн.","D":"330ml. ж/б - 70 грн.\n500ml - 85 грн.","t":"thumbnail_VPFCfI-RUyrQEx-QrgTkIO.jpeg_T-q-X.webp","b":"VPFCfI-RUyrQEx-QrgTkIO.jpeg.webp"},{"n":"Сік Rich в асортименті","p":85,"d":"склянка соку- 85грн. графін 1 літр-220грн.","D":"склянка соку-\n85грн.\nграфін 1 літр-220грн.","t":"thumbnail_zPpYvld-frCdlS-kyIisov.jpeg_F-e-Y.webp","b":"zPpYvld-frCdlS-kyIisov.jpeg.webp"},{"n":"Бонаква в асортименті","p":0,"w":"0,5 л","d":"500ml. 65 грн. 330ml. скло - 80 грн.","D":"500ml. 65 грн.\n330ml. скло - 80 грн.","t":"thumbnail_GypXaMh-fGeGZEJ-pWhlXHV_original.jpeg_O-N-k.webp","b":"GypXaMh-fGeGZEJ-pWhlXHV_original.jpeg.webp"},{"n":"Моршинська б/г","p":90,"w":"0,330 л"},{"n":"Borjomi 0.5","p":160,"w":"0,33 л"},{"n":"Яблучний фреш","p":110,"w":"250 мл","t":"thumbnail_HKicNMA-MOTFxSe-fIebsOD_original.jpeg_x-I-w.webp","b":"HKicNMA-MOTFxSe-fIebsOD_original.jpeg.webp"},{"n":"Моркв‘яний фреш","p":110,"w":"250 мл","t":"thumbnail_iTeIkuh-MuFaVLL-HDsCsjl_original.jpeg_R-d-J.webp","b":"iTeIkuh-MuFaVLL-HDsCsjl_original.jpeg.webp"},{"n":"Апельсиновий фреш","p":170,"w":"250 мл","t":"thumbnail_QZDKYqT-nQkulTj-wvqllrn_original.jpeg_e-l-p.webp","b":"QZDKYqT-nQkulTj-wvqllrn_original.jpeg.webp"},{"n":"Грейпфрутовий фреш","p":180,"w":"250 мл","t":"thumbnail_xMxDuax-ReDkmIA-VvwCRpQ_original.jpeg_N-p-m.webp","b":"xMxDuax-ReDkmIA-VvwCRpQ_original.jpeg.webp"},{"n":"Класичний лимонад","p":125,"d":"До замовлення на вибір: склянка 500ml.-125грн. графін 1l.- 245 грн.","D":"До замовлення на вибір:\nсклянка 500ml.-125грн.\nграфін 1l.- 245 грн.","t":"thumbnail_IcotEuo-wHSgMSQ-KTJarMD.jpeg_Z-O-g.webp","b":"IcotEuo-wHSgMSQ-KTJarMD.jpeg.webp"},{"n":"Цитрусовий лимонад","p":125,"w":"1 л","d":"До замовлення на вибір: склянка 500ml.-125грн. графін 1l.- 245 грн.","D":"До замовлення на вибір:\nсклянка 500ml.-125грн.\nграфін 1l.- 245 грн.","t":"thumbnail_cVHlWGZ-VAbjjH-DVZbIjr.jpeg_B-j-A.webp","b":"cVHlWGZ-VAbjjH-DVZbIjr.jpeg.webp"},{"n":"Мохіто б/а","p":125,"w":"1 л","d":"До замовлення на вибір: склянка 500ml.-125грн. графін 1l.- 245грн.","D":"До замовлення на вибір:\nсклянка 500ml.-125грн.\nграфін 1l.- 245грн.","t":"thumbnail_rmHAObV-zgqofHa-qJvRBQk.jpeg_e-Y-h.webp","b":"rmHAObV-zgqofHa-qJvRBQk.jpeg.webp"},{"n":"Уманський лимонад","p":95,"t":"thumbnail_akMdxtG-CdlgFZF-WBcmbCL.jpeg_J-q-y.webp","b":"akMdxtG-CdlgFZF-WBcmbCL.jpeg.webp"}]},{"n":"Пиво пляшкове","d":"","i":[{"n":"Stella Artois 0,5","p":150,"d":"Світле фільтроване.","t":"thumbnail_eIpMCyG-bhbZPh-olyVRFg.jpeg_b-e-C.webp","b":"eIpMCyG-bhbZPh-olyVRFg.jpeg.webp"},{"n":"Stella Artois Б/А 0.33","p":85,"d":"Non alcohol, світле фільтроване.","t":"thumbnail_vBgqJsh-wJmmEFf-LGIGkCn_original.jpeg_e-W-o.webp","b":"vBgqJsh-wJmmEFf-LGIGkCn_original.jpeg.webp"},{"n":"Hoegarden 0,33","p":185,"d":"Світле нефільтроване пиво.","t":"thumbnail_bdRIBDJ-HgDxJUT-ewceWHX.jpeg_n-R-k.webp","b":"bdRIBDJ-HgDxJUT-ewceWHX.jpeg.webp"},{"n":"Hoegaarden Б/А","p":90,"w":"0,33 л","d":"Non alcohol, світле нефільтроване.","t":"thumbnail_WrbVCRI-eFHPjLr-RejaXQs_original.jpeg_x-I-m.webp","b":"WrbVCRI-eFHPjLr-RejaXQs_original.jpeg.webp"},{"n":"Corona Extra 0,35","p":185,"d":"Світле фільтроване пиво.","t":"thumbnail_efLsOZg-RVCFsGk-RISdobd.jpeg_i-F-S.webp","b":"efLsOZg-RVCFsGk-RISdobd.jpeg.webp"},{"n":"Leffe 0,33","p":185,"d":"Blonde, bruin","t":"thumbnail_Fsqefx-epjRuNS-LqxEMgk.jpeg_P-V-M.webp","b":"Fsqefx-epjRuNS-LqxEMgk.jpeg.webp"},{"n":"Віденське 0,5","p":120,"d":"Світле фільтроване пиво виробляється на місцевому заводі Уманьпиво.","D":"Світле фільтроване пиво \nвиробляється на місцевому заводі Уманьпиво.","t":"thumbnail_bWwtzm-eSvNSHI-yxNRbx.jpeg_b-T-d.webp","b":"bWwtzm-eSvNSHI-yxNRbx.jpeg.webp"},{"n":"Вайсбург Бланш 0,5","p":120,"d":"Світле нефільтроване пиво. Виробляється на місцевому заводі Уманьпиво.","D":"Світле нефільтроване пиво. \nВиробляється на місцевому заводі Уманьпиво.","t":"thumbnail_UaBbxtu-NYUnvnr-axeJEed.jpeg_Q-l-a.webp","b":"UaBbxtu-NYUnvnr-axeJEed.jpeg.webp"},{"n":"Вайсбург Бланш Б/А 0.5","p":95,"t":"thumbnail_FZxkvpp-ncTMyJD-YgzbRrD_original.jpeg_b-j-u.webp","b":"FZxkvpp-ncTMyJD-YgzbRrD_original.jpeg.webp"},{"n":"Пшеничне 0,5","p":120,"d":"Світле фільтроване та пастеризоване пиво. Виробляється на місцевому заводі Уманьпиво.","D":"Світле фільтроване та пастеризоване пиво.\nВиробляється на місцевому заводі Уманьпиво.","t":"thumbnail_YdFJHnq-HeZHdpd-SlZeUij.jpeg_M-t-i.webp","b":"YdFJHnq-HeZHdpd-SlZeUij.jpeg.webp"},{"n":"Медове 0,5","p":120,"d":"Світле фільтроване пиво з додаванням справжнього меду. Виробляється на місцевому заводі Уманьпиво.","t":"thumbnail_CNWsIHh-pQlYHIY-WKrUim.jpeg_S-u-W.webp","b":"CNWsIHh-pQlYHIY-WKrUim.jpeg.webp"},{"n":"Софіївське 0,33","p":100,"d":"Світле нефільтроване пиво з ноткою цитруса. Виробляється на місцевому заводі Уманьпиво.","t":"thumbnail_WdTlwGb-Oxmbrxq-txnFumc.jpeg_C-O-Q.webp","b":"WdTlwGb-Oxmbrxq-txnFumc.jpeg.webp"},{"n":"Пшенично-солодове 0,5","p":120},{"n":"Житнє","p":120}]},{"n":"Горілка","d":"","i":[{"n":"Finlandia original","p":65,"d":"50g-65UAN 1пляшка 500g-650 UAN","D":"50g-65UAN\n1пляшка 500g-650 UAN","t":"thumbnail_QgxNyyI-XgLkHqx-cTSANlg.jpeg_o-Y-q.webp","b":"QgxNyyI-XgLkHqx-cTSANlg.jpeg.webp"},{"n":"Koskencorva original","p":60,"d":"50g-60 UAN 1пляшка 500g-600 UAN Преміум горілка родом з Фінляндії. Виготовлена з двох основних інгрідієнтів: фінського ячменю та підземних джерельних вод. Чиста та мяка горілка.","D":"50g-60 UAN\n1пляшка 500g-600 UAN Преміум горілка родом з Фінляндії. \nВиготовлена з двох основних інгрідієнтів: фінського ячменю та підземних джерельних вод. Чиста та мяка горілка.","t":"thumbnail_XaISect-JZkvetG-ugSvRAO_original.jpeg_g-F-a.webp","b":"XaISect-JZkvetG-ugSvRAO_original.jpeg.webp"},{"n":"Nikita","p":50,"d":"50g-50 UAN 1пляшка 500g-500 UAN Горілка із чистого кукурудзяного спирту та артезіанської води. Смак горілки чистий з легкими солодкуватими відтінками кукурудзи, хліба та маку.","D":"50g-50 UAN\n1пляшка 500g-500 UAN Горілка із чистого кукурудзяного спирту та артезіанської води. Смак горілки чистий з легкими солодкуватими відтінками кукурудзи, хліба та маку.","t":"thumbnail_lkFJHwS-plXdIhJ-qYeKZsV_original.jpeg_x-e-l.webp","b":"lkFJHwS-plXdIhJ-qYeKZsV_original.jpeg.webp"},{"n":"Зубровка","p":50,"d":"50g-50 UAN 1пляшка 500g-500 UAN","D":"50g-50 UAN\n1пляшка 500g-500 UAN","t":"thumbnail_iWCgcIx-CnFjbCD-aANCHAb_original.jpeg_y-g-o.webp","b":"iWCgcIx-CnFjbCD-aANCHAb_original.jpeg.webp"},{"n":"Козацька рада","p":45,"d":"50g-45 UAN 1пляшка 500g-450 UAN","D":"50g-45 UAN\n1пляшка 500g-450 UAN","t":"thumbnail_RJvorUy-jmrGHPk-TumTFwe.jpeg_l-R-c.webp","b":"RJvorUy-jmrGHPk-TumTFwe.jpeg.webp"},{"n":"Перша Гільдія","p":45,"d":"50g-45 UAN 1пляшка 500g-450 UAN","D":"50g-45 UAN\n1пляшка 500g-450 UAN","t":"thumbnail_JtbKFDs-lLUhqIp-ZhsQCRy_original.jpeg_P-Y-D.webp","b":"JtbKFDs-lLUhqIp-ZhsQCRy_original.jpeg.webp"}]},{"n":"Коньяк","d":"","i":[{"n":"Hennessy VS","p":210,"d":"50g-210 UAN 1пляшка 500g-2100 UAN Hennessy один із найстаріших та найвідоміших французьких коньячних домів. Смак коньяку об'ємний з нотами ванілі, свіжих фруктів, легка горіхова гірчинка та післясмак солодкого меду.","D":"50g-210 UAN\n1пляшка 500g-2100 UAN Hennessy один із найстаріших та найвідоміших французьких коньячних домів. Смак коньяку об'ємний з нотами ванілі, свіжих фруктів, легка горіхова гірчинка та післясмак солодкого меду.","t":"thumbnail_zUJIgNY-YSIGQYO-ulPDHLt_original.jpeg_B-E-G.webp","b":"zUJIgNY-YSIGQYO-ulPDHLt_original.jpeg.webp"},{"n":"Аріне***","p":65,"d":"50g-65 UAN 1пляшка 500g-650UAN Вірменський коньяк. Колір темно-янтарний з золотистим відтінком та квітковим букетом з нотами шоколаду та ванілі. Смак м'який, але повний, насичений.","D":"50g-65 UAN\n1пляшка 500g-650UAN Вірменський коньяк. Колір темно-янтарний з золотистим відтінком та квітковим букетом з нотами шоколаду та ванілі. Смак м'який, але повний, насичений.","t":"thumbnail_oGsynuh-EHhmJIj-baqvHQn.jpeg_K-Q-J.webp","b":"oGsynuh-EHhmJIj-baqvHQn.jpeg.webp"},{"n":"Lesage VS","p":50,"d":"50g-50 UAN 1пляшка 500g-500 UAN Молдавський коньяк. Має гармонійне поєднання натуральних відтінків ванілі, сухофруктів і спецій в букеті. Тривалий післясмак з тонами шоколаду і сушеного винограду.","D":"50g-50 UAN\n1пляшка 500g-500 UAN Молдавський коньяк. Має гармонійне поєднання натуральних відтінків ванілі, сухофруктів і спецій в букеті. Тривалий післясмак з тонами шоколаду і сушеного винограду.","t":"thumbnail_mGVFIQT-ArAoHsH-ChlcIPm_original.jpeg_G-F-I.webp","b":"mGVFIQT-ArAoHsH-ChlcIPm_original.jpeg.webp"},{"n":"Lesage VSOP","p":60,"d":"50g-60 UAN 1пляшка 500g-600 UAN Молдавський коньяк. Має гармонійне поєднання натуральних відтінків ванілі, сухофруктів і спецій в букеті. Тривалий післясмак з тонами шоколаду і сушеного винограду.","D":"50g-60 UAN\n1пляшка 500g-600 UAN Молдавський коньяк. Має гармонійне поєднання натуральних відтінків ванілі, сухофруктів і спецій в букеті. Тривалий післясмак з тонами шоколаду і сушеного винограду.","t":"thumbnail_vEgXCly-beUibYZ-jurLIib_original.jpeg_Y-D-e.webp","b":"vEgXCly-beUibYZ-jurLIib_original.jpeg.webp"},{"n":"Легенда Вірменії 3*","p":65,"d":"50g-65 UAN 1пляшка 500g-650 UAN Це марочний коньяк, що випускається Араратський коньячним заводом. Смак, складний, м'який, з домінувальними тонами шоколаду та ванілі. Приємну збалансованість смаку додають медові, фруктові та деревні відтінки.","D":"50g-65 UAN\n1пляшка 500g-650 UAN Це марочний коньяк, що випускається Араратський коньячним заводом. Смак, складний, м'який, з домінувальними тонами шоколаду та ванілі. Приємну збалансованість смаку додають медові, фруктові та деревні відтінки.","t":"thumbnail_dnEDjnI-wvKrhtO-CWWFwkV_original.jpeg_x-B-d.webp","b":"dnEDjnI-wvKrhtO-CWWFwkV_original.jpeg.webp"},{"n":"Легенда Вірменії 5*","p":75,"d":"50g-75 UAN 1пляшка 500g-750 UAN Це марочний коньяк, що випускається Араратський коньячним заводом. Смак, складний, м'який, з домінувальними тонами шоколаду та ванілі. Приємну збалансованість смаку додають медові, фруктові та деревні відтінки.","D":"50g-75 UAN\n1пляшка 500g-750 UAN Це марочний коньяк, що випускається Араратський коньячним заводом. Смак, складний, м'який, з домінувальними тонами шоколаду та ванілі. Приємну збалансованість смаку додають медові, фруктові та деревні відтінки.","t":"thumbnail_xvGXLPn-cKRSJLh-kuQrJXt_original.jpeg_T-L-s.webp","b":"xvGXLPn-cKRSJLh-kuQrJXt_original.jpeg.webp"},{"n":"Koblevo 3*","p":50,"d":"50g-50 UAN 1пляшка 500g - 500 UAN Український коньяк. Тонкий букет з легкими тонами витримки, поєднюючий аромат степових квітів з пряним відтінком грецького горіху та сухофруктів. Смак м'ягкий, повний, гармонійний.","D":"50g-50 UAN\n1пляшка 500g - 500  UAN Український коньяк. Тонкий букет з легкими тонами витримки, поєднюючий аромат степових квітів з пряним відтінком грецького горіху та сухофруктів. Смак м'ягкий, повний, гармонійний.","t":"thumbnail_ZpjaJcH-sGKBebD-yWHsHad_original.jpeg_c-g-A.webp","b":"ZpjaJcH-sGKBebD-yWHsHad_original.jpeg.webp"},{"n":"Koblevo 5*","p":55,"d":"50g-55 UAN 1пляшка 500g-550 UAN Український коньяк. Коблево Резерв є купажем кращих коньячних спиртів з наступною витримкою у дубових бочках протягом 5 років. М'який збалансований смак приваблює елегантними квітковими та шоколадними тонами, а також нотами дуба у післясмаку.","D":"50g-55 UAN\n1пляшка 500g-550 UAN Український коньяк.\nКоблево Резерв є купажем кращих коньячних спиртів з наступною витримкою у дубових бочках протягом 5 років. М'який збалансований смак приваблює елегантними квітковими та шоколадними тонами, а також нотами дуба у післясмаку.","t":"thumbnail_Cldepye-zfHGkeN-AkTFHjb_original.jpeg_m-B-c.webp","b":"Cldepye-zfHGkeN-AkTFHjb_original.jpeg.webp"}]},{"n":"Віскі","d":"","i":[{"n":"Jack Daniels original","p":145,"w":"50 мл","d":"50g-145 UAN 1пляшка 500g-1450 UAN","D":"50g-145 UAN\n1пляшка 500g-1450 UAN","t":"thumbnail_AUoIkv-ieZYNDD-nFGslS.jpeg_r-m-J.webp","b":"AUoIkv-ieZYNDD-nFGslS.jpeg.webp"},{"n":"Jack Daniels Honey","p":145,"w":"50 мл","d":"50g-145 UAN 1пляшка 500g-1450 UAN","D":"50g-145 UAN\n1пляшка 500g-1450 UAN","t":"thumbnail_DnWzdYJ-GgVGhOX-yklaUks_g-c-R.webp","b":"DnWzdYJ-GgVGhOX-yklaUks.webp"},{"n":"Jack Daniels Fire","p":145,"w":"50 мл","d":"50g-145 UAN 1пляшка 500g-1450 UAN","D":"50g-145 UAN\n1пляшка 500g-1450 UAN","t":"thumbnail_TlHuQLN-uYlGmbA-blWEaGz_Z-b-E.webp","b":"TlHuQLN-uYlGmbA-blWEaGz.webp"},{"n":"Jameson","p":145,"d":"50g-145 UAN 1пляшка 500g-1450 UAN","D":"50g-145 UAN\n1пляшка 500g-1450  UAN","t":"thumbnail_gJIqDSF-eXyYGNp-xvMktBk.jpeg_e-o-w.webp","b":"gJIqDSF-eXyYGNp-xvMktBk.jpeg.webp"},{"n":"Red Label","p":125,"w":"50 мл","d":"50g-125 UAN 1 пляшка 500g-1250 UAN","D":"50g-125 UAN\n1 пляшка 500g-1250 UAN","t":"thumbnail_wSKmCIg-sHQnSel-FhDOZKa_k-q-e.webp","b":"wSKmCIg-sHQnSel-FhDOZKa.webp"},{"n":"Black Label","p":170,"w":"50 мл","d":"50g-170 UAN 1пляшка 500g-1700 UAN","D":"50g-170 UAN\n1пляшка 500g-1700  UAN","t":"thumbnail_FvWMCyX-vkabrSx-blFahas_B-F-N.webp","b":"FvWMCyX-vkabrSx-blFahas.webp"},{"n":"White Horse","p":120,"w":"50 мл","d":"50g-120 UAN 1пляшка 500g-1200 UAN","D":"50g-120 UAN\n1пляшка 500g-1200 UAN","t":"thumbnail_BBSzIyt-yGJlaGa-FuQAeHT_l-l-d.webp","b":"BBSzIyt-yGJlaGa-FuQAeHT.webp"}]},{"n":"Алкогольні коктейлі","d":"","i":[{"n":"Глінтвейн на червоному вині","p":220,"w":"350 мл","d":"Червоне сухе вино, вишневий сік, апельсин, кориця в паличках, кардамон, бадьян, імбир, гвоздика.","l":["new"],"t":"thumbnail_AlAefsO-zvUhpFb-xMcUomH_K-F-W.webp","b":"AlAefsO-zvUhpFb-xMcUomH.webp"},{"n":"Глінтвейн на білому вині","p":220,"w":"350 мл","d":"Біле сухе вино, яблучний сік, апельсин, кориця в паличках, кардамон, бадьян, імбир, гвоздика.","l":["new"],"t":"thumbnail_wDHbgzH-QQUhIDd-kuUolJc_U-d-N.webp","b":"wDHbgzH-QQUhIDd-kuUolJc.webp"},{"n":"Aperol Spritz","p":230,"w":"250 мл","d":"Лікер Aperol, Prosecco, тонік.","t":"thumbnail_RokFBDl-mPGIGbG-nOKxvcG.jpeg_l-E-I.webp","b":"RokFBDl-mPGIGbG-nOKxvcG.jpeg.webp"},{"n":"Irish Martini","p":195,"w":"250 мл","d":"Лікер Бейліс, віскі, кава, шоколадний сироп.","t":"thumbnail_GbJUGAo-WMTWtbJ-hYeYRzz.jpeg_I-t-d.webp","b":"GbJUGAo-WMTWtbJ-hYeYRzz.jpeg.webp"},{"n":"Pina Colada","p":220,"w":"250 мл","d":"Світлий ром, кокосовий лікер, ананасовий сік, вершки, кокосовий сироп.","t":"thumbnail_oHaaacp-HuGCFUl-LJIUDbM.jpeg_J-I-Z.webp","b":"oHaaacp-HuGCFUl-LJIUDbM.jpeg.webp"},{"n":"Michelada","p":210,"w":"450 мл","d":"Пиво Corona Extra, текіла, томатний сік, соус табаско, соус ворчесте.","l":["middle-spicy"],"t":"thumbnail_dqkprze-klxyznN-BYKuoYq.jpeg_x-e-G.webp","b":"dqkprze-klxyznN-BYKuoYq.jpeg.webp"},{"n":"Drunk Cherry","p":180,"w":"300 мл","d":"Червоне сухе вино, вишневий сік, сік лимона, вишневий сироп.","t":"thumbnail_rXVkrui-NizHztS-kXSkIHR.jpeg_z-O-I.webp","b":"rXVkrui-NizHztS-kXSkIHR.jpeg.webp"},{"n":"Ramos Gin Fizz","p":220,"w":"300 мл","d":"Джин, сік лайма, сік лимона, газована вода, вершки, цитрусовий сироп.","t":"thumbnail_kOrGNzq-cGeCml-vRETpN.jpeg_u-M-M.webp","b":"kOrGNzq-cGeCml-vRETpN.jpeg.webp"},{"n":"Mogito Cubano","p":150,"w":"300 мл","d":"Світлий ром, спрайт, лайм, мʼята.","t":"thumbnail_ikiGHhy-IPTDNee-ChmmVFw.jpeg_j-O-s.webp","b":"ikiGHhy-IPTDNee-ChmmVFw.jpeg.webp"},{"n":"Gin Tonik","p":170,"w":"200 мл","d":"Джин, тонік, лайм.","t":"thumbnail_zNGPAok-RGgClkT-JNscGFE.jpeg_a-r-J.webp","b":"zNGPAok-RGgClkT-JNscGFE.jpeg.webp"},{"n":"Cucumber Gin Tonik","p":185,"w":"200 мл","d":"Джин, тонік, свіжий огірок.","t":"thumbnail_QReOUIo-bTiXkEe-chFGTlc.jpeg_J-l-k.webp","b":"QReOUIo-bTiXkEe-chFGTlc.jpeg.webp"}]},{"n":"Алкогольні напої","d":"","i":[{"n":"Джин Gordon’s 50g","p":100,"w":"50 мл","t":"thumbnail_oCJaWzL-VqQnIuw-hVormok_R-E-y.webp","b":"oCJaWzL-VqQnIuw-hVormok.webp"},{"n":"Ром Captain Morgan White 50g","p":90,"w":"50 мл","t":"thumbnail_oHKCOGZ-tOOyIRd-ndnkDdc_I-V-N.webp","b":"oHKCOGZ-tOOyIRd-ndnkDdc.webp"},{"n":"Ром Captain Morgan Spiced Gold 50g","p":90,"w":"50 мл","t":"thumbnail_jMjjFIy-PTWjzIY-lXbELrO_m-m-s.webp","b":"jMjjFIy-PTWjzIY-lXbELrO.webp"},{"n":"Текіла Jarana Blanko 50g","p":70,"w":"50 мл","t":"thumbnail_qlIetbI-SHKribC-PibcHly_r-A-T.webp","b":"qlIetbI-SHKribC-PibcHly.webp"},{"n":"Лікер Aperol 50g","p":65,"w":"50 мл","t":"thumbnail_hHbnqGz-iMbcqcE-qIqDVwR_w-c-k.webp","b":"hHbnqGz-iMbcqcE-qIqDVwR.webp"},{"n":"Лікер Baileys 50g","p":100,"w":"50 мл","t":"thumbnail_JOJTVMJ-IsHizbY-KDGRYJL_B-G-O.webp","b":"JOJTVMJ-IsHizbY-KDGRYJL.webp"},{"n":"Лікер Jägermeister 50g","p":60,"w":"50 мл","t":"thumbnail_pRrzJzD-imDfIyS-ffstJcI_o-q-U.webp","b":"pRrzJzD-imDfIyS-ffstJcI.webp"}]},{"n":"Додатки","d":"","i":[{"n":"Лимон","p":20,"t":"thumbnail_kAWnmtN-amGftBF-sDlGWCC_F-c-X.webp","b":"kAWnmtN-amGftBF-sDlGWCC.webp"},{"n":"Мед","p":20,"t":"thumbnail_pziUmUa-sRwYtti-zJaTxju_C-D-l.webp","b":"pziUmUa-sRwYtti-zJaTxju.webp"},{"n":"Вершки","p":20,"t":"thumbnail_oGgdlIl-PoTeZEm-JqFfYbe_o-p-B.webp","b":"oGgdlIl-PoTeZEm-JqFfYbe.webp"},{"n":"Молоко","p":15,"w":"100 мл"},{"n":"Сироп","p":15,"t":"thumbnail_hwjaKRV-fbIepGe-uCVDYOY_K-g-S.webp","b":"hwjaKRV-fbIepGe-uCVDYOY.webp"}]}]},{"n":"Вино","info":"","c":[{"n":"Lettres de France, France","d":"","i":[{"n":"Lettres, червоне сухе","p":38,"w":"50 мл","d":"Сорт: Мерло, Каберне. Пляшка 400 грн.","D":"Сорт: Мерло, Каберне. \nПляшка 400 грн.","t":"thumbnail_dInaleJ-lTcfZMG-ccyNtFB.jpeg_m-J-w.webp","b":"dInaleJ-lTcfZMG-ccyNtFB.jpeg.webp"},{"n":"Lettres, біле сухе","p":38,"w":"50 мл","d":"Сорт: Уні Блан, Совіньон Блан. Пляшка 400 грн.","D":"Сорт: Уні Блан, Совіньон Блан. \nПляшка 400 грн.","t":"thumbnail_GwdJQkO-RILSLlY-gwTXUzK.jpeg_F-G-f.webp","b":"GwdJQkO-RILSLlY-gwTXUzK.jpeg.webp"},{"n":"Lettres, червоне напів солодке","p":38,"w":"50 мл","d":"Сорт: Каберне, Мерло. Пляшка 400 грн.","D":"Сорт: Каберне, Мерло.\nПляшка 400 грн.","t":"thumbnail_GsmHYUV-LpFdEav-BvgOClC.jpeg_W-p-F.webp","b":"GsmHYUV-LpFdEav-BvgOClC.jpeg.webp"},{"n":"Lettres, біле напів солодке","p":38,"w":"50 мл","d":"Сорт: Треббіано, Совіньон Блан. Пляшка 400 грн.","D":"Сорт: Треббіано, Совіньон Блан. \nПляшка 400 грн.","t":"thumbnail_xWSAkHN-MPxpbxH-Gikgvot.jpeg_k-B-y.webp","b":"xWSAkHN-MPxpbxH-Gikgvot.jpeg.webp"}]},{"n":"Corazon de longares, Spain","d":"","i":[{"n":"Corazon, червоне сухе","p":38,"w":"50 мл","d":"Сорт: Горнача, Темпранільйо, Каберне. Пляшка 400 грн.","D":"Сорт: Горнача, Темпранільйо, Каберне. \nПляшка 400 грн.","t":"thumbnail_xmplnlO-vYEbYfQ-zUcurGO.jpeg_M-l-K.webp","b":"xmplnlO-vYEbYfQ-zUcurGO.jpeg.webp"},{"n":"Corazon, червоне напів солодке","p":38,"w":"50 мл","d":"Сорт: Гренаш, Горнача. Пляшка 400 грн.","D":"Сорт: Гренаш, Горнача. \nПляшка 400 грн.","t":"thumbnail_IMSbObQ-axbIGX-eIvRjkC.jpeg_k-D-q.webp","b":"IMSbObQ-axbIGX-eIvRjkC.jpeg.webp"},{"n":"Corazon, біле сухе","p":38,"w":"50 мл","d":"Сорт: Макабео, Віура. Пляшка 400 грн.","D":"Сорт: Макабео, Віура.\nПляшка 400 грн.","t":"thumbnail_DpikHSy-kkQBkMe-bBSyFsD_N-j-G.webp","b":"DpikHSy-kkQBkMe-bBSyFsD.webp"},{"n":"Corazon, біле напів солодке","p":38,"w":"50 мл","d":"Сорт: Макабео, Віура. Пляшка 400 грн.","D":"Сорт: Макабео, Віура. \nПляшка 400 грн.","t":"thumbnail_DqBMIwN-qFzlkWt-GKKufel_a-O-V.webp","b":"DqBMIwN-qFzlkWt-GKKufel.webp"}]},{"n":"Santa Ana Torrontes, Argentina","d":"","i":[{"n":"Santa Ana Torrontes","p":53,"w":"50 мл","d":"Сорт винограду: Торонтес Пляшка 530 грн.","D":"Сорт винограду: Торонтес\nПляшка 530 грн.","t":"thumbnail_sLKknBW-zvdBsxJ-fcEiGqD_p-m-S.webp","b":"sLKknBW-zvdBsxJ-fcEiGqD.webp"},{"n":"Santa Ana Malbec","p":53,"w":"50 мл","d":"Сорт винограду: Мальбек Пляшка 530 грн.","D":"Сорт винограду: Мальбек\nПляшка 530 грн.","t":"thumbnail_kcxivRI-ANKIeEV-hDoIjar_l-u-l.webp","b":"kcxivRI-ANKIeEV-hDoIjar.webp"}]},{"n":"Besini, Georgia","d":"","i":[{"n":"Кіндзмараулі, червоне напів солодке","p":75,"w":"50 мл","d":"Сорт: Сапераві Пляшка 700 грн.","D":"Сорт: Сапераві \nПляшка 700 грн.","t":"thumbnail_DvhyADk-HCtdufC-ZzFJECJ.jpeg_W-Y-g.webp","b":"DvhyADk-HCtdufC-ZzFJECJ.jpeg.webp"},{"n":"Сапераві, червоне сухе","p":60,"w":"50 мл","d":"Сорт: Сапераві Пляшка 600 грн.","D":"Сорт: Сапераві\nПляшка 600 грн.","t":"thumbnail_gxkNWMd-xBVlGIT-lbvIYZX.jpeg_m-e-K.webp","b":"gxkNWMd-xBVlGIT-lbvIYZX.jpeg.webp"},{"n":"Цинандалі, біле сухе","p":60,"w":"50 мл","d":"Сорт: Ркацителі Пляшка 600 грн.","D":"Сорт: Ркацителі \nПляшка 600 грн.","t":"thumbnail_nbnFEJX-FcPxAXZ-balRArT.jpeg_A-S-P.webp","b":"nbnFEJX-FcPxAXZ-balRArT.jpeg.webp"},{"n":"Алазанська долина, біле напів солодке","p":60,"w":"50 мл","d":"Сорт: Ркацителі, суміш різних добірних сортів винограду. Пляшка 600 грн.","D":"Сорт: Ркацителі, суміш різних добірних сортів винограду.\nПляшка 600 грн.","t":"thumbnail_fpGhAFo-lESEaJk-OscshFC_s-b-b.webp","b":"fpGhAFo-lESEaJk-OscshFC.webp"},{"n":"Алазанська долина, червоне напів солодке","p":60,"w":"50 мл","d":"Суміш різних добірних сортів винограду. Пляшка 600 грн.","D":"Суміш різних добірних сортів винограду.\nПляшка 600 грн.","t":"thumbnail_RbUeYDL-HsmzOFG-pCepsTU.jpeg_J-k-u.webp","b":"RbUeYDL-HsmzOFG-pCepsTU.jpeg.webp"}]},{"n":"Aves del Sur, Chile","d":"","i":[{"n":"Cabernet, червоне сухе","p":53,"w":"50 мл","d":"Сорт: Каберне, Совіньон. Пляшка 560 грн.","D":"Сорт: Каберне, Совіньон.\nПляшка 560 грн.","t":"thumbnail_rpujZYR-xFnVuXg-JWMxwWn_R-I-D.webp","b":"rpujZYR-xFnVuXg-JWMxwWn.webp"},{"n":"Merlot, червоне сухе","p":53,"w":"50 мл","d":"Сорт: Мерло. Пляшка 560 грн.","D":"Сорт: Мерло.\nПляшка 560 грн.","t":"thumbnail_EKErPRR-iPnEgSj-NekzcPb.jpeg_d-p-v.webp","b":"EKErPRR-iPnEgSj-NekzcPb.jpeg.webp"},{"n":"Sauvingnon blanc, біле сухе","p":53,"w":"50 мл","d":"Сорт: Совіньон Блан Пляшка 560 грн.","D":"Сорт: Совіньон Блан \nПляшка 560 грн.","t":"thumbnail_WJXfydt-YnJvFor-Binybbr.jpeg_n-y-d.webp","b":"WJXfydt-YnJvFor-Binybbr.jpeg.webp"},{"n":"Merlot Rose р.cухе","p":53,"d":"Сорт: Мерло. Пляшка 560 грн.","D":"Сорт: Мерло.\nПляшка 560 грн."}]},{"n":"Plantaze, Balkans","d":"","i":[{"n":"Plantaze, червоне сухе","p":65,"w":"50 мл","d":"Сорт: Вранац Пляшка 650 грн.","D":"Сорт: Вранац \nПляшка 650 грн.","t":"thumbnail_BZfiIzf-vuQIkz-IrKxwRk.jpeg_D-h-v.webp","b":"BZfiIzf-vuQIkz-IrKxwRk.jpeg.webp"}]},{"n":"Castelnuovo Vino, Italy","d":"","i":[{"n":"Rosso, червоне напів солодке","p":38,"w":"50 мл","d":"Сорт: Корвіна,Рондинелла. Пляшка 400 грн.","D":"Сорт: Корвіна,Рондинелла. \nПляшка 400 грн.","t":"thumbnail_MFhkZoI-RESjiKr-diCfnwp.jpeg_Y-M-D.webp","b":"MFhkZoI-RESjiKr-diCfnwp.jpeg.webp"},{"n":"Bianco, біле напів солодке","p":38,"w":"50 мл","d":"Сорт: Гарганега, Треб‘яно. Пляшка 400 грн.","D":"Сорт: Гарганега, Треб‘яно.\nПляшка 400 грн.","t":"thumbnail_njteCHV-uGPhGCu-HCkLlvH_C-h-Q.webp","b":"njteCHV-uGPhGCu-HCkLlvH.webp"},{"n":"Merlot, червоне сухе","p":45,"w":"50 мл","d":"Сорт: Мерло. Пляшка 500 грн.","D":"Сорт: Мерло.\nПляшка 500 грн.","t":"thumbnail_RkOdGhs-yjVkeUf-oIjwjGt.jpeg_i-u-C.webp","b":"RkOdGhs-yjVkeUf-oIjwjGt.jpeg.webp"},{"n":"Pinot Grigio, біле сухе","p":48,"w":"50 мл","d":"Сорт: Піно Гріджио Пляшка 550 грн.","D":"Сорт: Піно Гріджио\nПляшка 550 грн.","t":"thumbnail_lQQrCER-nbIsERD-IaIkxb.jpeg_N-R-Z.webp","b":"lQQrCER-nbIsERD-IaIkxb.jpeg.webp"},{"n":"Bardolino ч.сухе","p":50,"d":"Сорт: Корвіна, Рондінелла, Молінара. Пляшка 550 грн.","D":"Сорт: Корвіна, Рондінелла, Молінара.\nПляшка 550 грн."}]},{"n":"Ігристі вина","d":"","i":[{"n":"Cava Brut","p":650,"w":"750 мл"},{"n":"Mas Pere Cava Brut","p":850,"t":"thumbnail_EGGMfJi-chbOyGC-FVKbWBF_c-D-N.webp","b":"EGGMfJi-chbOyGC-FVKbWBF.webp"},{"n":"Arte Latino Cava Brut","p":650,"t":"thumbnail_yenxDoz-oofEmbU-zFEUqUu_C-C-p.webp","b":"yenxDoz-oofEmbU-zFEUqUu.webp"},{"n":"Serena Prosecco","p":650,"w":"750 мл","t":"thumbnail_fkrGQpV-OOjcElq-vDwlgDu_R-q-x.webp","b":"fkrGQpV-OOjcElq-vDwlgDu.webp"},{"n":"Fonte Prosecco","p":850,"t":"thumbnail_DeoRsoe-BXABAYE-yIWpklj_V-t-G.webp","b":"DeoRsoe-BXABAYE-yIWpklj.webp"},{"n":"Cavicchioli Lambrusco Rosso","p":650,"t":"thumbnail_lrFTQqt-CzTZSCM-YdCIPDE_i-u-g.webp","b":"lrFTQqt-CzTZSCM-YdCIPDE.webp"},{"n":"Cavicchioli Lambrusco Bianco","p":650,"w":"750 мл","d":"Біле ігристе напів солодке вино. Сорт: Ламбруско, Гаспаросса.","t":"thumbnail_xNlRZzl-UCVZaIT-pJDyhP.jpeg_s-F-j.webp","b":"xNlRZzl-UCVZaIT-pJDyhP.jpeg.webp"},{"n":"Marengo Brut","p":450,"w":"750 мл","t":"thumbnail_nUjJzcp-nSGKBRu-beMNdbx_n-q-y.webp","b":"nUjJzcp-nSGKBRu-beMNdbx.webp"},{"n":"Marengo Lambrusco","p":450,"w":"750 мл"},{"n":"Fratelli Fragolino","p":450,"w":"750 мл","t":"thumbnail_UKrvBtM-vpiHUFA-TGwlqdW_i-y-E.webp","b":"UKrvBtM-vpiHUFA-TGwlqdW.webp"},{"n":"Aznauri semi-sweet","p":450,"w":"750 мл","t":"thumbnail_ElcqMOb-ReoxnBA-eILbHuy_Q-D-N.webp","b":"ElcqMOb-ReoxnBA-eILbHuy.webp"}]}]},{"n":"Кальяни","info":"","c":[{"n":"Обери свій кальян та смак","d":"","i":[{"n":"Легкий, середній, важкий","p":500,"t":"thumbnail_XFklmDI-WbpQFeG-cpLOjAG_original.jpeg_I-A-F.webp","b":"XFklmDI-WbpQFeG-cpLOjAG_original.jpeg.webp"}]}]}]}</script>
+<script>
+(function(){
+'use strict';
+var D=JSON.parse(document.getElementById('data').textContent);
+var IMG='https://cdn-media.choiceqr.com/prod-eat-benchef/menu/';
+var $=function(s){return document.querySelector(s)};
+var store={get:function(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+var RM=matchMedia('(prefers-reduced-motion: reduce)'),reduce=RM.matches;
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+var LBL={recommended:['Шеф радить',1],'new':['Новинка',1],spicy:['Гостре',0],'middle-spicy':['Пікантне',0],vegetarian:['Вегетаріанське',0],vegan:['Веганське',0]};
+function tagsHtml(m){return (m.l||[]).map(function(l){var x=LBL[l];return x?'<span class="tag'+(x[1]?' hot':'')+'">'+x[0]+'</span>':''}).join('')}
+function priceHtml(m){if(!m.p)return '';return m.p+' ₴'+(m.per?' <small>/ 100 г</small>':'')}
+
+var ALL=[];
+D.s.forEach(function(s,si){s.c.forEach(function(c,ci){c.i.forEach(function(m,ii){m.id=si+'-'+ci+'-'+ii;m.si=si;m.per=si===0&&!m.w&&/100\s?гр/i.test(m.n);ALL.push(m)})})});
+var byId={};ALL.forEach(function(m){byId[m.id]=m});
+
+/* nav */
+var nav=$('#nav');addEventListener('scroll',function(){nav.classList.toggle('solid',scrollY>40)},{passive:true});
+
+/* hero image */
+var hb=new Image();hb.onload=function(){var el=$('#heroBg');el.style.backgroundImage="url('"+D.hero+"')";el.classList.add('ok')};hb.src=D.hero;
+var tk=['Стейки з Josper','Бургери','Риба на вогні','Вино','Сніданки до 13:00','Grill set на компанію','Доставка'];
+var th=tk.map(function(t){return '<span>'+t+'</span><b></b>'}).join('');$('#ticker').innerHTML=th+th;
+document.addEventListener('visibilitychange',function(){document.body.classList.toggle('paused',document.hidden)});
+
+/* embers engine (hero + dish of the day) */
+function Embers(cv,opt){
+  var ctx=cv.getContext('2d'),P=[],W=0,H=0,dpr=Math.min(1.5,devicePixelRatio||1),run=false,raf=0,vis=true,last=0;
+  var self={boost:0,px:-999,py:-999,heat:0};
+  function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
+  function spawn(y){return{x:Math.random()*W,y:y==null?H+10:y,vx:(Math.random()-.5)*.3,vy:-(.35+Math.random()*1.1)*opt.speed,r:.8+Math.random()*2.4,l:0,ml:200+Math.random()*320,h:Math.random()}}
+  function draw(t){
+    var dt=Math.min(50,t-(last||t))/16.667;last=t;
+    ctx.clearRect(0,0,W,H);
+    var heat=Math.min(1,self.heat+self.boost);
+    var g=ctx.createRadialGradient(W*.5,H*1.05,0,W*.5,H*1.05,H*(.55+.45*heat));
+    g.addColorStop(0,'rgba(255,110,70,'+(.22+.4*heat)+')');g.addColorStop(.45,'rgba(255,80,90,'+(.07+.18*heat)+')');g.addColorStop(1,'rgba(255,80,90,0)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    if(self.px>-900){var pg=ctx.createRadialGradient(self.px,self.py,0,self.px,self.py,180);pg.addColorStop(0,'rgba(255,150,80,.16)');pg.addColorStop(1,'rgba(255,150,80,0)');ctx.fillStyle=pg;ctx.fillRect(0,0,W,H)}
+    var want=Math.round(opt.count*(1+1.6*heat));
+    while(P.length<want)P.push(spawn());
+    ctx.globalCompositeOperation='lighter';
+    for(var i=P.length-1;i>=0;i--){
+      var p=P[i];p.l+=dt;
+      var dx=p.x-self.px,dy=p.y-self.py,d2=dx*dx+dy*dy;
+      if(d2<26000){var f=(1-d2/26000)*.5;p.vx+=dx/Math.sqrt(d2+1)*f*.6;p.vy-=f*.9}
+      p.vx*=.985;p.vy*=.995;p.x+=(p.vx+Math.sin((p.l+p.h*99)*.03)*.25)*dt;p.y+=p.vy*dt*(1+heat*1.2);
+      var a=Math.sin(Math.PI*Math.min(1,p.l/p.ml));
+      if(p.l>p.ml||p.y<-20||p.x<-20||p.x>W+20){if(P.length>want)P.splice(i,1);else P[i]=spawn();continue}
+      var rr=p.r*(1+heat*.5);
+      ctx.fillStyle='rgba(255,'+(140+(p.h*80|0))+','+(70+(p.h*40|0))+','+(a*.9)+')';
+      ctx.beginPath();ctx.arc(p.x,p.y,rr,0,6.283);ctx.fill();
+      ctx.fillStyle='rgba(255,110,80,'+(a*.09)+')';ctx.beginPath();ctx.arc(p.x,p.y,rr*3,0,6.283);ctx.fill();
+    }
+    ctx.globalCompositeOperation='source-over';
+    self.boost*=Math.pow(.96,dt);
+    if(run)raf=requestAnimationFrame(draw);
+  }
+  self.start=function(){if(run||reduce||!vis)return;run=true;last=0;raf=requestAnimationFrame(draw)};
+  self.stop=function(){run=false;cancelAnimationFrame(raf)};
+  self.still=function(){size();self.heat=.25;P=[];for(var i=0;i<opt.count;i++)P.push(spawn(Math.random()*H));last=0;draw(0)};
+  size();for(var i=0;i<opt.count;i++)P.push(spawn(Math.random()*H));
+  addEventListener('resize',function(){size()});
+  if('IntersectionObserver' in window)new IntersectionObserver(function(e){vis=e[0].isIntersecting;vis?self.start():self.stop()}).observe(cv);
+  document.addEventListener('visibilitychange',function(){document.hidden?self.stop():self.start()});
+  return self;
+}
+var hero=$('#top'),E=Embers($('#embers'),{count:70,speed:1});
+if(reduce)E.still();else E.start();
+hero.addEventListener('pointermove',function(e){var r=hero.getBoundingClientRect();var nx=e.clientX-r.left,ny=e.clientY-r.top;var sp=Math.hypot(nx-E.px,ny-E.py);if(E.px>-900)E.boost=Math.min(.9,E.boost+sp*.0015);E.px=nx;E.py=ny});
+hero.addEventListener('pointerleave',function(){E.px=-999;E.py=-999});
+
+/* open status */
+function status(){
+  var p=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Kiev',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+  var h=0,m=0;p.forEach(function(x){if(x.type==='hour')h=+x.value%24;if(x.type==='minute')m=+x.value});
+  var t=h*60+m,el=$('#status'),tx;
+  if(t>=660&&t<1350){el.classList.add('on');tx=t>=1290?'Відчинено, до 22:30':(t>=720&&t<1260?'Відчинено · Josper гріє':(t<780?'Відчинено · сніданки до 13:00':'Відчинено до 22:30'))}
+  else{el.classList.remove('on');tx='Зачинено · з 11:00'}
+  $('#statusText').textContent=tx;
+}
+status();setInterval(status,60000);
+
+/* doneness */
+var DONE=[
+ ['Rare','49-52°C','Червона прохолодна серединка. Для тих, хто любить чистий смак м\'яса.','#ff6b6b','#b3303a','#d0625c'],
+ ['Medium rare','55-57°C','Рожево-червоний центр і багато соку. Саме так радить більшість шефів.','#ffa24c','#c4474a','#d98572'],
+ ['Medium','58-62°C','Рожева серединка і щільніший шматок. Золота середина.','#ffb35c','#d27a78','#cc9580'],
+ ['Medium well','63-68°C','Ледь рожевий центр, майже без соку на тарілці.','#f3b96f','#c9998c','#ad8a76'],
+ ['Well done','70°C+','Повністю просмажений, зі щільною скоринкою від вугілля.','#e6c58f','#9c7d69','#87695a']
+];
+var doneEl=$('#done');
+function setDone(v,save){var d=DONE[v],r=document.documentElement.style;r.setProperty('--heat',d[3]);r.setProperty('--core',d[4]);r.setProperty('--mid',d[5]);$('#doneName').textContent=d[0];$('#doneTemp').textContent=d[1];$('#doneText').textContent=d[2];doneEl.setAttribute('aria-valuetext',d[0]);if(save)store.set('bc_done',v)}
+doneEl.value=store.get('bc_done',1);setDone(+doneEl.value,false);
+doneEl.addEventListener('input',function(){setDone(+doneEl.value,true)});
+
+/* favourites */
+var favs=store.get('bc_favs',[]).filter(function(id){return byId[id]});
+var cur=null,dodItem=null;
+function isFav(id){return favs.indexOf(id)>-1}
+function toggleFav(id){var i=favs.indexOf(id);if(i>-1)favs.splice(i,1);else favs.push(id);store.set('bc_favs',favs);syncFav()}
+function favLabel(id){return isFav(id)?'♥ В обраному':'♡ В обране'}
+function syncFav(){
+  var c=$('#favCount');c.textContent=favs.length;c.classList.add('bump');setTimeout(function(){c.classList.remove('bump')},350);
+  document.querySelectorAll('.heart').forEach(function(b){var on=isFav(b.dataset.id);b.setAttribute('aria-pressed',on);b.setAttribute('aria-label',(on?'Прибрати з обраного: ':'Додати в обране: ')+byId[b.dataset.id].n)});
+  var sum=0;
+  $('#favList').innerHTML=favs.length?favs.map(function(id){var m=byId[id];sum+=m.p;return '<li><span>'+esc(m.n)+'</span><span class="price">'+(m.p?m.p+' ₴':'')+'</span><button data-rm="'+id+'" aria-label="Прибрати '+esc(m.n)+'">✕</button></li>'}).join(''):'<li style="display:block;border:0;color:var(--muted)">Тут поки порожньо. Тисни на сердечко біля страви, і вона збережеться тут до наступного візиту.</li>';
+  $('#favTotal').textContent=sum+' ₴';
+  if(cur)$('#dishFav').textContent=favLabel(cur.id);
+  if(dodItem)$('#dodFav').textContent=favLabel(dodItem.id);
+}
+
+/* reveal on scroll */
+var io=('IntersectionObserver' in window)&&!reduce?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'}):null;
+function watch(root){root.querySelectorAll('.card,.reveal').forEach(function(el,i){if(el.classList.contains('in'))return;if(io){if(el.classList.contains('card')){el.style.transitionDelay=(i%3*70)+'ms';el.addEventListener('transitionend',function f(){el.style.transitionDelay='';el.removeEventListener('transitionend',f)})}io.observe(el)}else el.classList.add('in')})}
+
+/* dish of the day */
+var kyivDate=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Kiev'}).format(new Date());
+var dayNum=Math.floor(Date.parse(kyivDate+'T00:00:00Z')/864e5);
+var pool=ALL.filter(function(m){return m.si===0&&m.b&&!m.na&&m.p>=200});
+dodItem=pool[(dayNum*7919)%pool.length];
+var dod=$('#dod'),dodF=Embers($('#dodFire'),{count:26,speed:.8});
+$('#dodPic').style.backgroundImage="url('"+IMG+dodItem.b+"')";
+$('#dodTags').innerHTML=tagsHtml(dodItem);$('#dodName').textContent=dodItem.n;$('#dodDesc').textContent=dodItem.d||'';
+$('#dodPrice').innerHTML=priceHtml(dodItem);$('#dodWt').textContent=dodItem.w||'';
+function nextTxt(){var p=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Kiev',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date()),h=0,m=0;p.forEach(function(x){if(x.type==='hour')h=+x.value%24;if(x.type==='minute')m=+x.value});var left=1440-(h*60+m);$('#dodNext').textContent='Нова страва дня через '+Math.floor(left/60)+' год '+(left%60)+' хв'}
+nextTxt();setInterval(nextTxt,60000);
+function light(){dod.classList.add('lit');dodF.heat=.15;store.set('bc_dod',kyivDate);syncFav()}
+if(reduce)dodF.still();
+if(store.get('bc_dod','')===kyivDate||reduce)light();
+var hold=$('#hold'),hv=0,holding=false,hraf=0,hlast=0;
+function htick(t){var dt=Math.min(50,t-(hlast||t));hlast=t;hv+=(holding?dt/1800:-dt/900);hv=Math.max(0,Math.min(1,hv));hold.style.setProperty('--h',hv.toFixed(3));dodF.heat=hv*.9;
+  if(hv>=1){holding=false;hraf=0;hlast=0;light();return}
+  if(hv>0||holding)hraf=requestAnimationFrame(htick);else{hraf=0;hlast=0}}
+function hstart(e){if(e.button>0)return;e.preventDefault();holding=true;try{hold.setPointerCapture(e.pointerId)}catch(x){}if(!hraf)hraf=requestAnimationFrame(htick)}
+function hend(){holding=false}
+hold.addEventListener('pointerdown',hstart);hold.addEventListener('pointerup',hend);hold.addEventListener('pointercancel',hend);hold.addEventListener('lostpointercapture',hend);
+hold.addEventListener('contextmenu',function(e){e.preventDefault()});
+hold.addEventListener('keydown',function(e){if((e.key===' '||e.key==='Enter')&&!e.repeat){e.preventDefault();holding=true;if(!hraf)hraf=requestAnimationFrame(htick)}});
+hold.addEventListener('keyup',function(e){if(e.key===' '||e.key==='Enter')hend()});
+$('#dodFav').addEventListener('click',function(){toggleFav(dodItem.id)});
+
+/* hits rail */
+var hits=ALL.filter(function(m){return (m.l||[]).indexOf('recommended')>-1&&m.b&&!m.na});
+$('#rail').innerHTML=hits.map(function(m){return '<button class="hit-card" data-open="'+m.id+'"><div class="ph"><img loading="lazy" decoding="async" alt="" src="'+IMG+m.b+'" onerror="this.style.opacity=0"></div><div class="cap"><div class="tags">'+tagsHtml(m)+'</div><h3>'+esc(m.n)+'</h3><span class="price">'+priceHtml(m)+'</span></div></button>'}).join('');
+function railBy(d){var r=$('#rail');r.scrollBy({left:d*Math.min(r.clientWidth*.8,640),behavior:reduce?'auto':'smooth'})}
+$('#railPrev').addEventListener('click',function(){railBy(-1)});$('#railNext').addEventListener('click',function(){railBy(1)});
+
+/* menu */
+var sec=0;
+function card(m){
+  var tags=tagsHtml(m);
+  return '<article class="card'+(m.t?'':' noimg')+(m.na?' na':'')+'"><div>'+(tags?'<div class="tags">'+tags+'</div>':'')+'<h4>'+esc(m.n)+'</h4>'+(m.d?'<p>'+esc(m.d)+'</p>':'')+'<div class="meta"><span class="price">'+priceHtml(m)+'</span>'+(m.w?'<span class="wt">'+esc(m.w)+'</span>':'')+(m.na?'<span class="wt">немає в наявності</span>':'')+'</div></div>'+(m.t?'<div class="pic"><img loading="lazy" decoding="async" alt="" src="'+IMG+m.t+'" onerror="this.parentNode.parentNode.classList.add(\'noimg\');this.parentNode.remove()"></div>':'')+'<button class="hit" data-open="'+m.id+'" aria-label="Детальніше: '+esc(m.n)+'"></button><button class="heart" data-id="'+m.id+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.500S3.500 15 3.500 9.200A4.700 4.700 0 0 1 12 6.500a4.700 4.700 0 0 1 8.500 2.700C20.500 15 12 20.500 12 20.500z"/></svg></button></article>';
+}
+function render(){
+  var q=$('#q').value.trim().toLowerCase(),html='',chips='';
+  if(q){
+    var hit=ALL.filter(function(m){return (m.n+' '+(m.d||'')).toLowerCase().indexOf(q)>-1});
+    html=hit.length?'<div class="cat"><h3>Знайдено <small>'+hit.length+'</small></h3><div class="grid">'+hit.map(card).join('')+'</div></div>':'<p class="empty">Нічого не знайшли. Спробуй інше слово.</p>';
+  }else{
+    var s=D.s[sec];
+    if(s.info)html+='<p class="secinfo">'+esc(s.info)+'</p>';
+    s.c.forEach(function(c,ci){
+      chips+='<a class="chip" href="#c'+ci+'">'+esc(c.n)+'</a>';
+      html+='<div class="cat" id="c'+ci+'"><h3>'+esc(c.n)+' <small>'+c.i.length+'</small></h3>'+(c.d?'<p class="note">'+esc(c.d)+'</p>':'')+'<div class="grid">'+c.i.map(card).join('')+'</div></div>';
+    });
+  }
+  $('#chips').innerHTML=chips;$('#chips').style.display=chips?'':'none';
+  var root=$('#list');root.innerHTML=html;watch(root);syncFav();
+}
+$('#tabs').innerHTML=D.s.map(function(s,i){return '<button class="tab" role="tab" data-s="'+i+'" aria-selected="'+(i===0)+'">'+esc(s.n)+'</button>'}).join('');
+$('#tabs').addEventListener('click',function(e){var b=e.target.closest('.tab');if(!b)return;sec=+b.dataset.s;$('#q').value='';document.querySelectorAll('.tab').forEach(function(t){t.setAttribute('aria-selected',t===b)});render();var y=$('#tabs').getBoundingClientRect().top+scrollY-90;if(scrollY>y)scrollTo({top:y,behavior:reduce?'auto':'smooth'})});
+var qt;$('#q').addEventListener('input',function(){clearTimeout(qt);qt=setTimeout(render,140)});
+
+/* dish dialog */
+var dish=$('#dish'),calcR=$('#calcR');
+function calc(){var g=+calcR.value;$('#calcW').textContent=g+' г';$('#calcSum').textContent='≈ '+Math.round(cur.p*g/100)+' ₴'}
+calcR.addEventListener('input',calc);
+function openDish(id){
+  cur=byId[id];var m=cur;
+  $('#dishPic').innerHTML=m.b?'<img alt="'+esc(m.n)+'" src="'+IMG+m.b+'" onerror="this.parentNode.style.display=\'none\'">':'';$('#dishPic').style.display=m.b?'':'none';
+  $('#dishTags').innerHTML=tagsHtml(m);$('#dishName').textContent=m.n;$('#dishDesc').textContent=m.D||m.d||'';
+  $('#dishPrice').innerHTML=priceHtml(m);$('#dishWt').textContent=m.w||'';
+  $('#calc').hidden=!m.per;if(m.per)calc();
+  $('#dishFav').textContent=favLabel(m.id);
+  if(!dish.open)dish.showModal();dish.scrollTop=0;
+}
+$('#dishFav').addEventListener('click',function(){toggleFav(cur.id)});
+document.addEventListener('click',function(e){
+  var h=e.target.closest('.heart');if(h){toggleFav(h.dataset.id);h.classList.remove('pop');void h.offsetWidth;h.classList.add('pop');return}
+  var o=e.target.closest('[data-open]');if(o){openDish(o.dataset.open);return}
+  var rm=e.target.closest('[data-rm]');if(rm){toggleFav(rm.dataset.rm);return}
+  var bk=e.target.closest('[data-book]');if(bk){e.preventDefault();document.querySelectorAll('dialog[open]').forEach(function(d){d.close()});var hn=$('#copyHint');hn.textContent='Якщо дзвінок не відкрився, скопіюй номер і набери з телефона.';hn.classList.remove('ok');$('#book').showModal();return}
+  var c=e.target.closest('[data-close]');if(c){c.closest('dialog').close();return}
+  if(e.target.tagName==='DIALOG')e.target.close();
+});
+$('#favOpen').addEventListener('click',function(){$('#drawer').showModal()});
+$('#copyNum').addEventListener('click',function(){
+  var h=$('#copyHint'),ok=function(){h.textContent='Номер скопійовано ✓';h.classList.add('ok')};
+  var fall=function(){var r=document.createRange();r.selectNodeContents($('#bookNum'));var sel=getSelection();sel.removeAllRanges();sel.addRange(r);try{document.execCommand('copy');ok()}catch(err){h.textContent='Номер виділено, натисни Ctrl+C'}};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText('0737677766').then(ok,fall)}else fall();
+});
+
+/* lucky */
+$('#lucky').addEventListener('click',function(){
+  var pl=ALL.filter(function(m){return m.si===0&&m.b&&!m.na&&m.p>=170});
+  var n=reduce?1:7,k=0;(function spin(){openDish(pl[Math.floor(Math.random()*pl.length)].id);if(++k<n)setTimeout(spin,90+k*35)})();
+});
+
+render();watch(document);
+})();
+</script>
+</body>
+</html>
