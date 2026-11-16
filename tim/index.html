@@ -673,13 +673,13 @@ try{var t=localStorage.getItem('tim_theme');if(!t)t=matchMedia('(prefers-color-s
 </dialog>
 
 <dialog class="dlg order" id="order" aria-labelledby="orderH">
-  <div class="hd"><button class="x" data-close aria-label="Закрити">✕</button><span class="ico"><svg aria-hidden="true" width="28" height="28"><use href="#i-net"/></svg></span><h3 id="orderH">Заявка на підключення</h3><p style="margin:8px 0 0;color:rgba(255,255,255,.75)" id="orderSub">Залиште адресу й телефон, і ми вам передзвонимо.</p></div>
+  <div class="hd"><button class="x" data-close aria-label="Закрити">✕</button><span class="ico"><svg aria-hidden="true" width="28" height="28"><use href="#i-net"/></svg></span><h3 id="orderH">Заявка на підключення</h3><p style="margin:8px 0 0;color:rgba(255,255,255,.75)" id="orderSub">Зателефонуйте нам або замовте дзвінок.</p></div>
   <div class="bd">
     <div class="otabs" role="tablist">
-      <button role="tab" aria-selected="true" data-ot="cb">Замовити дзвінок</button>
-      <button role="tab" aria-selected="false" data-ot="call">Зателефонувати</button>
+      <button role="tab" aria-selected="true" data-ot="call">Зателефонувати</button>
+      <button role="tab" aria-selected="false" data-ot="cb">Замовити дзвінок</button>
     </div>
-    <div data-op="cb">
+    <div data-op="cb" hidden>
       <form id="cbForm" novalidate>
         <label class="fl"><span>Населений пункт</span>
           <input name="city" list="cities" required autocomplete="address-level2" placeholder="Оберіть або впишіть">
@@ -707,7 +707,7 @@ try{var t=localStorage.getItem('tim_theme');if(!t)t=matchMedia('(prefers-color-s
         <button class="btn btn-line" type="button" id="cbBack" style="width:100%;margin-top:10px">Змінити дані</button>
       </div>
     </div>
-    <div data-op="call" hidden>
+    <div data-op="call">
       <a class="num" href="tel:0971992299">(097) 199-22-99<small>Київстар · багатоканальний</small></a>
       <a class="num" href="tel:0931992299">(093) 199-22-99<small>lifecell · багатоканальний</small></a>
       <a class="num" href="tel:0991992299">(099) 199-22-99<small>Vodafone · багатоканальний</small></a>
@@ -895,7 +895,7 @@ calc();
   var dlg=$('#order'),form=$('#cbForm'),done=$('#cbDone'),err=$('#cbErr');
   function tab(k){dlg.querySelectorAll('.otabs [data-ot]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.ot===k)});dlg.querySelectorAll('[data-op]').forEach(function(p){p.hidden=p.dataset.op!==k})}
   dlg.querySelector('.otabs').addEventListener('click',function(e){var b=e.target.closest('[data-ot]');if(b)tab(b.dataset.ot)});
-  window.__orderReset=function(){tab('cb');form.hidden=false;done.hidden=true;err.textContent=''};
+  window.__orderReset=function(){tab('call');form.hidden=false;done.hidden=true;err.textContent=''};
   form.addEventListener('submit',function(e){
     e.preventDefault();var f=form.elements,bad=[];
     ['city','street','house','phone'].forEach(function(n){var ok=f[n].value.trim().length>0;f[n].setAttribute('aria-invalid',!ok);if(!ok)bad.push(n)});
@@ -918,7 +918,7 @@ calc();
 /* dialogs and clicks */
 document.addEventListener('click',function(e){
   var o=e.target.closest('[data-order]');
-  if(o){e.preventDefault();document.querySelectorAll('dialog[open]').forEach(function(d){d.close()});var nm=o.getAttribute('data-order');$('#order').dataset.tariff=nm||'';$('#orderSub').textContent=nm?'Тариф «'+nm+'». Залиште адресу й телефон, і ми вам передзвонимо.':'Залиште адресу й телефон, і ми вам передзвонимо.';window.__orderReset();$('#order').showModal();return}
+  if(o){e.preventDefault();document.querySelectorAll('dialog[open]').forEach(function(d){d.close()});var nm=o.getAttribute('data-order');$('#order').dataset.tariff=nm||'';$('#orderSub').textContent=nm?'Тариф «'+nm+'». Зателефонуйте нам або замовте дзвінок.':'Зателефонуйте нам або замовте дзвінок.';window.__orderReset();$('#order').showModal();return}
   var s=e.target.closest('[data-svc]');if(s){openSvc(+s.dataset.svc);return}
   var c=e.target.closest('[data-close]');if(c){var dl=c.closest('dialog');if(dl)dl.close();return}
   if(e.target.tagName==='DIALOG')e.target.close();
