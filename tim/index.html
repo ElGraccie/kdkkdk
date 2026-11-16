@@ -101,6 +101,14 @@ section{padding:96px 0}
 .gauge .read{position:absolute;inset:auto 0 8%;text-align:center}
 .gauge .read b{display:block;font-family:var(--disp);font-weight:800;font-size:clamp(2.6rem,6vw,3.6rem);letter-spacing:-.04em;line-height:1}
 .gauge .read span{font-family:var(--mono);font-size:.78rem;color:var(--muted-d);letter-spacing:.1em}
+.gsel{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);margin-bottom:18px}
+.gsel button{display:flex;flex-direction:column;align-items:center;gap:2px;min-height:58px;justify-content:center;border-radius:13px;color:rgba(255,255,255,.7);transition:background .4s var(--ease),color .3s var(--ease),box-shadow .4s var(--ease)}
+.gsel button b{font-family:var(--disp);font-size:1.05rem}
+.gsel button span{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;opacity:.8}
+.gsel button:hover{color:#fff}
+.gsel button[aria-checked=true]{background:var(--grad);color:#fff;box-shadow:0 10px 26px -10px rgba(34,199,240,.7)}
+.gname{text-align:center;margin:16px 0 0;font-size:.85rem;color:var(--muted-d)}
+.gbtn{width:100%;margin-top:12px}
 .gauge-foot{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:20px}
 .gauge-foot div{text-align:center;padding:12px 6px;border-radius:14px;background:rgba(255,255,255,.05)}
 .gauge-foot b{display:block;font-family:var(--disp);font-size:1.15rem}
@@ -352,8 +360,12 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
         <span class="chip"><svg aria-hidden="true"><use href="#i-check"/></svg>Особистий кабінет</span>
       </div>
     </div>
-    <div class="gauge-card rise d5" aria-label="Швидкість до 1000 Мбіт/с">
-      <div class="gauge">
+    <div class="gauge-card rise d5">
+      <div class="gsel" role="radiogroup" aria-label="Оберіть тариф">
+        <button role="radio" aria-checked="false" data-g="std"><b>Стандарт</b><span>300 Мбіт/с</span></button>
+        <button role="radio" aria-checked="true" data-g="prem"><b>Преміум</b><span>1000 Мбіт/с</span></button>
+      </div>
+      <div class="gauge" aria-live="polite">
         <svg viewBox="0 0 320 200" aria-hidden="true">
           <path class="trk" d="M30 180 A130 130 0 0 1 290 180"/>
           <path class="val" id="gVal" d="M30 180 A130 130 0 0 1 290 180" pathLength="440"/>
@@ -361,10 +373,12 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
         <div class="read"><b id="gNum">0</b><span>МБІТ/С</span></div>
       </div>
       <div class="gauge-foot">
-        <div><b>від 300</b><span>грн/міс</span></div>
-        <div><b>200</b><span>каналів ТБ</span></div>
+        <div><b id="gPrice">99 грн</b><span id="gPriceL">перші 6 міс, далі 450</span></div>
+        <div><b id="gExtra">200</b><span id="gExtraL">каналів ТБ у подарунок</span></div>
         <div><b>0 грн</b><span>підключення</span></div>
       </div>
+      <p class="gname" id="gName">Тариф «Стандарт Гігабіт»</p>
+      <button class="btn btn-blue gbtn" id="gBtn" data-order="Стандарт Гігабіт">Підключити Преміум</button>
     </div>
   </div>
 </header>
@@ -609,11 +623,29 @@ $('#burger').addEventListener('click',function(){$('#mnav').showModal()});
   document.addEventListener('visibilitychange',function(){document.hidden?stop():start()});
 })();
 
-/* gauge */
+/* gauge with tariff switch */
 (function(){
-  var v=$('#gVal'),n=$('#gNum'),T=1000;
-  if(reduce){v.style.strokeDashoffset=0;n.textContent=T;return}
-  var t0=null;setTimeout(function(){requestAnimationFrame(function step(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/1800),e=1-Math.pow(1-k,3);v.style.strokeDashoffset=440*(1-e);n.textContent=Math.round(T*e);if(k<1)requestAnimationFrame(step)})},500);
+  var v=$('#gVal'),n=$('#gNum'),cur=0,anim=0;
+  var G={std:{sp:300,price:'300 грн',priceL:'на місяць',extra:'PON',extraL:'оптика до дверей',name:'Тариф «Стандарт»',order:'Стандарт',btn:'Підключити Стандарт'},
+         prem:{sp:1000,price:'99 грн',priceL:'перші 6 міс, далі 450',extra:'200',extraL:'каналів ТБ у подарунок',name:'Тариф «Стандарт Гігабіт»',order:'Стандарт Гігабіт',btn:'Підключити Преміум'}};
+  function draw(x){v.style.strokeDashoffset=440*(1-x/1000);n.textContent=Math.round(x)}
+  function go(to,delay){
+    cancelAnimationFrame(anim);
+    if(reduce){cur=to;draw(to);return}
+    var from=cur,t0=null,dur=900+Math.abs(to-from)*.6;
+    setTimeout(function(){anim=requestAnimationFrame(function st(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-k,3);cur=from+(to-from)*e;draw(cur);if(k<1)anim=requestAnimationFrame(st)})},delay||0);
+  }
+  function pick(key,delay){
+    var g=G[key];
+    document.querySelectorAll('.gsel button').forEach(function(b){b.setAttribute('aria-checked',b.dataset.g===key)});
+    $('#gPrice').textContent=g.price;$('#gPriceL').textContent=g.priceL;$('#gExtra').textContent=g.extra;$('#gExtraL').textContent=g.extraL;
+    $('#gName').textContent=g.name;var btn=$('#gBtn');btn.textContent=g.btn;btn.setAttribute('data-order',g.order);
+    go(g.sp,delay);
+  }
+  var sel=document.querySelector('.gsel');
+  sel.addEventListener('click',function(e){var b=e.target.closest('[data-g]');if(b)pick(b.dataset.g)});
+  sel.addEventListener('keydown',function(e){if(e.key==='ArrowLeft'||e.key==='ArrowRight'){var k=sel.querySelector('[aria-checked=true]').dataset.g==='std'?'prem':'std';pick(k);sel.querySelector('[data-g='+k+']').focus()}});
+  draw(0);pick('prem',500);
 })();
 
 /* services */
