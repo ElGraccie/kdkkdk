@@ -51,6 +51,9 @@ h1,h2,h3{font-family:var(--disp);font-weight:800;line-height:1.04;margin:0;lette
 .nav{position:fixed;inset:12px 0 auto;z-index:40;pointer-events:none}
 .nav .bar{pointer-events:auto;display:flex;align-items:center;gap:10px;height:60px;padding:0 8px 0 18px;border-radius:999px;background:rgba(21,17,15,.62);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(18px) saturate(1.3);transition:background .4s var(--ease)}
 .nav.solid .bar{background:rgba(21,17,15,.86)}
+.nav::before{content:"";position:absolute;left:0;right:0;top:-12px;height:84px;background:rgba(21,17,15,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);opacity:0;transition:opacity .4s var(--ease)}
+.nav.solid::before{opacity:1}
+.nav .bar{position:relative}
 .logo{font-family:var(--logo);font-weight:800;font-size:1.3rem;letter-spacing:-.04em;text-decoration:none;display:flex;align-items:center;gap:8px;margin-right:auto;white-space:nowrap}
 .logo svg{width:22px;height:22px}
 .links{display:none;gap:4px}
@@ -177,12 +180,12 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .tab{flex:none;min-height:46px;padding:0 20px;border-radius:999px;font-weight:700;font-size:.94rem;color:var(--muted);transition:background .35s var(--ease),color .35s var(--ease)}
 .tab:hover{color:var(--bone)}
 .tab[aria-selected=true]{background:var(--grad);color:var(--ink)}
-.tools{position:sticky;top:80px;z-index:20;margin:16px -16px 0;padding:10px 16px;background:linear-gradient(var(--canvas) 70%,transparent)}
+.tools{margin:18px 0 0}
 .search{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line-strong);border-radius:16px;padding:0 16px;transition:border-color .3s var(--ease),box-shadow .3s var(--ease)}
 .search:focus-within{border-color:var(--heat);box-shadow:0 0 0 4px color-mix(in srgb,var(--heat) 18%,transparent)}
 .search input{flex:1;min-width:0;height:48px;background:none;border:0;outline:0;color:var(--bone);font:inherit}
 .search input::placeholder{color:var(--muted)}
-.chips{display:flex;gap:6px;overflow-x:auto;margin-top:10px;scrollbar-width:none}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
 .chip{flex:none;min-height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--line);font-size:.84rem;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;white-space:nowrap;transition:color .3s var(--ease),border-color .3s var(--ease)}
 .chip:hover{color:var(--bone);border-color:var(--heat)}
 .secinfo{color:var(--muted);margin:18px 0 0;max-width:70ch;font-size:.95rem}
@@ -221,6 +224,13 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .heart.pop{animation:pop .5s var(--ease-out)}
 @keyframes pop{40%{transform:scale(1.35)}}
 .empty{padding:50px 0;color:var(--muted);text-align:center}
+
+/* back to menu */
+.tomenu{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:35;display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 20px 0 16px;border-radius:999px;background:var(--grad);color:var(--ink);font-weight:700;font-size:.95rem;box-shadow:0 12px 30px -8px rgba(0,0,0,.6),0 8px 24px -10px color-mix(in srgb,var(--heat2) 70%,transparent);opacity:0;transform:translateY(20px) scale(.9);pointer-events:none;transition:opacity .4s var(--ease-out),transform .5s var(--ease-out)}
+.tomenu.show{opacity:1;transform:none;pointer-events:auto}
+.tomenu:hover{transform:translateY(-2px)}
+.tomenu svg{width:18px;height:18px}
+body:has(dialog[open]) .tomenu{opacity:0;pointer-events:none}
 
 /* dialogs */
 dialog{border:0;padding:0;color:var(--bone);background:var(--panel);max-width:none}
@@ -288,8 +298,11 @@ dialog::backdrop{background:rgba(12,9,8,.74);backdrop-filter:blur(6px)}
 .cta .in-box{position:relative;overflow:hidden;border-radius:36px;padding:clamp(40px,7vw,90px) 24px;text-align:center;background:var(--panel);border:1px solid var(--line);isolation:isolate}
 .cta .in-box::before{content:"";position:absolute;inset:auto -10% -60%;height:120%;z-index:-1;background:radial-gradient(50% 50% at 50% 50%,color-mix(in srgb,var(--heat2) 40%,transparent),color-mix(in srgb,var(--heat) 18%,transparent) 50%,transparent 75%);animation:glow 6s -2s ease-in-out infinite alternate}
 @keyframes glow{to{opacity:.6;transform:scale(1.08)}}
-.cta h2{font-family:var(--logo);font-size:clamp(2.6rem,8vw,6rem);letter-spacing:-.05em;margin:14px 0 28px}
-footer.site{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--muted);font-size:.84rem}
+.cta h2{font-family:var(--logo);font-size:clamp(2.6rem,8vw,6rem);line-height:.95;letter-spacing:-.05em;margin:14px 0 14px}
+.cta h2 .grad-text{padding-right:.05em;white-space:nowrap}
+@media (max-width:640px){.cta h2 .grad-text{display:block}}
+.cta-sub{color:var(--muted);margin:0 0 28px;font-size:1rem}
+footer.site{border-top:1px solid var(--line);padding:26px 0 96px;color:var(--muted);font-size:.84rem}
 footer.site .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
 footer.site a{text-decoration:none}footer.site a:hover{color:var(--bone)}
 
@@ -410,7 +423,6 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
       </div>
       <div class="tabs" role="tablist" aria-label="Розділи меню" id="tabs"></div>
       <div class="tools">
-        <label class="search"><span aria-hidden="true">⌕</span><input id="q" type="search" placeholder="Пошук: рібай, цезар, лате..." aria-label="Пошук у меню" autocomplete="off"></label>
         <nav class="chips" id="chips" aria-label="Категорії"></nav>
       </div>
       <div id="list" aria-live="polite"></div>
@@ -449,7 +461,8 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
     <div class="wrap">
       <div class="in-box reveal">
         <div class="kicker">Вугілля вже гаряче</div>
-        <h2>Стіл для тебе є</h2>
+        <h2>Приходь <span class="grad-text">на вогник</span></h2>
+        <p class="cta-sub">Щодня 11:00-22:30 · Садова, 20, Умань</p>
         <button class="btn btn-fire" data-book>Забронювати стіл</button>
       </div>
     </div>
@@ -457,6 +470,8 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
 </main>
 
 <footer class="site"><div class="wrap"><span>Ben Chef · Садова, 20, Умань</span><a href="https://www.instagram.com/ben_chef_/" target="_blank" rel="noopener">Instagram @ben_chef_</a><span>Meat · Burgers · Wine</span></div></footer>
+
+<button class="tomenu" id="toMenu" aria-label="Повернутися до вибору меню"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Меню</button>
 
 <dialog class="dish" id="dish" aria-labelledby="dishName">
   <button class="x" data-close aria-label="Закрити">✕</button>
@@ -660,7 +675,7 @@ function card(m){
   return '<article class="card'+(m.t?'':' noimg')+(m.na?' na':'')+'"><div>'+(tags?'<div class="tags">'+tags+'</div>':'')+'<h4>'+esc(m.n)+'</h4>'+(m.d?'<p>'+esc(m.d)+'</p>':'')+'<div class="meta"><span class="price">'+priceHtml(m)+'</span>'+(m.w?'<span class="wt">'+esc(m.w)+'</span>':'')+(m.na?'<span class="wt">немає в наявності</span>':'')+'</div></div>'+(m.t?'<div class="pic"><img loading="lazy" decoding="async" alt="" src="'+IMG+m.t+'" onerror="this.parentNode.parentNode.classList.add(\'noimg\');this.parentNode.remove()"></div>':'')+'<button class="hit" data-open="'+m.id+'" aria-label="Детальніше: '+esc(m.n)+'"></button><button class="heart" data-id="'+m.id+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.500S3.500 15 3.500 9.200A4.700 4.700 0 0 1 12 6.500a4.700 4.700 0 0 1 8.500 2.700C20.500 15 12 20.500 12 20.500z"/></svg></button></article>';
 }
 function render(){
-  var q=$('#q').value.trim().toLowerCase(),html='',chips='';
+  var q='',html='',chips='';
   if(q){
     var hit=ALL.filter(function(m){return (m.n+' '+(m.d||'')).toLowerCase().indexOf(q)>-1});
     html=hit.length?'<div class="cat"><h3>Знайдено <small>'+hit.length+'</small></h3><div class="grid">'+hit.map(card).join('')+'</div></div>':'<p class="empty">Нічого не знайшли. Спробуй інше слово.</p>';
@@ -676,8 +691,7 @@ function render(){
   var root=$('#list');root.innerHTML=html;watch(root);syncFav();
 }
 $('#tabs').innerHTML=D.s.map(function(s,i){return '<button class="tab" role="tab" data-s="'+i+'" aria-selected="'+(i===0)+'">'+esc(s.n)+'</button>'}).join('');
-$('#tabs').addEventListener('click',function(e){var b=e.target.closest('.tab');if(!b)return;sec=+b.dataset.s;$('#q').value='';document.querySelectorAll('.tab').forEach(function(t){t.setAttribute('aria-selected',t===b)});render();var y=$('#tabs').getBoundingClientRect().top+scrollY-90;if(scrollY>y)scrollTo({top:y,behavior:reduce?'auto':'smooth'})});
-var qt;$('#q').addEventListener('input',function(){clearTimeout(qt);qt=setTimeout(render,140)});
+$('#tabs').addEventListener('click',function(e){var b=e.target.closest('.tab');if(!b)return;sec=+b.dataset.s;document.querySelectorAll('.tab').forEach(function(t){t.setAttribute('aria-selected',t===b)});render();var y=$('#tabs').getBoundingClientRect().top+scrollY-90;if(scrollY>y)scrollTo({top:y,behavior:reduce?'auto':'smooth'})});
 
 /* dish dialog */
 var dish=$('#dish'),calcR=$('#calcR');
@@ -713,6 +727,12 @@ $('#lucky').addEventListener('click',function(){
   var pl=ALL.filter(function(m){return m.si===0&&m.b&&!m.na&&m.p>=170});
   var n=reduce?1:7,k=0;(function spin(){openDish(pl[Math.floor(Math.random()*pl.length)].id);if(++k<n)setTimeout(spin,90+k*35)})();
 });
+
+/* back to menu button */
+var toMenu=$('#toMenu'),tabsEl=$('#tabs'),tmOn=false;
+function tmCheck(){var r=tabsEl.getBoundingClientRect(),on=r.bottom<0;if(on!==tmOn){tmOn=on;toMenu.classList.toggle('show',on)}}
+addEventListener('scroll',tmCheck,{passive:true});tmCheck();
+toMenu.addEventListener('click',function(){var y=$('#menu').getBoundingClientRect().top+scrollY-90;scrollTo({top:y,behavior:reduce?'auto':'smooth'})});
 
 render();watch(document);
 })();
