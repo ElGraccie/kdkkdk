@@ -286,10 +286,29 @@ details.equip[open] summary i{transform:rotate(45deg)}
 .cta h2{font-size:clamp(2.2rem,6vw,4.4rem);font-weight:800;margin:14px 0 14px}
 .cta p{color:rgba(255,255,255,.78);margin:0 auto 28px;max-width:44ch}
 .cta .row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
-footer{background:var(--navy);color:var(--muted-d);padding:40px 0 50px;font-size:.88rem}
+footer{background:var(--navy);color:var(--muted-d);padding:40px 0 100px;font-size:.88rem}
 footer .wrap{display:flex;flex-wrap:wrap;gap:14px 30px;justify-content:space-between;align-items:center}
 footer a{text-decoration:none}footer a:hover{color:#fff}
 footer .logo{margin:0}
+
+/* floating contact */
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:45;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.fab-main{display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 20px 0 16px;border-radius:999px;background:var(--grad);color:#fff;font-weight:700;box-shadow:0 14px 34px -10px rgba(29,92,255,.75);transition:transform .4s var(--ease-out),box-shadow .4s var(--ease)}
+.fab-main:hover{transform:translateY(-2px)}
+.fab-main svg{width:22px;height:22px}
+.fab-main .ring{position:absolute;inset:0;border-radius:999px;box-shadow:0 0 0 0 rgba(34,199,240,.5);animation:fabp 2.6s -1s infinite;pointer-events:none}
+@keyframes fabp{70%,100%{box-shadow:0 0 0 14px rgba(34,199,240,0)}}
+.fab-main{position:relative}
+.fab-list{display:flex;flex-direction:column;align-items:flex-end;gap:8px;opacity:0;transform:translateY(10px) scale(.96);transform-origin:bottom right;pointer-events:none;transition:opacity .35s var(--ease-out),transform .45s var(--ease-out)}
+.fab.open .fab-list{opacity:1;transform:none;pointer-events:auto}
+.fab-list a{display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 18px 0 14px;border-radius:999px;color:#fff;font-weight:700;text-decoration:none;box-shadow:0 10px 26px -10px rgba(0,0,0,.5);transition:transform .35s var(--ease-out)}
+.fab-list a:hover{transform:translateX(-3px)}
+.fab-list a svg{width:20px;height:20px}
+.fab-list .vb{background:#7360f2}.fab-list .tg{background:#229ed9}.fab-list .cl{background:var(--navy2)}
+.fab.open .fab-main .ring{display:none}
+.fab .xi{display:none}.fab.open .ci{display:none}.fab.open .xi{display:block}
+body:has(dialog[open]) .fab{opacity:0;pointer-events:none}
+@media (max-width:480px){.fab-main .lbl{display:none}.fab-main{padding:0;width:58px;justify-content:center}}
 
 /* dialogs */
 dialog{border:0;padding:0;color:var(--ink);background:var(--card);max-width:none}
@@ -402,7 +421,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
       <div class="gauge-foot">
         <div><b id="gPrice">99 грн</b><span id="gPriceL">перші 6 міс, далі 450</span></div>
         <div><b id="gExtra">200</b><span id="gExtraL">каналів ТБ у подарунок</span></div>
-        <div><b>0 грн</b><span>підключення</span></div>
+        <div><b id="gConn">PON</b><span id="gConnL">0 грн підключення</span></div>
       </div>
       <p class="gname" id="gName">Тариф «Стандарт Гігабіт»</p>
       <button class="btn btn-blue gbtn" id="gBtn" data-order="Стандарт Гігабіт">Підключити Преміум</button>
@@ -575,6 +594,15 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
   </div>
 </footer>
 
+<div class="fab" id="fab">
+  <div class="fab-list" id="fabList" role="menu" aria-label="Зв'язатися з оператором">
+    <a class="vb" role="menuitem" href="viber://pa?chatURI=tim_support_bot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-7l-5 4v-4H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/></svg>Viber</a>
+    <a class="tg" role="menuitem" href="https://t.me/tim_support_bot" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 4L3 11l6 2 2 6 3-4 5 4z"/><path d="M9 13l12-9"/></svg>Telegram</a>
+    <a class="cl" role="menuitem" href="tel:0971992299"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h3l2 5-2.500 1.500a11 11 0 0 0 7 7L16 14l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg>(097) 199-22-99</a>
+  </div>
+  <button class="fab-main" id="fabBtn" aria-expanded="false" aria-controls="fabList"><span class="ring"></span><svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.600 7.100L4 20.500l1.400-4.700A8 8 0 1 1 21 12z"/><path d="M8.500 11h.01M12 11h.01M15.500 11h.01"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="lbl">Зв'язатися з оператором</span></button>
+</div>
+
 <dialog class="mnav" id="mnav" aria-label="Меню">
   <button class="x" data-close aria-label="Закрити" style="color:#fff;background:rgba(255,255,255,.1)">✕</button>
   <a href="#services" data-close>Послуги</a><a href="#tariffs" data-close>Тарифи</a><a href="#pick" data-close>Підбір швидкості</a><a href="#pay" data-close>Оплата</a><a href="#news" data-close>Новини</a><a href="#contacts" data-close>Контакти</a>
@@ -660,10 +688,10 @@ $('#burger').addEventListener('click',function(){$('#mnav').showModal()});
 (function(){
   var v=$('#gVal'),n=$('#gNum'),cur=0,anim=0;
   var G={
-    std:{flat:{sp:300,price:'300 грн',priceL:'на місяць',extra:'PON',extraL:'оптика до дверей',name:'Тариф «Стандарт» · квартира',order:'Стандарт',btn:'Підключити Стандарт'},
-         house:{sp:300,price:'350 грн',priceL:'на місяць',extra:'PON',extraL:'оптика до будинку',name:'Тариф «Стандарт Приватний» · будинок',order:'Стандарт Приватний',btn:'Підключити Стандарт'}},
-    prem:{flat:{sp:1000,price:'99 грн',priceL:'перші 6 міс, далі 450',extra:'200',extraL:'каналів ТБ у подарунок',name:'Тариф «Стандарт Гігабіт» · квартира',order:'Стандарт Гігабіт',btn:'Підключити Преміум'},
-          house:{sp:1000,price:'99 грн',priceL:'перші 6 міс, далі 470',extra:'PON',extraL:'оптика до будинку',name:'Тариф «Приват Преміум» · будинок',order:'Приват Преміум',btn:'Підключити Преміум'}}};
+    std:{flat:{sp:300,price:'300 грн',priceL:'на місяць',extra:'PON',extraL:'оптика до дверей',conn:'0 грн',connL:'підключення',name:'Тариф «Стандарт» · квартира',order:'Стандарт',btn:'Підключити Стандарт'},
+         house:{sp:300,price:'350 грн',priceL:'на місяць',extra:'PON',extraL:'оптика до будинку',conn:'0 грн',connL:'підключення',name:'Тариф «Стандарт Приватний» · будинок',order:'Стандарт Приватний',btn:'Підключити Стандарт'}},
+    prem:{flat:{sp:1000,price:'99 грн',priceL:'перші 6 міс, далі 450',extra:'200',extraL:'каналів ТБ у подарунок',conn:'PON',connL:'оптика, підключення 0 грн',name:'Тариф «Стандарт Гігабіт» · квартира',order:'Стандарт Гігабіт',btn:'Підключити Преміум'},
+          house:{sp:1000,price:'99 грн',priceL:'перші 6 міс, далі 470',extra:'200',extraL:'каналів ТБ у подарунок',conn:'PON',connL:'оптика, підключення 0 грн',name:'Тариф «Приват Преміум» · будинок',order:'Приват Преміум',btn:'Підключити Преміум'}}};
   var gk='prem',hk='flat';
   function draw(x){v.style.strokeDashoffset=440*(1-x/1000);n.textContent=Math.round(x)}
   function go(to,delay){
@@ -678,7 +706,7 @@ $('#burger').addEventListener('click',function(){$('#mnav').showModal()});
     document.querySelectorAll('.hsel button').forEach(function(b){b.setAttribute('aria-checked',b.dataset.h===hk)});
     document.querySelector('.gsel [data-g=std] span').textContent=G.std[hk].price.replace(' грн','')+' грн · 300 Мбіт/с';
     document.querySelector('.gsel [data-g=prem] span').textContent=(hk==='flat'?'450':'470')+' грн · 1000 Мбіт/с';
-    $('#gPrice').textContent=g.price;$('#gPriceL').textContent=g.priceL;$('#gExtra').textContent=g.extra;$('#gExtraL').textContent=g.extraL;
+    $('#gPrice').textContent=g.price;$('#gPriceL').textContent=g.priceL;$('#gExtra').textContent=g.extra;$('#gExtraL').textContent=g.extraL;$('#gConn').textContent=g.conn;$('#gConnL').textContent=g.connL;
     $('#gName').textContent=g.name;var btn=$('#gBtn');btn.textContent=g.btn;btn.setAttribute('data-order',g.order);
     go(g.sp,delay);
   }
@@ -708,7 +736,7 @@ var T={
   {n:'Стандарт',sp:'300',f:['Безлімітний інтернет','PON підключення'],pr:300},
   {n:'Стандарт Гігабіт',sp:'1000',f:['Безлімітний інтернет','PON підключення','200 телеканалів'],pr:99,old:450,hot:1,flag:'Акція',promo:'Спеціальна ціна для нових абонентів перші 6 місяців.'},
   {n:'Стандарт Приватний',sp:'300',f:['Для приватного будинку','Безлімітний інтернет','PON підключення'],pr:350},
-  {n:'Приват Преміум',sp:'1000',f:['Для приватного будинку','Безлімітний інтернет','PON підключення'],pr:99,old:470,flag:'Акція',promo:'Спеціальна ціна для нових абонентів перші 6 місяців.'}],
+  {n:'Приват Преміум',sp:'1000',f:['Для приватного будинку','Безлімітний інтернет','PON підключення','200 телеканалів'],pr:99,old:470,flag:'Акція',promo:'Спеціальна ціна для нових абонентів перші 6 місяців.'}],
   eq:[['Реальна IP-адреса для фізичних осіб','60 грн'],['Реальна IP-адреса для юридичних осіб','100 грн']],eqt:'Послуги'},
  biz:{c:'c4',note:'Тарифи діють з 01.05.2026 · м. Умань · юридичні особи',p:[
   {n:'Офіс Стандарт',sp:'300',f:['Безлімітний інтернет','PON підключення'],pr:800},
@@ -749,8 +777,8 @@ function calc(){
   need=Math.round(need*1.3/10)*10;if(cnt&&need<50)need=50;
   $('#needN').textContent=need;$('#needBar').style.width=Math.min(100,need/10)+'%';
   var name,text,why;
-  if(need>220&&homeType==='house'){name='Приват Преміум';text='1000 Мбіт/с для приватного будинку, безліміт, PON підключення. Акція: 99 грн/міс перші 6 місяців, далі 470 грн.';why='У вас багато одночасних пристроїв, тож запас швидкості не завадить: ігри, 4K і дзвінки не заважатимуть одне одному.'}
-  else if(need>220){name='Стандарт Гігабіт';text='1000 Мбіт/с, 200 телеканалів. Акція: 99 грн/міс перші 6 місяців, далі 450 грн.';why='У вас багато одночасних пристроїв, тож запас швидкості не завадить: ігри, 4K і дзвінки не заважатимуть одне одному.'}
+  if(need>220&&homeType==='house'){name='Приват Преміум';text='1000 Мбіт/с для приватного будинку, 200 телеканалів, безліміт, PON підключення. Акція: 99 грн/міс перші 6 місяців, далі 470 грн.';why='У вас багато одночасних пристроїв, тож запас швидкості не завадить: ігри, 4K і дзвінки не заважатимуть одне одному.'}
+  else if(need>220){name='Стандарт Гігабіт';text='1000 Мбіт/с, 200 телеканалів, безліміт, PON підключення. Акція: 99 грн/міс перші 6 місяців, далі 450 грн.';why='У вас багато одночасних пристроїв, тож запас швидкості не завадить: ігри, 4K і дзвінки не заважатимуть одне одному.'}
   else if(homeType==='house'){name='Стандарт Приватний';text='300 Мбіт/с для приватного будинку, безліміт, PON підключення. 350 грн/міс.';why='300 Мбіт/с з запасом вистачить на всю родину. Захочете більше, тариф легко змінити.'}
   else{name='Стандарт';text='300 Мбіт/с, безлімітний інтернет, PON підключення. 300 грн/міс.';why='300 Мбіт/с з запасом вистачить на всю родину. Захочете більше, тариф легко змінити.'}
   $('#recName').textContent=name;$('#recText').textContent=text;$('#recWhy').textContent=why;
@@ -778,6 +806,15 @@ document.addEventListener('click',function(e){
   var c=e.target.closest('[data-close]');if(c){var dl=c.closest('dialog');if(dl)dl.close();return}
   if(e.target.tagName==='DIALOG')e.target.close();
 });
+
+/* floating contact */
+(function(){
+  var f=$('#fab'),b=$('#fabBtn');
+  function set(o){f.classList.toggle('open',o);b.setAttribute('aria-expanded',o)}
+  b.addEventListener('click',function(e){e.stopPropagation();set(!f.classList.contains('open'))});
+  document.addEventListener('click',function(e){if(!e.target.closest('#fab'))set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
 
 watch(document);
 })();
