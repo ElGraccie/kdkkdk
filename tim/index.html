@@ -328,6 +328,25 @@ footer .logo{margin:0}
 body:has(dialog[open]) .fab{opacity:0;pointer-events:none}
 @media (max-width:480px){.fab-main .lbl{display:none}.fab-main{padding:0;width:58px;justify-content:center}}
 
+/* callback form */
+.otabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:5px;border-radius:14px;background:var(--canvas);border:1px solid var(--line);margin-bottom:18px}
+.otabs button{min-height:44px;border-radius:10px;font-weight:700;font-size:.9rem;color:var(--muted);transition:background .3s var(--ease),color .3s var(--ease)}
+.otabs button[aria-selected=true]{background:var(--card);color:var(--ink);box-shadow:0 4px 14px -6px var(--shadow)}
+.fl{display:block;margin-bottom:12px}
+.fl span{display:block;font-size:.82rem;font-weight:600;color:var(--muted);margin-bottom:6px}
+.fl input{width:100%;height:50px;padding:0 14px;border-radius:12px;border:1.5px solid var(--line2);background:var(--canvas);color:var(--ink);font:inherit;font-size:16px;outline:0;transition:border-color .3s var(--ease),box-shadow .3s var(--ease)}
+.fl input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(29,92,255,.15)}
+.fl input[aria-invalid=true]{border-color:#e5484d}
+.fl input::placeholder{color:var(--muted);opacity:.7}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ferr{color:#e5484d;font-size:.86rem;font-weight:600;margin:0 0 10px;min-height:0}
+.ferr:empty{display:none}
+.cbdone{text-align:center}
+.okmark{width:60px;height:60px;margin:4px auto 12px;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:#fff}
+.cbdone h4{font-family:var(--disp);font-size:1.35rem;margin:0 0 6px}
+.cbdone p{margin:0 0 12px}
+.cbtext{text-align:left;white-space:pre-wrap;font-family:var(--mono);font-size:.8rem;line-height:1.5;background:var(--canvas);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 12px;color:var(--ink)}
+
 /* dialogs */
 dialog{border:0;padding:0;color:var(--ink);background:var(--card);max-width:none}
 dialog::backdrop{background:rgba(7,22,52,.6);backdrop-filter:blur(6px)}
@@ -654,17 +673,51 @@ try{var t=localStorage.getItem('tim_theme');if(!t)t=matchMedia('(prefers-color-s
 </dialog>
 
 <dialog class="dlg order" id="order" aria-labelledby="orderH">
-  <div class="hd"><button class="x" data-close aria-label="Закрити">✕</button><span class="ico"><svg aria-hidden="true" width="28" height="28"><use href="#i-net"/></svg></span><h3 id="orderH">Заявка на підключення</h3><p style="margin:8px 0 0;color:rgba(255,255,255,.75)" id="orderSub">Зателефонуйте або напишіть у месенджер, і ми все налаштуємо.</p></div>
+  <div class="hd"><button class="x" data-close aria-label="Закрити">✕</button><span class="ico"><svg aria-hidden="true" width="28" height="28"><use href="#i-net"/></svg></span><h3 id="orderH">Заявка на підключення</h3><p style="margin:8px 0 0;color:rgba(255,255,255,.75)" id="orderSub">Залиште адресу й телефон, і ми вам передзвонимо.</p></div>
   <div class="bd">
-    <a class="num" href="tel:0971992299">(097) 199-22-99<small>Київстар · багатоканальний</small></a>
-    <a class="num" href="tel:0931992299">(093) 199-22-99<small>lifecell · багатоканальний</small></a>
-    <a class="num" href="tel:0991992299">(099) 199-22-99<small>Vodafone · багатоканальний</small></a>
-    <div class="msg">
-      <a class="vb" href="viber://pa?chatURI=tim_support_bot">Viber</a>
-      <a class="tg" href="https://t.me/tim_support_bot" target="_blank" rel="noopener">Telegram</a>
-      <a class="fb" href="https://m.me/itim.net" target="_blank" rel="noopener">Facebook</a>
+    <div class="otabs" role="tablist">
+      <button role="tab" aria-selected="true" data-ot="cb">Замовити дзвінок</button>
+      <button role="tab" aria-selected="false" data-ot="call">Зателефонувати</button>
     </div>
-    <p class="hint">На комп'ютері дзвінок може не відкритися, тоді наберіть номер з телефона. Абонвідділ працює з 9:00 до 18:00, техпідтримка цілодобово.</p>
+    <div data-op="cb">
+      <form id="cbForm" novalidate>
+        <label class="fl"><span>Населений пункт</span>
+          <input name="city" list="cities" required autocomplete="address-level2" placeholder="Оберіть або впишіть">
+          <datalist id="cities"><option value="Умань"><option value="Христинівка"></datalist></label>
+        <label class="fl"><span>Вулиця</span><input name="street" required autocomplete="address-line1" placeholder="Назва вулиці"></label>
+        <div class="frow">
+          <label class="fl"><span>Будинок</span><input name="house" required inputmode="text" placeholder="Напр. 5А"></label>
+          <label class="fl"><span>Квартира</span><input name="flat" inputmode="numeric" placeholder="Напр. 12"></label>
+        </div>
+        <label class="fl"><span>Номер телефону</span><input name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="+380 __ ___ __ __"></label>
+        <p class="ferr" id="cbErr" role="alert"></p>
+        <button class="btn btn-blue" type="submit" style="width:100%">Замовити дзвінок</button>
+        <p class="hint">Квартиру можна не вказувати, якщо у вас приватний будинок.</p>
+      </form>
+      <div class="cbdone" id="cbDone" hidden>
+        <div class="okmark" aria-hidden="true"><svg width="30" height="30"><use href="#i-check"/></svg></div>
+        <h4>Заявку сформовано</h4>
+        <p>Залишився один крок: надішліть її оператору зручним способом. Текст заявки вже скопійовано.</p>
+        <pre class="cbtext" id="cbText"></pre>
+        <div class="msg">
+          <a class="tg" id="cbTg" href="https://t.me/tim_support_bot" target="_blank" rel="noopener">Telegram</a>
+          <a class="vb" id="cbVb" href="viber://pa?chatURI=tim_support_bot">Viber</a>
+          <a class="fb" id="cbMail" href="mailto:support@itim.net" style="background:var(--navy2)">E-mail</a>
+        </div>
+        <button class="btn btn-line" type="button" id="cbBack" style="width:100%;margin-top:10px">Змінити дані</button>
+      </div>
+    </div>
+    <div data-op="call" hidden>
+      <a class="num" href="tel:0971992299">(097) 199-22-99<small>Київстар · багатоканальний</small></a>
+      <a class="num" href="tel:0931992299">(093) 199-22-99<small>lifecell · багатоканальний</small></a>
+      <a class="num" href="tel:0991992299">(099) 199-22-99<small>Vodafone · багатоканальний</small></a>
+      <div class="msg">
+        <a class="vb" href="viber://pa?chatURI=tim_support_bot">Viber</a>
+        <a class="tg" href="https://t.me/tim_support_bot" target="_blank" rel="noopener">Telegram</a>
+        <a class="fb" href="https://m.me/itim.net" target="_blank" rel="noopener">Facebook</a>
+      </div>
+      <p class="hint">На комп'ютері дзвінок може не відкритися, тоді наберіть номер з телефона. Абонвідділ працює з 9:00 до 18:00, техпідтримка цілодобово.</p>
+    </div>
   </div>
 </dialog>
 
@@ -837,10 +890,35 @@ calc();
   els.forEach(function(el){ob.observe(el)});
 })();
 
+/* callback form */
+(function(){
+  var dlg=$('#order'),form=$('#cbForm'),done=$('#cbDone'),err=$('#cbErr');
+  function tab(k){dlg.querySelectorAll('.otabs [data-ot]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.ot===k)});dlg.querySelectorAll('[data-op]').forEach(function(p){p.hidden=p.dataset.op!==k})}
+  dlg.querySelector('.otabs').addEventListener('click',function(e){var b=e.target.closest('[data-ot]');if(b)tab(b.dataset.ot)});
+  window.__orderReset=function(){tab('cb');form.hidden=false;done.hidden=true;err.textContent=''};
+  form.addEventListener('submit',function(e){
+    e.preventDefault();var f=form.elements,bad=[];
+    ['city','street','house','phone'].forEach(function(n){var ok=f[n].value.trim().length>0;f[n].setAttribute('aria-invalid',!ok);if(!ok)bad.push(n)});
+    var digits=f.phone.value.replace(/\D/g,'');var phOk=digits.length>=10&&digits.length<=12;
+    if(!phOk&&bad.indexOf('phone')<0){bad.push('phone');f.phone.setAttribute('aria-invalid',true)}
+    if(bad.length){err.textContent=bad.indexOf('phone')>-1&&bad.length===1?'Перевірте номер телефону: потрібно 10 цифр, наприклад 097 123 45 67.':'Заповніть, будь ласка, населений пункт, вулицю, будинок і телефон.';f[bad[0]].focus();return}
+    err.textContent='';
+    var tariff=dlg.dataset.tariff||'';
+    var txt='Заявка на підключення ТІМ'+(tariff?'\nТариф: '+tariff:'')+'\nНаселений пункт: '+f.city.value.trim()+'\nАдреса: вул. '+f.street.value.trim()+', буд. '+f.house.value.trim()+(f.flat.value.trim()?', кв. '+f.flat.value.trim():'')+'\nТелефон: '+f.phone.value.trim()+'\nПрошу передзвонити.';
+    $('#cbText').textContent=txt;
+    $('#cbMail').href='mailto:support@itim.net?subject='+encodeURIComponent('Заявка на підключення')+'&body='+encodeURIComponent(txt);
+    try{navigator.clipboard&&navigator.clipboard.writeText(txt)}catch(x){}
+    form.hidden=true;done.hidden=false;
+  });
+  form.addEventListener('input',function(e){if(e.target.getAttribute('aria-invalid')==='true')e.target.setAttribute('aria-invalid',e.target.value.trim()?'false':'true')});
+  $('#cbBack').addEventListener('click',function(){form.hidden=false;done.hidden=true});
+  ['cbTg','cbVb'].forEach(function(id){$('#'+id).addEventListener('click',function(){try{navigator.clipboard&&navigator.clipboard.writeText($('#cbText').textContent)}catch(x){}})});
+})();
+
 /* dialogs and clicks */
 document.addEventListener('click',function(e){
   var o=e.target.closest('[data-order]');
-  if(o){e.preventDefault();document.querySelectorAll('dialog[open]').forEach(function(d){d.close()});var nm=o.getAttribute('data-order');$('#orderSub').textContent=nm?'Тариф «'+nm+'». Зателефонуйте або напишіть у месенджер, і ми все налаштуємо.':'Зателефонуйте або напишіть у месенджер, і ми все налаштуємо.';$('#order').showModal();return}
+  if(o){e.preventDefault();document.querySelectorAll('dialog[open]').forEach(function(d){d.close()});var nm=o.getAttribute('data-order');$('#order').dataset.tariff=nm||'';$('#orderSub').textContent=nm?'Тариф «'+nm+'». Залиште адресу й телефон, і ми вам передзвонимо.':'Залиште адресу й телефон, і ми вам передзвонимо.';window.__orderReset();$('#order').showModal();return}
   var s=e.target.closest('[data-svc]');if(s){openSvc(+s.dataset.svc);return}
   var c=e.target.closest('[data-close]');if(c){var dl=c.closest('dialog');if(dl)dl.close();return}
   if(e.target.tagName==='DIALOG')e.target.close();
