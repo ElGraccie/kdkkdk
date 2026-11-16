@@ -159,6 +159,13 @@ section{padding:96px 0}
 .tab{flex:none;min-height:46px;padding:0 18px;border-radius:12px;font-weight:700;font-size:.94rem;color:var(--muted);transition:background .35s var(--ease),color .35s var(--ease)}
 .tab:hover{color:var(--ink)}
 .tab[aria-selected=true]{background:var(--navy);color:#fff}
+@media (max-width:640px){
+  .tabs{display:grid;grid-template-columns:repeat(3,1fr);width:100%}
+  .tab{min-height:52px;padding:0 6px;font-size:.84rem;line-height:1.2;white-space:normal;text-align:center}
+  .seg{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .seg button{padding:0 6px}
+  .hsel{width:100%;display:grid;grid-template-columns:1fr 1fr}
+}
 html[data-theme=dark] .tab[aria-selected=true]{background:var(--blue)}
 .note{font-family:var(--mono);font-size:.74rem;color:var(--muted);margin-top:14px;letter-spacing:.04em}
 .plans{display:grid;gap:14px;margin-top:22px}
@@ -268,6 +275,17 @@ details.equip[open] summary i{transform:rotate(45deg)}
 .pay span{font-size:.84rem;color:var(--muted)}
 .pay em{font-style:normal;font-family:var(--mono);font-size:.7rem;font-weight:700;color:var(--ok);background:var(--ok-bg);padding:4px 8px;border-radius:999px;align-self:flex-start}
 
+/* docs */
+.docs{display:grid;gap:14px;margin-top:36px}
+@media (min-width:860px){.docs{grid-template-columns:1fr 1fr}}
+.doc{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:24px;border-radius:24px;background:var(--card);border:1px solid var(--line);text-decoration:none;transition:transform .5s var(--ease-out),border-color .3s var(--ease),box-shadow .5s var(--ease)}
+.doc:hover{transform:translateY(-3px);border-color:var(--blue);box-shadow:0 24px 50px -26px var(--shadow)}
+.doc .ico{margin:0}
+.doc b{display:block;font-family:var(--disp);font-size:1.25rem;margin:4px 0 6px}
+.doc .ds{display:block;color:var(--muted);font-size:.9rem;line-height:1.45}
+.doc .pdf{font-family:var(--mono);font-weight:700;font-size:.78rem;color:var(--blue);padding:8px 12px;border-radius:999px;background:rgba(29,92,255,.1);white-space:nowrap}
+@media (max-width:520px){.doc{grid-template-columns:auto 1fr}.doc .pdf{grid-column:2;justify-self:start}}
+
 /* contacts */
 .cont{display:grid;gap:14px;margin-top:36px}
 @media (min-width:960px){.cont{grid-template-columns:1.2fr 1fr 1fr}}
@@ -370,6 +388,7 @@ try{var t=localStorage.getItem('tim_theme');if(!t)t=matchMedia('(prefers-color-s
     <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 12h8M8 15h5"/></g></symbol>
     <symbol id="i-tag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.500" cy="8.500" r="1.300"/></g></symbol>
     <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/></g></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.500h8l4 4V21a.5.5 0 0 1-.5.5h-11.500a.5.5 0 0 1-.5-.5V3a.5.5 0 0 1 .5-.5z"/><path d="M14 2.500V7h4M8.500 12h7M8.500 15.500h7M8.500 9h3"/></g></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round" d="M5 12.500l4.500 4.500L19 7.500"/></symbol>
   </defs>
 </svg>
@@ -538,6 +557,25 @@ try{var t=localStorage.getItem('tim_theme');if(!t)t=matchMedia('(prefers-color-s
   </div>
 </section>
 
+<section id="docs" style="padding-top:20px">
+  <div class="wrap">
+    <div class="reveal"><div class="kicker">Документи</div><h2 class="h2">Публічні договори</h2>
+    <p class="lead">Послуги надаються згідно з публічними договорами. Натисніть, щоб відкрити договір у форматі PDF.</p></div>
+    <div class="docs">
+      <a class="doc reveal" href="https://cms.itim.net/media/documents/publichni_dogovory/tov_giper_merezha.pdf" target="_blank" rel="noopener">
+        <span class="ico"><svg aria-hidden="true"><use href="#i-doc"/></svg></span>
+        <span class="dt"><span class="mono">Доступ до мережі Інтернет</span><b>ТОВ «ГІПЕР МЕРЕЖА»</b><span class="ds">Послуга доступу до мережі Інтернет надається ТОВ «ГІПЕР МЕРЕЖА» згідно з Публічним договором.</span></span>
+        <span class="pdf">PDF ↗</span>
+      </a>
+      <a class="doc reveal" href="https://cms.itim.net/media/documents/publichni_dogovory/fop_han.pdf" target="_blank" rel="noopener">
+        <span class="ico"><svg aria-hidden="true"><use href="#i-doc"/></svg></span>
+        <span class="dt"><span class="mono">Сервісне обслуговування</span><b>ФОП Хан Є. В.</b><span class="ds">Послуга сервісного обслуговування надається ФОП Хан Є. В. згідно з Публічним договором.</span></span>
+        <span class="pdf">PDF ↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <section id="contacts" style="padding-top:20px">
   <div class="wrap">
     <div class="reveal"><div class="kicker">Контакти</div><h2 class="h2">Ми завжди на зв'язку</h2></div>
@@ -591,7 +629,7 @@ try{var t=localStorage.getItem('tim_theme');if(!t)t=matchMedia('(prefers-color-s
   <div class="wrap">
     <a class="logo" href="#top" aria-label="ТІМ, на початок"><svg class="lg" aria-hidden="true"><use href="#tim-logo"/></svg><small>оператор<br>телекомунікацій</small></a>
     <span>ТОВ «ТРК «ТІМ» · Умань, Христинівка</span>
-    <span><a href="https://itim.net/documents" target="_blank" rel="noopener">Документи</a> · <a href="https://itim.net/settings" target="_blank" rel="noopener">Налаштування</a> · <a href="https://cabinet.itim.net/" target="_blank" rel="noopener">Кабінет</a></span>
+    <span><a href="#docs">Публічні договори</a> · <a href="https://itim.net/settings" target="_blank" rel="noopener">Налаштування</a> · <a href="https://cabinet.itim.net/" target="_blank" rel="noopener">Кабінет</a></span>
   </div>
 </footer>
 
@@ -606,7 +644,7 @@ try{var t=localStorage.getItem('tim_theme');if(!t)t=matchMedia('(prefers-color-s
 
 <dialog class="mnav" id="mnav" aria-label="Меню">
   <button class="x" data-close aria-label="Закрити" style="color:#fff;background:rgba(255,255,255,.1)">✕</button>
-  <a href="#services" data-close>Послуги</a><a href="#tariffs" data-close>Тарифи</a><a href="#pick" data-close>Підбір швидкості</a><a href="#pay" data-close>Оплата</a><a href="#news" data-close>Новини</a><a href="#contacts" data-close>Контакти</a>
+  <a href="#services" data-close>Послуги</a><a href="#tariffs" data-close>Тарифи</a><a href="#pick" data-close>Підбір швидкості</a><a href="#pay" data-close>Оплата</a><a href="#news" data-close>Новини</a><a href="#docs" data-close>Документи</a><a href="#contacts" data-close>Контакти</a>
   <a class="btn btn-blue" href="https://cabinet.itim.net/" target="_blank" rel="noopener">Особистий кабінет</a>
 </dialog>
 
