@@ -327,7 +327,7 @@ footer .logo{margin:0}
 
 /* floating contact */
 .fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:45;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-.fab-main{display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 20px 0 16px;border-radius:999px;background:var(--grad);color:#fff;font-weight:700;box-shadow:0 14px 34px -10px rgba(29,92,255,.75);transition:transform .4s var(--ease-out),box-shadow .4s var(--ease)}
+.fab-main{display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 20px 0 16px;border-radius:999px;background:var(--grad);color:#fff;font-weight:700;box-shadow:0 8px 24px -6px rgba(29,92,255,.6);transition:transform .4s var(--ease-out),box-shadow .4s var(--ease)}
 .fab-main:hover{transform:translateY(-2px)}
 .fab-main svg{width:22px;height:22px}
 .fab-main .ring{position:absolute;inset:0;border-radius:999px;box-shadow:0 0 0 0 rgba(34,199,240,.5);animation:fabp 2.6s -1s infinite;pointer-events:none}
@@ -342,7 +342,7 @@ footer .logo{margin:0}
 .fab.open .fab-main .ring{display:none}
 .fab .xi{display:none}.fab.open .ci{display:none}.fab.open .xi{display:block}
 body:has(dialog[open]) .fab{opacity:0;pointer-events:none}
-@media (max-width:480px){.fab-main .lbl{display:none}.fab-main{padding:0;width:58px;justify-content:center}}
+@media (max-width:480px){.fab-main .lbl{display:none}.fab-main{padding:0;width:58px;height:58px;min-height:58px;border-radius:50%;justify-content:center;gap:0}.fab-main .ring{border-radius:50%}.fab-main svg{width:26px;height:26px}}
 
 /* callback form */
 .otabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:5px;border-radius:14px;background:var(--canvas);border:1px solid var(--line);margin-bottom:18px}
@@ -674,7 +674,7 @@ try{var t=localStorage.getItem('tim_theme');if(!t)t=matchMedia('(prefers-color-s
     <a class="tg" role="menuitem" href="https://t.me/tim_support_bot" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 4L3 11l6 2 2 6 3-4 5 4z"/><path d="M9 13l12-9"/></svg>Telegram</a>
     <a class="cl" role="menuitem" href="tel:0971992299"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h3l2 5-2.500 1.500a11 11 0 0 0 7 7L16 14l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg>(097) 199-22-99</a>
   </div>
-  <button class="fab-main" id="fabBtn" aria-expanded="false" aria-controls="fabList"><span class="ring"></span><svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.600 7.100L4 20.500l1.400-4.700A8 8 0 1 1 21 12z"/><path d="M8.500 11h.01M12 11h.01M15.500 11h.01"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="lbl">Зв'язатися з оператором</span></button>
+  <button class="fab-main" id="fabBtn" aria-expanded="false" aria-controls="fabList"><span class="ring"></span><svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="13" width="4" height="6" rx="1.500"/><rect x="17" y="13" width="4" height="6" rx="1.500"/><path d="M19 19c0 1.700-1.800 2.500-4.500 2.500H13"/></svg><svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="lbl">Зв'язатися з оператором</span></button>
 </div>
 
 <dialog class="mnav" id="mnav" aria-label="Меню">
