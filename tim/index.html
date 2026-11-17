@@ -80,6 +80,8 @@ section{padding:96px 0}
 .nav .phone{display:none;white-space:nowrap;color:#fff;text-decoration:none;font-family:var(--mono);font-weight:700;font-size:.9rem;padding:0 10px}
 @media (min-width:760px) and (max-width:1059px),(min-width:1360px){.nav .phone{display:block}}
 .nav .btn{min-height:44px;padding:0 18px;font-size:.92rem;border-radius:12px}
+.nav .navorder{max-width:0;padding:0;margin-left:-8px;opacity:0;overflow:hidden;white-space:nowrap;transform:translateY(-6px) scale(.9);pointer-events:none;box-shadow:none;transition:max-width .55s var(--ease-out),padding .55s var(--ease-out),margin .55s var(--ease-out),opacity .4s var(--ease),transform .55s var(--ease-out),box-shadow .4s var(--ease)}
+.nav .navorder.show{max-width:180px;padding:0 18px;margin-left:0;opacity:1;transform:none;pointer-events:auto;box-shadow:0 12px 30px -12px rgba(29,92,255,.7)}
 .nav .cab{display:none}
 @media (min-width:600px){.nav .cab{display:inline-flex}}
 .burger{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.08)}
@@ -441,7 +443,7 @@ try{var t=localStorage.getItem('tim_theme');if(!t)t=matchMedia('(prefers-color-s
     <div class="links"><a href="#services">Послуги</a><a href="#tariffs">Тарифи</a><a href="#pick">Підбір швидкості</a><a href="#pay">Оплата</a><a href="#news">Новини</a><a href="#contacts">Контакти</a></div>
     <a class="phone" href="tel:0971992299">(097) 199-22-99</a>
     <a class="btn btn-line cab" href="https://cabinet.itim.net/" target="_blank" rel="noopener" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2);color:#fff">Кабінет</a>
-    <button class="btn btn-blue" data-order style="display:none" id="navOrder">Підключити</button>
+    <button class="btn btn-blue navorder" data-order id="navOrder" tabindex="-1" aria-hidden="true">Підключити</button>
     <button class="theme" id="theme" aria-label="Увімкнути темну тему" title="Тема"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.500A8 8 0 0 1 9.500 4a8 8 0 1 0 10.500 10.500z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.200"/><path d="M12 2.500v2.200M12 19.300v2.200M2.500 12h2.200M19.300 12h2.200M5.300 5.300l1.500 1.500M17.200 17.200l1.500 1.500M5.300 18.700l1.500-1.500M17.200 6.800l1.500-1.500"/></svg></button>
     <button class="burger" id="burger" aria-label="Меню" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
@@ -754,7 +756,7 @@ document.addEventListener('visibilitychange',function(){document.body.classList.
 
 /* nav */
 var nav=$('#nav'),navOrder=$('#navOrder');
-function onNav(){var s=scrollY>40;nav.classList.toggle('solid',s);navOrder.style.display=s&&innerWidth>=480?'inline-flex':'none'}
+function onNav(){var s=scrollY>40,on=s&&innerWidth>=480;nav.classList.toggle('solid',s);if(navOrder.classList.contains('show')!==on){navOrder.classList.toggle('show',on);navOrder.tabIndex=on?0:-1;navOrder.setAttribute('aria-hidden',!on)}}
 addEventListener('scroll',onNav,{passive:true});addEventListener('resize',onNav);onNav();
 $('#burger').addEventListener('click',function(){$('#mnav').showModal()});
 (function(){
